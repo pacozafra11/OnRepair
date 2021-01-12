@@ -22,7 +22,7 @@
         <div class="container">
             <div class="row formLogin align-items-center justify-content-center">
                 <div class="col-7">
-                    {* Formulario html *}
+                    <!-- Formulario html -->
                     <form name="formLogin" id="formLogin" action="index.php" method="post">
 
                     </form>                     
