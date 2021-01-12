@@ -10,6 +10,9 @@
     <!-- CSS Propio -->
     <link rel="stylesheet" href="css/estilos.css">
 
+    <!-- Favicon -->
+    <link rel=”shortcut icon” type=”image/png” href=”imagenes/favicon.png”/>
+
     <title>On Repair - Login</title>
 </head>
 <body id="index">
