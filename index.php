@@ -20,7 +20,7 @@
 <?php
     
     //Declaración de variables
-    $email= $emailErr= "";
+    $email= $emailErr= $password= $passwordErr= "";
 ?>
 
     <section>        
@@ -38,8 +38,13 @@
 
                         <!-- Campos rellenables de usuario y contraseña -->
                         <div class="form-group col-12 col-xs-12">
-                            <input type="text" class="form-control" name="email" id="email" placeholder="&#128272;  Email" value="<?php echo $email;?>" autofocus maxlength="20" required> 
+                            <input type="text" class="form-control" name="email" id="email" placeholder="&#128272;  Email" value="<?php echo $email;?>" autofocus maxlength="50" required> 
                             <span class="error"><?php echo $emailErr;?></span>    
+                        </div>
+
+                        <div class="form-group col-12 col-xs-12">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="&#128272; Contraseña" value="<?php echo $password;?>" autofocus maxlength="20" required>
+                            <span class="error"><?php echo $passwordErr;?></span>
                         </div>
 
                     </form>                     
