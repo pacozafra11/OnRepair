@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/estilos.css">
 
     <!-- Favicon -->
-    <link rel=”shortcut icon” type=”image/png” href=”imagenes/favicon.png”/>
+    <link rel="shortcut icon" type="image/jpg" href="imagenes/favicon.jpg"/>
 
     <title>On Repair - Login</title>
 </head>
