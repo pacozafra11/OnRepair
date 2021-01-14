@@ -26,30 +26,28 @@
     <section>        
         <div class="container">
             <div class="row formLogin align-items-center justify-content-center">
-                <div class="col-7 mt-5">
-
-                    <div class="form-group col-12 col-xs-12 mt-3">
-                        <div class="text-center">
-                            <img src="imagenes/loco_centrado.png" class="rounded" alt="Logotipo On Repair">
-                        </div>    
-                    </div>
+                <div class="col-6 mt-5">
 
                     <!-- Formulario html -->
                     <form name="formLogin" id="formLogin" action="index.php" method="post">
 
+                        <div class="form-group col-12 mt-3">
+                            <img src="imagenes/loco_centrado.png" class="img-fluid img-responsive col-12  alt="Logotipo On Repair">    
+                        </div>
+
                         <!-- Campos rellenables de usuario y contraseña -->
-                        <div class="form-group col-12 col-xs-12">
+                        <div class="form-group col-12">
                             <input type="text" class="form-control" name="email" id="email" placeholder="&#128272;  Email" value="<?php echo $email;?>" autofocus maxlength="50" required> 
                             <span class="error"><?php echo $emailErr;?></span>    
                         </div>
 
-                        <div class="form-group col-12 col-xs-12">
+                        <div class="form-group col-12">
                             <input type="password" class="form-control" name="password" id="password" placeholder="&#128272; Contraseña" value="<?php echo $password;?>" autofocus maxlength="20" required>
                             <span class="error"><?php echo $passwordErr;?></span>
                         </div>
 
                         <!-- Botón enviar -->
-                        <div class="form-group col-12 col-xs-12">
+                        <div class="form-group col-12">
                             <button type="submit" class="btn btn-success col-12" name="autenti">Autentificarse</button>
                             <span class="error"><?php echo $error;?></span>
                         </div>
