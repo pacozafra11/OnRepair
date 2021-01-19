@@ -10,7 +10,7 @@
     <script nomodule="" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
 
     <!-- Script propios para la página -->
-    <script src="js/funciones.js"></script>
+    <script src="js/functions.js"></script>
 
 </body>
 </html>
