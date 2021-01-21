@@ -1,5 +1,10 @@
 <?php 
+    /* Index o página de inicio, formulario de autentificación para acceder a la App Web
+    *
+    * @author Francisco José López Zafra
+    */
 
+    //Incluyo cabecera
     include("includes/head.php");
     
     //Declaración de variables
@@ -45,7 +50,7 @@
         if($emailOk && $passwordOk){
 
             $db = new db();
-            $error = $db->comprobarUsuario($usuario, $password);
+            $error = $db->comprobarUsuario($email, $password);
 
             //Si es correcto el resultado redirecciono
             if($error=="OK"){
@@ -92,5 +97,6 @@
 
     
 <?php
+    //Incluyo pie
     include("includes/footer.php");
 ?>
