@@ -1,10 +1,10 @@
 <?php 
-    /* Index o página de inicio, formulario de autentificación para acceder a la App Web
+    /* Pagina d einformación al usuario sobre cookies
     *
     * @author Francisco José López Zafra
     */
 
-    //Incluyo cabecera y db
+    //Incluyo cabecera
     include("head.php");
 ?>    
 
