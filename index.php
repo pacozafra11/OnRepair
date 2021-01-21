@@ -64,7 +64,7 @@
                     <form name="formLogin" id="formLogin" class="form-signin" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
 
                         <div class="form-group">
-                            <img src="imagenes/logo_centrado.png" class="img-fluid"  alt="Logotipo On Repair" width="100%" height="auto">    
+                            <img src="images/logo_centrado.png" class="img-fluid"  alt="Logotipo On Repair" width="100%" height="auto">    
                         </div>
 
                         <!-- Campos rellenables de usuario y contraseña -->
