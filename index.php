@@ -4,8 +4,9 @@
     * @author Francisco José López Zafra
     */
 
-    //Incluyo cabecera
+    //Incluyo cabecera y db
     include("includes/head.php");
+    include("includes/db.php");
     
     //Declaración de variables
     $email= $emailErr= $password= $passwordErr= $error= "";
@@ -62,7 +63,7 @@
 
     <section class="container">        
         <div class="row justify-content-center align-items-center minh-100">
-            <div class="col-sm-7 mt-4">
+            <div class="col-sm-6 mt-4">
                 <div class="col-sm-12">
 
                     <!-- Formulario html -->
@@ -95,6 +96,14 @@
         </div>        
     </section>
 
+    <footer class="footer">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Esta página hace uso de <a href="includes/cookies.php" class="alert-link">cookies</a> para su funcionamiento.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </footer>
     
 <?php
     //Incluyo pie
