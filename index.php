@@ -7,11 +7,20 @@
     //Incluyo cabecera y db
     include("includes/head.php");
     include("includes/db.php");
+    include("includes/functions.php");
     
     //Declaración de variables
     $email= $emailErr= $password= $passwordErr= $error= "";
     $emailOk= $passwordOk= false;
 
+
+    //Primero compruebo sesion
+    if(comprobarSesion()){
+        //Redirijo a tareas.php puesto que la inición está iniciada y es válida
+        header("Location: tareas.php");
+    }
+
+    
     //Si se ha pulsado "autentificarse"
     if(isset($_POST["autenti"])){
             
@@ -55,7 +64,7 @@
 
             //Si es correcto el resultado redirecciono
             if($error=="OK"){
-                header('Location: escaparate.php');
+                header('Location: tareas.php');
             }
         }    
     }
