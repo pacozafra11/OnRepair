@@ -14,3 +14,44 @@
 	color: red;
 }
 
+/* Menú lateral */
+.sidenav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	overflow-x: hidden;
+	transition: 0.5s;
+  }
+  
+  .sidenav a {
+	padding: 8px 3px 5px 20px;
+	text-decoration: none;
+	font-size: 20px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
+	color: white;
+  }
+  
+  .sidenav a:hover {
+	color: #656566;
+  }
+  
+  .sidenav .closebtn {
+	position: absolute;
+	right: 25px;
+	font-size: 30px;
+	margin-left: 50px;
+  }
+  
+  @media screen and (max-height: 450px) {
+	.sidenav {padding-top: 15px;}
+	.sidenav a {font-size: 18px;}
+  }
+
+  #abrir_menu {
+	margin-left: 20px;
+  }
