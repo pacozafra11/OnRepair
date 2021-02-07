@@ -5,10 +5,10 @@
         $resultado = false;
 
         //Máxima duración de sesión activa en horas
-        define( 'max_sesion_tiempo', 60 * 60 * 8 );
+        define('max_sesion_tiempo', 60 * 60 * 8 );
 
         //Controla cuando se ha creado y cuando tiempo ha recorrido 
-        if(isset( $_SESSION[ 'ultima_conexion' ] ) && ( time() - $_SESSION[ 'ultima_conexion' ] > max_sesion_tiempo )){
+        if(isset( $_SESSION['ultima_conexion'] ) && ( time() - $_SESSION['ultima_conexion'] > max_sesion_tiempo )){
 
             //Si ha pasado el tiempo sobre el limite destruyo la session
             $_SESSION = array();

@@ -18,7 +18,7 @@
         <a href="#">Repuestos</a>
         <a href="#">Usuarios</a>
         <?php if($_SESSION['rol']==1){echo '<a href="#">Roles</a>';}?>
-        <a href="#">Salir</a>
+        <a href="includes/go_out.php">Salir</a>
 
         <a href="#" class="closebtn" id ="cerrar_menu" >&times;</a>
     </div>

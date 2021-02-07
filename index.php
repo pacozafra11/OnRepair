@@ -15,10 +15,8 @@
 
 
     //Primero compruebo sesion
-    if(comprobarSesion()){
-        //Redirijo a tareas.php puesto que la inición está iniciada y es válida
-        header("Location: tareas.php");
-    }
+    //comprobarSesion();
+        
 
     
     //Si se ha pulsado "autentificarse"
