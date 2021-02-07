@@ -23,4 +23,4 @@
         <a href="#" class="closebtn" id ="cerrar_menu" >&times;</a>
     </div>
 
-    <span id="abrir_menu" style="font-size:30px;cursor:pointer">&#9776;</span>
+    
