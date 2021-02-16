@@ -81,6 +81,7 @@
                         $_SESSION['login'] = $login;
                         $_SESSION['hora'] = date('H:i:s');
                         $_SESSION['rol'] = $registro["id_rol"];
+                        $_SESSION['nombre'] = $registro["nombre"];
                         $_SESSION['ultima_conexion'] = time();   
                         
                         //Redirijo a tareas.php
@@ -139,6 +140,47 @@
         
             return $bloqueado;    
         }
+
+    
+        //Función para mostrar tareas, no recibe parámetros
+        public function mostrarTareas(){
+
+            $conexion = $this->accesoDB();
+            $sql="SELECT tareas.id AS Id, tareas.titulo AS Título, tareas.descripcion AS Descripción, tareas.tiempo AS 'Tiempo Empleado', 
+                tareas.fecha AS Fecha, tareas.finalizada AS Finalizada, tipo_mantenimiento.nombre AS 'Tipo de Mantenimiento', 
+                tipo_averia.nombre AS 'Tipo de Avería', usuarios.nombre AS Técnico, maquinas.nombre AS Máquina
+                        FROM tareas 
+                        INNER JOIN tipo_mantenimiento ON tareas.id_tipo_mantenimiento = tipo_mantenimiento.id
+                        INNER JOIN tipo_averia ON tareas.id_tipo_averia = tipo_averia.id
+                        INNER JOIN usuarios ON tareas.id_usuario = usuarios.id
+                        INNER JOIN maquinas ON tareas.id_maquina = maquinas.id
+                        ORDER BY fecha DESC";
+                        
+            $resultado=$conexion->prepare($sql);
+            $resultado->execute();
+
+            if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
+
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
+            } else {
+                $registros = "No hay datos registrados que mostrar";
+            }         
+            return $registros;
+        }
+
+
+
+
+
+
+
+
+
+
+
 
     }
 ?>

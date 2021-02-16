@@ -9,49 +9,88 @@
 	outline: none;
 }
 
+body{
+	overflow: hidden;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight: 300;
+}
 
 .error{
 	color: red;
 }
 
-/* Menú lateral */
-.sidenav {
-	height: 100%;
-	width: 0;
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	overflow-x: hidden;
-	transition: 0.5s;
-  }
-  
-  .sidenav a {
-	padding: 8px 3px 5px 20px;
-	text-decoration: none;
-	font-size: 20px;
-	color: #818181;
-	display: block;
-	transition: 0.3s;
-	color: white;
-  }
-  
-  .sidenav a:hover {
-	color: #656566;
-  }
-  
-  .sidenav .closebtn {
-	position: absolute;
-	right: 25px;
-	font-size: 30px;
-	margin-left: 50px;
-  }
-  
-  @media screen and (max-height: 450px) {
-	.sidenav {padding-top: 15px;}
-	.sidenav a {font-size: 18px;}
+:root{
+	--warning: #a6fafd;
+}
+
+/* Menú lateral y superior */
+#wrapper {
+    overflow-x: hidden;
+}
+
+#logo {
+	max-width: 240px;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
   }
 
-  #abrir_menu {
-	margin-left: 20px;
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
   }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+
+#content{
+	overflow-y: auto;
+	height: 100vh;
+	padding-bottom: 5rem;
+}
+
+/* .casillas{
+	overflow-y: auto;
+	height: 10vh;
+	padding-bottom: 2rem;
+} */
+
+
+/* Tablas tareas */
+#tablasTareas tr td{
+	width: 30% !important;
+}
+
+#tablasTareas .colDerecha{
+	width: 40% !important;
+}

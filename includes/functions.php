@@ -58,4 +58,25 @@
         return $resultado; 
     }*/
 
+    /* 
+    //Incluyo la páginas necesarias
+    include("db.php");
+
+
+    //Creo un objeto db de la clase DB
+    $db = new db();
+
+    //Si recibe por el método POST el parámetro "anuncios", llama al método mostrarAnuncios() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['anuncios'])){
+
+        $resultados = $db->mostrarTareas();  
+
+        $json = json_encode($resultados);   //Retorna la representación JSON del valor dado
+        echo $json;    
+    } */
+
+
+
+    
+
 ?>
