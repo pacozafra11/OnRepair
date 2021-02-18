@@ -11,7 +11,7 @@
 
     
         //Iniciar variables
-        $login= $hora= $nombre= $ultimaConexion= $titulo= "";
+        $login= $hora= $nombre= $ultimaConexion= $tituloPagina= "";
         $rol= 0;
 
         //Retomo la sesión
@@ -63,6 +63,10 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
+                    <div class="col-lg-4">
+                        <h2 class="mt-1 text-info"><?php echo $tituloPagina;?></h2>
+                    </div>
+
                     <!-- Botón extender menú superior -->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -71,13 +75,9 @@
                     
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                        <!-- Campo de busqueda -->
-                        <!-- <form class="form-inline position-relative d-inline-block">
-                            <input class="form-control mr-sm-2" type="search" id="busqueda" placeholder="Buscar..." aria-label="Search" pattern="[a-zA-Z 0-9 áéíóúñÑ-]{0,50}" required>
-                        </form> -->
-                        <div class="position-relative d-inline-block">
+                        <!-- <div class="position-relative d-inline-block">
                             <h2 class="text-info"><?php echo $titulo;?></h2>
-                        </div>
+                        </div> -->
 
                         <!-- Desplegable con información de usuario -->
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -86,9 +86,9 @@
                                     <?php echo $nombre;?>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <span class="dropdown-item"><?php echo $login;?></span>
-                                    <span class="dropdown-item"><?php echo $hora;?></span>
-                                    <span class="dropdown-item"><?php if($rol==1){echo "Administrador";}elseif($rol==2){echo "Responsable";}else{echo "Técnico";}?></span>
+                                    <span id="login" class="dropdown-item"><?php echo $login;?></span>
+                                    <span id="hora" class="dropdown-item"><?php echo $hora;?></span>
+                                    <span id="rol" class="dropdown-item"><?php if($rol==1){echo "Administrador";}elseif($rol==2){echo "Responsable";}else{echo "Técnico";}?></span>
                                     <div class="dropdown-divider"></div>
                                     <a href="includes/go_out.php" class="dropdown-item text-danger">Cerrar sesión <ion-icon name="log-out"></ion-icon></a>   
                                 </div>

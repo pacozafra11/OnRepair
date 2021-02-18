@@ -19,9 +19,6 @@ body{
 	color: red;
 }
 
-:root{
-	--warning: #a6fafd;
-}
 
 /* Menú lateral y superior */
 #wrapper {
