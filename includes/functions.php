@@ -1,6 +1,10 @@
 <?php
     /* Archivo que contiene funciones auxiliares */
 
+    //Incluyo la páginas necesarias
+    include("db.php");
+
+
     function comprobarSesion(){
         $resultado = false;
 
@@ -77,6 +81,38 @@
 
 
 
-    
+    //Creo un objeto db de la clase DB
+    $db = new db();
+
+
+    //Si recibe por el método POST el parámetro "anuncios", llama al método mostrarAnuncios() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['tareas'])){
+
+        $tareas = $db->mostrarTareas();  
+
+        $json = json_encode($tareas);   //Retorna la representación JSON del valor dado
+        echo $json;    
+    }
+
+  
+
+    //Si recibe por el método POST el parámetro "tareas", llama al método mostrarMaquinas() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['maquinas'])){
+
+        $maquinas = $db->mostrarMaquinas();  
+
+        $json = json_encode($maquinas);   //Retorna la representación JSON del valor dado
+        echo $json;    
+    }
+
+
+    //Si recibe por el método POST el parámetro "grupos", llama al método mostrarGrupos() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['grupos'])){
+
+        $grupos = $db->mostrarGrupos();  
+
+        $json = json_encode($grupos);   //Retorna la representación JSON del valor dado
+        echo $json;    
+    }
 
 ?>

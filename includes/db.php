@@ -146,15 +146,61 @@
         public function mostrarTareas(){
 
             $conexion = $this->accesoDB();
-            $sql="SELECT tareas.id AS Id, tareas.titulo AS Título, tareas.descripcion AS Descripción, tareas.tiempo AS 'Tiempo Empleado', 
-                tareas.fecha AS Fecha, tareas.finalizada AS Finalizada, tipo_mantenimiento.nombre AS 'Tipo de Mantenimiento', 
-                tipo_averia.nombre AS 'Tipo de Avería', usuarios.nombre AS Técnico, maquinas.nombre AS Máquina
+            $sql="SELECT tareas.id AS id, tareas.titulo AS titulo, tareas.descripcion AS descripcion, tareas.tiempo AS tiempo, 
+                tareas.fecha AS fecha, tareas.finalizada AS finalizada, tipo_mantenimiento.nombre AS mantenimiento, 
+                tipo_averia.nombre AS averia, usuarios.nombre AS tecnico, maquinas.nombre AS maquina
                         FROM tareas 
                         INNER JOIN tipo_mantenimiento ON tareas.id_tipo_mantenimiento = tipo_mantenimiento.id
                         INNER JOIN tipo_averia ON tareas.id_tipo_averia = tipo_averia.id
                         INNER JOIN usuarios ON tareas.id_usuario = usuarios.id
                         INNER JOIN maquinas ON tareas.id_maquina = maquinas.id
                         ORDER BY fecha DESC";
+                        
+            $resultado=$conexion->prepare($sql);
+            $resultado->execute();
+
+            if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
+
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
+            } else {
+                $registros = "No hay datos registrados que mostrar";
+            }         
+            return $registros;
+        }
+
+
+        //Función para mostrar maquinas, no recibe parámetros
+        public function mostrarMaquinas(){
+
+            $conexion = $this->accesoDB();
+            $sql="SELECT maquinas.id AS id, maquinas.nombre AS nombre, maquinas.marca AS marca, maquinas.modelo AS modelo, maquinas.descripcion AS descripcion, grupos.nombre AS grupo
+                        FROM maquinas
+                        INNER JOIN grupos ON maquinas.id_grupo = grupos.id";
+                        
+            $resultado=$conexion->prepare($sql);
+            $resultado->execute();
+
+            if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
+
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
+            } else {
+                $registros = "No hay datos registrados que mostrar";
+            }         
+            return $registros;
+        }
+
+
+        //Función para mostrar grupos, no recibe parámetros
+        public function mostrarGrupos(){
+
+            $conexion = $this->accesoDB();
+            $sql="SELECT * FROM grupos";
                         
             $resultado=$conexion->prepare($sql);
             $resultado->execute();

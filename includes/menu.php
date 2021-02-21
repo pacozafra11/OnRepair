@@ -6,8 +6,6 @@
         
         //Incluyo los de mas archivos
         include("includes/head.php");
-        include("includes/db.php");
-        include("includes/functions.php");
 
     
         //Iniciar variables
@@ -41,14 +39,14 @@
                 </div>
 
                 <div class="list-group list-group-flush">
-                    <a href="tareas.php" class="list-group-item list-group-item-action bg-info text-light"><ion-icon name="clipboard" class="lead"></ion-icon> Tareas</a>
-                    <a href="maquinas.php" class="list-group-item list-group-item-action bg-info text-light"><ion-icon name="cog" class="lead"></ion-icon> Máquinas</a>
-                    <a href="grupos.php" class="list-group-item list-group-item-action bg-info text-light"><ion-icon name="filing" class="lead"></ion-icon> Grupos de máquinas</a>
-                    <a href="averias.php" class="list-group-item list-group-item-action bg-info text-light"><ion-icon name="flash" class="lead"></ion-icon> Tipos de averías</a>
-                    <a href="manteni.php" class="list-group-item list-group-item-action bg-info text-light"><ion-icon name="build" class="lead"></ion-icon> Tipos de mantenimiento</a>
-                    <a href="repuestos.php" class="list-group-item list-group-item-action bg-info text-light"><ion-icon name="git-compare" class="lead"></ion-icon> Repuestos</a>
-                    <a href="usuarios.php" class="list-group-item list-group-item-action bg-info text-light"><ion-icon name="contacts" class="lead"></ion-icon> Usuarios</a>
-                    <?php if($_SESSION['rol']==1){echo '<a href="roles.php" class="list-group-item list-group-item-action bg-info text-light"><ion-icon name="podium" class="lead"></ion-icon> Roles</a>';}?>
+                    <a href="tareas.php" class="list-group-item list-group-item-action bg-info text-light" id="menuTareas"><ion-icon name="clipboard" class="lead"></ion-icon> Tareas</a>
+                    <a href="maquinas.php" class="list-group-item list-group-item-action bg-info text-light" id="menuMaquinas"><ion-icon name="cog" class="lead"></ion-icon> Máquinas</a>
+                    <a href="grupos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuGrupos"><ion-icon name="filing" class="lead"></ion-icon> Grupos de máquinas</a>
+                    <a href="averias.php" class="list-group-item list-group-item-action bg-info text-light" id="menuAverias"><ion-icon name="flash" class="lead"></ion-icon> Tipos de averías</a>
+                    <a href="mantenimiento.php" class="list-group-item list-group-item-action bg-info text-light" id="menuMantenimiento"><ion-icon name="build" class="lead"></ion-icon> Tipos de mantenimiento</a>
+                    <a href="repuestos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRepuestos"><ion-icon name="git-compare" class="lead"></ion-icon> Repuestos</a>
+                    <a href="usuarios.php" class="list-group-item list-group-item-action bg-info text-light" id="menuUsuarios"><ion-icon name="contacts" class="lead"></ion-icon> Usuarios</a>
+                    <?php if($_SESSION['rol']==1){echo '<a href="roles.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRoles"><ion-icon name="podium" class="lead"></ion-icon> Roles</a>';}?>
                 </div>
             </div>
             
@@ -57,15 +55,12 @@
             <div id="page-content-wrapper">
 
                 <!-- Menú superior -->
-                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-info border-bottom">
                     <!-- Botón ocultar menú sidebar -->
                     <button class="btn btn-light mr-4" id="menu-toggle">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="col-lg-4">
-                        <h2 class="mt-1 text-info"><?php echo $tituloPagina;?></h2>
-                    </div>
 
                     <!-- Botón extender menú superior -->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,10 +69,6 @@
 
                     
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                        <!-- <div class="position-relative d-inline-block">
-                            <h2 class="text-info"><?php echo $titulo;?></h2>
-                        </div> -->
 
                         <!-- Desplegable con información de usuario -->
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">

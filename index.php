@@ -6,7 +6,6 @@
 
     //Incluyo cabecera y db
     include("includes/head.php");
-    include("includes/db.php");
     include("includes/functions.php");
     
     //Declaración de variables
@@ -57,7 +56,6 @@
         //Si todo está correcto, envío los datos a la función para comprobar si existe el usuario y si es correcta la contraseña
         if($emailOk && $passwordOk){
 
-            $db = new db();
             $error = $db->comprobarUsuario($email, $password);
 
             //Si es correcto el resultado redirecciono

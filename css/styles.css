@@ -70,7 +70,7 @@ body{
   }
 }
 
-#content{
+.content{
 	overflow-y: auto;
 	height: 100vh;
 	padding-bottom: 5rem;
@@ -84,10 +84,26 @@ body{
 
 
 /* Tablas tareas */
-#tablasTareas tr td{
+.tablasTareas tr td{
 	width: 30% !important;
 }
 
-#tablasTareas .colDerecha{
+.tablasTareas .colDerecha{
 	width: 40% !important;
+}
+
+.tablasMaquinas tr td{
+  width: 20% !important;
+}
+
+#tdIdMaquinas{
+  width: 8% !important;
+}
+
+.tablasGrupos tr td{
+  width: 40% !important;
+}
+
+.botonesGrupos{
+  padding-left: 2.5em !important;
 }
