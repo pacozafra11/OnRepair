@@ -115,4 +115,45 @@
         echo $json;    
     }
 
+
+    //Si recibe por el método POST el parámetro "averias", llama al método mostrarAverias() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['averias'])){
+
+        $averias = $db->mostrarAverias();  
+
+        $json = json_encode($averias);   //Retorna la representación JSON del valor dado
+        echo $json;    
+    }
+
+
+    //Si recibe por el método POST el parámetro "manteni", llama al método mostrarMantenimientos() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['manteni'])){
+
+        $manteni = $db->mostrarMantenimientos();  
+
+        $json = json_encode($manteni);   //Retorna la representación JSON del valor dado
+        echo $json;    
+    }
+
+
+    //Si recibe por el método POST el parámetro "repuestos", llama al método mostrarRepuestos() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['repuestos'])){
+
+        $repuestos = $db->mostrarRepuestos();  
+
+        $json = json_encode($repuestos);   //Retorna la representación JSON del valor dado
+        echo $json;    
+    }
+
+
+
+    //Si recibe por el método POST el parámetro "usuarios", llama al método mostrarUsuarios() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['usuarios'])){
+
+        $usuarios = $db->mostrarUsuarios();  
+
+        $json = json_encode($usuarios);   //Retorna la representación JSON del valor dado
+        echo $json;    
+    }
+
 ?>

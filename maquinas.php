@@ -7,8 +7,6 @@
     
     //Incluyo los de mas archivos    
     include("includes/menu.php");
-
-    $tituloPagina = "MÁQUINAS";
     
 ?>
 
@@ -17,11 +15,11 @@
                 <div class="row pb-2">
 
                     <!-- Contenedor que contiene el título de la página -->
-                    <div class="col-lg-3 text-left mt-2">
-                        <h2 class="mt-1 text-info">MÁQUINAS</h2>                        
+                    <div class="col-lg-4 text-left mt-2">
+                        <h2 class="mt-1 text-info"><ion-icon name="cog" class="lead text-warning"></ion-icon> MÁQUINAS</h2>                        
                     </div>
 
-                    <div class="col-lg-6 text-center">
+                    <div class="col-lg-5 text-center">
                         <!-- Campo de busqueda -->
                         <form class="form-inline position-relative d-inline-block mt-2">
                             <input class="form-control border border-info mr-sm-2" type="search" id="busqueda" placeholder="Buscar por nombre" aria-label="Search" pattern="[a-zA-Z 0-9 áéíóúñÑ-]{0,50}" required>

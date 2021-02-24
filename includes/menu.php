@@ -43,7 +43,7 @@
                     <a href="maquinas.php" class="list-group-item list-group-item-action bg-info text-light" id="menuMaquinas"><ion-icon name="cog" class="lead"></ion-icon> Máquinas</a>
                     <a href="grupos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuGrupos"><ion-icon name="filing" class="lead"></ion-icon> Grupos de máquinas</a>
                     <a href="averias.php" class="list-group-item list-group-item-action bg-info text-light" id="menuAverias"><ion-icon name="flash" class="lead"></ion-icon> Tipos de averías</a>
-                    <a href="mantenimiento.php" class="list-group-item list-group-item-action bg-info text-light" id="menuMantenimiento"><ion-icon name="build" class="lead"></ion-icon> Tipos de mantenimiento</a>
+                    <a href="mantenimientos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuMantenimientos"><ion-icon name="construct" class="lead"></ion-icon> Tipos de mantenimiento</a>
                     <a href="repuestos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRepuestos"><ion-icon name="git-compare" class="lead"></ion-icon> Repuestos</a>
                     <a href="usuarios.php" class="list-group-item list-group-item-action bg-info text-light" id="menuUsuarios"><ion-icon name="contacts" class="lead"></ion-icon> Usuarios</a>
                     <?php if($_SESSION['rol']==1){echo '<a href="roles.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRoles"><ion-icon name="podium" class="lead"></ion-icon> Roles</a>';}?>

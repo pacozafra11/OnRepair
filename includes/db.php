@@ -196,7 +196,7 @@
         }
 
 
-        //Función para mostrar grupos, no recibe parámetros
+        //Función para mostrar grupos de máquinas, no recibe parámetros
         public function mostrarGrupos(){
 
             $conexion = $this->accesoDB();
@@ -217,6 +217,102 @@
             return $registros;
         }
 
+
+
+        //Función para mostrar los tipos de averías, no recibe parámetros
+        public function mostrarAverias(){
+
+            $conexion = $this->accesoDB();
+            $sql="SELECT * FROM tipo_averia";
+                        
+            $resultado=$conexion->prepare($sql);
+            $resultado->execute();
+
+            if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
+
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
+            } else {
+                $registros = "No hay datos registrados que mostrar";
+            }         
+            return $registros;
+        }
+
+
+
+
+        //Función para mostrar los tipos de mantenimientos, no recibe parámetros
+        public function mostrarMantenimientos(){
+
+            $conexion = $this->accesoDB();
+            $sql="SELECT * FROM tipo_mantenimiento";
+                        
+            $resultado=$conexion->prepare($sql);
+            $resultado->execute();
+
+            if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
+
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
+            } else {
+                $registros = "No hay datos registrados que mostrar";
+            }         
+            return $registros;
+        }
+
+
+
+
+        //Función para mostrar los repuestos, no recibe parámetros
+        public function mostrarRepuestos(){
+
+            $conexion = $this->accesoDB();
+            $sql="SELECT * FROM repuestos";
+                        
+            $resultado=$conexion->prepare($sql);
+            $resultado->execute();
+
+            if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
+
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
+            } else {
+                $registros = "No hay datos registrados que mostrar";
+            }         
+            return $registros;
+        }
+
+
+
+
+        //Función para mostrar los usuarios, no recibe parámetros
+        public function mostrarUsuarios(){
+
+            $conexion = $this->accesoDB();
+            $sql="SELECT usuarios.id AS id, usuarios.nombre AS nombre, usuarios.email AS email, usuarios.bloqueado AS bloqueado, roles.nombre AS rol
+                    FROM usuarios
+                    INNER JOIN roles ON usuarios.id_rol = roles.id";
+                        
+            $resultado=$conexion->prepare($sql);
+            $resultado->execute();
+
+            if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
+
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
+            } else {
+                $registros = "No hay datos registrados que mostrar";
+            }         
+            return $registros;
+        }
 
 
 

@@ -15,10 +15,10 @@
 
                         <!-- Contenedor que contiene el título de la página -->
                         <div class="col-lg-3 text-left mt-2">
-                            <h2 class="mt-1 text-info">TAREAS</h2>                        
+                            <h2 class="mt-1 text-info"><ion-icon name="clipboard" class="lead text-warning"></ion-icon> TAREAS</h2>                        
                         </div>
 
-                        <div class="col-lg-2 mt-3 text-right">                            
+                        <div class="col-lg-2 mt-3 text-right text-secondary">                            
                             <span class="text-right">Ordenadas por: </span>
                         </div>
 
