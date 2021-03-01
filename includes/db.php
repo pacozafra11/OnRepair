@@ -143,7 +143,26 @@
 
     
         //Función para mostrar tareas, no recibe parámetros
-        public function mostrarTareas(){
+        public function mostrarTareas($ordenTareas){
+            $orden = "";
+
+            /* Según se seleccione en el dropdown de ordenación */
+            switch ($ordenTareas) {
+                case "máqui":
+                    $orden = "id_maquina ASC";
+                    break;
+
+                case "técni":
+                    $orden = "id_usuario DESC";
+                    break;
+
+                case "final":
+                    $orden = "finalizada, fecha DESC";
+                    break;
+
+                default:
+                    $orden = "fecha DESC";
+            }
 
             $conexion = $this->accesoDB();
             $sql="SELECT tareas.id AS id, tareas.titulo AS titulo, tareas.descripcion AS descripcion, tareas.tiempo AS tiempo, 
@@ -154,7 +173,7 @@
                         INNER JOIN tipo_averia ON tareas.id_tipo_averia = tipo_averia.id
                         INNER JOIN usuarios ON tareas.id_usuario = usuarios.id
                         INNER JOIN maquinas ON tareas.id_maquina = maquinas.id
-                        ORDER BY fecha DESC";
+                        ORDER BY $orden";
                         
             $resultado=$conexion->prepare($sql);
             $resultado->execute();
@@ -170,6 +189,35 @@
             }         
             return $registros;
         }
+
+
+
+
+        //Función para mostrar los repuestos usados en las tareas, recibe como parámetro el id de la tarea que tiene relacionados los repuestos
+        public function mostrarRepTarea($idTarea){
+
+            $conexion = $this->accesoDB();
+            $sql="SELECT repuestos_en_tarea.referencia_repuesto AS referencia, repuestos_en_tarea.id_tarea AS id, repuestos_en_tarea.cantidad AS cantidad, repuestos.nombre AS nombre
+                    FROM repuestos_en_tarea
+                    INNER JOIN repuestos ON repuestos_en_tarea.referencia_repuesto = repuestos.referencia
+                    WHERE id_tarea = :idTarea";
+                        
+            $resultado=$conexion->prepare($sql);
+            $resultado->bindParam("idTarea", $idTarea);
+            $resultado->execute();
+
+            if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
+
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
+            } else {
+                $registros = "No hay datos registrados que mostrar";
+            }         
+            return $registros;
+        }
+
 
 
         //Función para mostrar maquinas, no recibe parámetros
@@ -318,6 +366,26 @@
 
 
 
+        //Función para mostrar los roles de usuario, no recibe parámetros
+        public function mostrarRoles(){
+
+            $conexion = $this->accesoDB();
+            $sql="SELECT * FROM roles";
+                        
+            $resultado=$conexion->prepare($sql);
+            $resultado->execute();
+
+            if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
+
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
+            } else {
+                $registros = "No hay datos registrados que mostrar";
+            }         
+            return $registros;
+        }
 
 
 

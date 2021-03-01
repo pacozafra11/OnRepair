@@ -32,7 +32,7 @@
                             <th scope="col">Grupos de <span class="text-warning">máquinas</span></th>
                             <th scope="col" class="text-right pr-5">Acción</th>
                         </thead>
-                        <tbody id="cont_mostrar_averias">
+                        <tbody id="cont_mostrar_grupos">
 
                         </tbody>
                     </table>     

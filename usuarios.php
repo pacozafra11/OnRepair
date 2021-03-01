@@ -19,7 +19,7 @@
                     </div>
                 
                     <div class="col-lg-4 text-right">
-                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearGrupo">Nuevo Usuario</button>
+                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearUsuario">Nuevo Usuario</button>
                     </div>
                 </div>
 

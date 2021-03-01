@@ -62,36 +62,31 @@
         return $resultado; 
     }*/
 
-    /* 
-    //Incluyo la páginas necesarias
-    include("db.php");
-
-
-    //Creo un objeto db de la clase DB
-    $db = new db();
-
-    //Si recibe por el método POST el parámetro "anuncios", llama al método mostrarAnuncios() para que se cargen todos los datos de la tabla.
-    if(isset($_POST['anuncios'])){
-
-        $resultados = $db->mostrarTareas();  
-
-        $json = json_encode($resultados);   //Retorna la representación JSON del valor dado
-        echo $json;    
-    } */
-
-
 
     //Creo un objeto db de la clase DB
     $db = new db();
 
 
-    //Si recibe por el método POST el parámetro "anuncios", llama al método mostrarAnuncios() para que se cargen todos los datos de la tabla.
+    //Si recibe por el método POST el parámetro "tareas", llama al método mostrarTareas() para que se cargen todos los datos de la tabla.
     if(isset($_POST['tareas'])){
 
-        $tareas = $db->mostrarTareas();  
+        $ordenTareas = $_POST['tareas'];
+        $tareas = $db->mostrarTareas($ordenTareas);  
 
         $json = json_encode($tareas);   //Retorna la representación JSON del valor dado
         echo $json;    
+    }
+
+
+
+    //Si recibe por el método POST el parámetro "resTareas", llama al método mostrarRepTareas() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['repTarea'])){
+
+            $idTarea = $_POST['repTarea'];
+            $repTarea = $db->mostrarRepTarea($idTarea);  
+
+            $json = json_encode($repTarea);   //Retorna la representación JSON del valor dado
+            echo $json;           
     }
 
   
@@ -153,6 +148,17 @@
         $usuarios = $db->mostrarUsuarios();  
 
         $json = json_encode($usuarios);   //Retorna la representación JSON del valor dado
+        echo $json;    
+    }
+
+
+
+    //Si recibe por el método POST el parámetro "roles", llama al método mostrarRoles() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['roles'])){
+
+        $roles = $db->mostrarRoles();  
+
+        $json = json_encode($roles);   //Retorna la representación JSON del valor dado
         echo $json;    
     }
 

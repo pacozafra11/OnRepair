@@ -20,7 +20,7 @@
                     </div>
                 
                     <div class="col-lg-4 text-right">
-                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearGrupo">Nuevo Tipo de Mantenimiento</button>
+                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearRepuesto">Nuevo Repuesto</button>
                     </div>
                 </div>
 

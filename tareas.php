@@ -28,10 +28,10 @@
                                     fecha, descendente
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                                    <a href="#" class="dropdown-item">fecha, ascendente</a>
-                                    <a href="#" class="dropdown-item">máquina, alfabéticamente</a>
-                                    <a href="#" class="dropdown-item">técnico, alfabéticamente</a>
-                                    <a href="#" class="dropdown-item">finalizada</a>
+                                    <a href="#" class="ordenTareas dropdown-item">fecha, ascendente</a>
+                                    <a href="#" class="ordenTareas dropdown-item">máquina, Id ascendente</a>
+                                    <a href="#" class="ordenTareas dropdown-item">técnico, alfabéticamente</a>
+                                    <a href="#" class="ordenTareas dropdown-item">finalizada</a>
                                 </div>
                             </div>                            
                         </div>

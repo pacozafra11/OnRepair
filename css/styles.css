@@ -45,6 +45,7 @@ body{
 
 #sidebar-wrapper .list-group {
   width: 15rem;
+  height: 3.3rem;
 }
 
 #page-content-wrapper {
@@ -75,12 +76,6 @@ body{
 	height: 100vh;
 	padding-bottom: 5rem;
 }
-
-/* .casillas{
-	overflow-y: auto;
-	height: 10vh;
-	padding-bottom: 2rem;
-} */
 
 
 /* Tablas tareas */

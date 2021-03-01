@@ -9,10 +9,24 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         $("#wrapper").toggleClass("toggled");
     });
 
+
+
+
+    $(document).on("click", ".ordenTareas ", function(e) {
+
+        e.preventDefault();
+        var orden = $(this).text();
+        mostrarTareas(orden.substr(0,5));
+    });
+
     
+
+
     //Funcion para mostrar todas las tareas y sus datos en una tabla en la página "Tareas"
-    function mostrarTareas(){
-      let tareas = "";
+    function mostrarTareas(orden){
+        let tareas = "";
+
+        orden===undefined ? tareas = "fecha" : tareas = orden       
 
         //Petición ajax
         $.ajax({
@@ -49,8 +63,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                                     <td class="pl-3"><span class="text-success font-weight-bold">Máquina </span>${buscado.maquina}</td>
                                     <td class="colDerecha"><span class="text-success font-weight-bold">Id </span>${id}</td> 
                                 </tr>
-                                <tr>
-                                    
+                                <tr>                                    
                                     <td class="pl-3"><span class="text-success font-weight-bold">Técnico </span>${buscado.tecnico}</td>
                                     <td class="colDerecha"><span class="text-success font-weight-bold">Tiempo Empleado </span>${buscado.tiempo}h</td>                                          
                                 </tr>
@@ -61,6 +74,15 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                                 <tr>
                                     <td class="pl-3"><span class="text-success font-weight-bold">Finalizada </span>${buscado.finalizada}</td>
                                     <td class="colDerecha"><span class="text-success font-weight-bold">Tipo de Mantenimiento </span>${buscado.mantenimiento}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">                                        
+                                        <a class="mostrarRepuestosTarea nav-link dropdown-toggle text-info text-center" href="#">
+                                            <ion-icon name="git-compare"></ion-icon> Repuestos utilizados
+                                        </a>                                       
+                                        
+                                        <div id="r${id}" class="contRepuestosTarea row"></div>
+                                    </td>                                    
                                 </tr>                                
                             </table>  
 
@@ -68,7 +90,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                     </div>`;  
                 });
 
-            $("#cont_mostrar_tareas").html(resultado); 
+            $("#cont_mostrar_tareas").html(resultado);
                             
 
           },
@@ -82,6 +104,60 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
     /* Invoco la función */
     mostrarTareas();
+
+
+
+
+
+    /* Al pulsar sobre alguno de los botones Repuestos de cada tarea, invocará a la función que traerá la llamada */
+    $(document).on("click", ".mostrarRepuestosTarea", function(e) {
+         
+        e.preventDefault();
+        var idTarea = $(this).closest(".row").attr("id");
+        mostrarRepTareas(idTarea);
+                      
+    });
+
+    
+
+    
+    //Funcion para mostrar todos los repuestos usados en tareas en la página "Tareas", en una fila inferior de cada tarea
+    function mostrarRepTareas(idTarea){
+        let repTarea = idTarea;
+
+            //Petición ajax
+            $.ajax({
+                url:'includes/functions.php',
+                type: 'POST',
+                data: { repTarea },
+                success: function(respuesta){
+                    let info = JSON.parse(respuesta);
+                    let resultado = '';
+                    let id = "";
+
+                    if(typeof info !== "string"){
+                        info.forEach(buscado => {                        
+                        id = buscado.referencia + "_" + buscado.id;
+                        resultado +=`<div class="align-text-bottom col-lg-4"><span class="text-success font-weight-bold">Referencia </span>${buscado.referencia}</div>
+                                    <div class="align-text-bottom col-lg-6"><span class="text-success font-weight-bold">Nombre </span>${buscado.nombre}</div>  
+                                    <div class="align-text-bottom col-lg-2"><span class="text-success font-weight-bold">Cantidad </span>${buscado.cantidad}</div>`;                    
+                        });
+                    } else {
+                        resultado +=`<div class="align-text-bottom col-lg-12 text-secondary">${info}</div>`; 
+                    }
+
+                $("#r" + idTarea).html(resultado);        
+
+            },
+            // Si la petición falla, devuelve en consola el error producido y el estado
+            error: function(estado, error) {
+                console.log("-Error producido: " + error + ". -Estado: " + estado)
+
+            }
+        });
+    }
+
+   
 
 
 
@@ -354,7 +430,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
     /* Invoco la función */
     mostrarRepuestos();
-    
+
 
 
 
@@ -432,31 +508,52 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
+    //Funcion para mostrar todos los roles de usuario en la página "Roles"
+    function mostrarRoles(){
+        let roles = "";
+  
+            //Petición ajax
+            $.ajax({
+                url:'includes/functions.php',
+                type: 'POST',
+                data: { roles },
+                success: function(respuesta){
+                    let info = JSON.parse(respuesta);
+                    let resultado = '';
+                    let id = "";
+                    info.forEach(buscado => {
+                        id = buscado.id;
+                        resultado +=`<tr id="${id}">
+                            <td class="align-middle">${id}</td>
+                            <td class="align-middle">${buscado.nombre}</td>                                        
+                            <td class="botonesGrupos text-right">
+                                <button type="button" class="actualizarRol btn btn-outline-primary">
+                                    <ion-icon name="create" class="pt-1"></ion-icon>
+                                </button> 
+                                &nbsp 
+                                <button type="button" class="eliminarRol btn btn-outline-danger">
+                                    <ion-icon name="trash" class="pt-1"></ion-icon>
+                                </button>
+                            </td>
+                        </tr>`;                                                
+                              
+                    });
+  
+                $("#cont_mostrar_roles").html(resultado);        
+  
+            },
+            // Si la petición falla, devuelve en consola el error producido y el estado
+            error: function(estado, error) {
+                console.log("-Error producido: " + error + ". -Estado: " + estado)
+  
+            }
+        });
+    }
+
+    /* Invoco la función */
+    mostrarRoles();
 
 
-
-
-
-    /* `<div class="row m-3" id="${id}">
-                            <div class="container-fluid bg-light text-secondary border">
-                                <div class="col-lg-3">
-                                    <span class="text-success font-weight-bold">Id: </span>${id}
-                                </div>
-                                <div class="col-lg-5">
-                                    <span class="text-success font-weight-bold">Nombre: </span>${buscado.nombre}
-                                </div>
-                                <div class="col-lg-3">
-                                    <button type="button" class="actualizarTarea btn btn-outline-primary m-1">
-                                        <ion-icon name="create" class="pt-1"></ion-icon>
-                                    </button> 
-                                    &nbsp 
-                                    <button type="button" class="eliminarTarea btn btn-outline-danger m-1">
-                                        <ion-icon name="trash" class="pt-1"></ion-icon>
-                                    </button>
-                                </div>
-                                                     
-                            </div>                   
-                        </div>`; */
 
 
     
