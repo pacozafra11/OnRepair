@@ -1,5 +1,15 @@
 <!-- Pie de todos los archivos php -->
 
+    
+    <!-- Modal información -->
+    <div class="modal fade" tabindex="-1" id="modalInfo">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div id="infoModal"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- JS script jquery-3, Popper y Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -11,6 +21,7 @@
 
     <!-- Script propios para la página -->
     <script src="js/functions.js"></script>
+    <script src="js/roles.js"></script>
 
 </body>
 </html>

@@ -46,7 +46,7 @@
                     <a href="mantenimientos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuMantenimientos"><ion-icon name="construct" class="lead"></ion-icon> Tipos de mantenimiento</a>
                     <a href="repuestos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRepuestos"><ion-icon name="git-compare" class="lead"></ion-icon> Repuestos</a>
                     <a href="usuarios.php" class="list-group-item list-group-item-action bg-info text-light" id="menuUsuarios"><ion-icon name="contacts" class="lead"></ion-icon> Usuarios</a>
-                    <?php if($_SESSION['rol']==1){echo '<a href="roles.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRoles"><ion-icon name="podium" class="lead"></ion-icon> Roles</a>';}?>
+                    <?php if($rol==1){echo '<a href="roles.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRoles"><ion-icon name="podium" class="lead"></ion-icon> Roles</a>';}?>
                 </div>
             </div>
             

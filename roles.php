@@ -1,6 +1,8 @@
 <?php 
     /* Página que muestra los roles de usuario
     *
+    *  Esta página es solo accesible para el "Administrador".
+    *
     * @author Francisco José López Zafra
     */
     
@@ -18,8 +20,8 @@
                         <h2 class="mt-1 text-info"><ion-icon name="podium" class="lead text-warning"></ion-icon> ROLES</h2>                        
                     </div>
                 
-                    <div class="col-lg-4 text-right">
-                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearRol">Nuevo Rol</button>
+                    <div class="col-lg-4 text-right">                    
+                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearRol">Nuevo Rol</button>                            
                     </div>
                                         
                 </div>
@@ -40,6 +42,45 @@
 
             </div>
         </div>
+
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalRol" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title text-info" id="tituloModalRol"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body bg-light justify-content-center">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label for="inputIdRol">Id</label>
+                                <input type="text" class="form-control" name="inputIdRol" id="inputIdRol" placeholder=" --" readonly> 
+                            </div>
+                            <div class="col-lg-10">
+                                <label for="inputNombreRol">Rol</label>
+                                <input type="text" class="form-control" name="inputNombreRol" id="inputNombreRol" placeholder="Añadir nuevo Rol" pattern="[A-Za-z]{3,20}" required> 
+                            </div>                       
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" id="aceptarModalRol">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
 
     </div>
 </div>

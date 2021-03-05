@@ -365,7 +365,7 @@
 
 
 
-
+        /* -----------------------------------------------------------------------ROLES------------------------------------------------------------------------------------------ */
         //Función para mostrar los roles de usuario, no recibe parámetros
         public function mostrarRoles(){
 
@@ -385,6 +385,47 @@
                 $registros = "No hay datos registrados que mostrar";
             }         
             return $registros;
+        }
+
+
+
+        //Función para modificar un rol o para crearlo nuevo 
+        public function accionRol($accion, $id, $nombre){
+            $realizado = "";
+            $conexion = $this->accesoDB();
+
+            /* Si la acción es Modificar un rol existente */
+            if($accion=="Modificar Rol"){
+                $sql="UPDATE roles SET nombre=:nombre WHERE id=:id";
+                $resultado=$conexion->prepare($sql);  
+                $resultado->bindParam(':id', $id);         
+                $resultado->bindParam(':nombre', $nombre);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+            /* Si la acción es crear un nuevo rol */
+            }elseif($accion=="Nuevo Rol") {
+                $sql="INSERT INTO roles (nombre) VALUES (:nombre)";
+                $resultado=$conexion->prepare($sql);          
+                $resultado->bindParam(':nombre', $nombre);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+                /* Si la acción es borrar un rol existente */
+            }elseif($accion=="Borrar Rol") {                
+                $sql="DELETE FROM roles WHERE id=:id";
+                $resultado = $conexion->prepare($sql);     
+                $resultado->bindParam(':id', $id);     
+                $resultado->execute();
+                $afectado=$resultado->rowCount();
+            }
+
+            if($afectado!=0){
+                $realizado = "si";            
+            }else{
+                $realizado = "no";
+            }
+            return $realizado;
         }
 
 

@@ -162,4 +162,19 @@
         echo $json;    
     }
 
+
+    //Si recibe por el método POST el parámetro "nuevoRol", llama al método mostrarRoles() para que se cargen todos los datos de la tabla.
+    if(isset($_POST['accionRol'])){
+
+        if(!empty($_POST['accionRol'])){
+            $accionRol=$_POST['accionRol'];
+            $accion=$accionRol['accion'];
+            $id=htmlentities(addslashes($accionRol['id']));
+            $nombre=htmlentities(addslashes($accionRol['nombre']));
+        
+            $realizado = $db->accionRol($accion, $id, $nombre);
+            
+            echo $realizado;
+        }      
+    }
 ?>

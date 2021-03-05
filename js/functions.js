@@ -1,6 +1,4 @@
 
-
-
 $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la página(HTML5 y CSS3) para ser ejecutado.
 
     //Botón ocultar/mostrar menú lateral
@@ -11,7 +9,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
-
+    /* al pulsar sobre alguna de las opciones del desplegable para reacer el oren a mostrar las tareas */
     $(document).on("click", ".ordenTareas ", function(e) {
 
         e.preventDefault();
@@ -20,7 +18,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     });
 
     
-
 
     //Funcion para mostrar todas las tareas y sus datos en una tabla en la página "Tareas"
     function mostrarTareas(orden){
@@ -81,7 +78,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                                             <ion-icon name="git-compare"></ion-icon> Repuestos utilizados
                                         </a>                                       
                                         
-                                        <div id="r${id}" class="contRepuestosTarea row"></div>
+                                        <div id="r${id}" class="contRepuestosTarea row hide"></div>
                                     </td>                                    
                                 </tr>                                
                             </table>  
@@ -109,12 +106,22 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
-    /* Al pulsar sobre alguno de los botones Repuestos de cada tarea, invocará a la función que traerá la llamada */
+    /* Al pulsar sobre alguno de los botones "Repuestos utilizados" de cada tarea, invocará a la función que traerá la llamada, y mostrará u ocultará la información */
     $(document).on("click", ".mostrarRepuestosTarea", function(e) {
          
         e.preventDefault();
-        var idTarea = $(this).closest(".row").attr("id");
-        mostrarRepTareas(idTarea);
+        var hermano = $(this).siblings();
+        var clase = $(this).siblings().attr("class");
+
+        if(clase == "contRepuestosTarea row hide"){
+            var idTarea = $(this).closest(".row").attr("id");
+            mostrarRepTareas(idTarea);
+            $(hermano).toggleClass("hide");
+
+        } else {
+            $(hermano).toggleClass("hide");
+            $(hermano).hide();           
+        }    
                       
     });
 
@@ -504,66 +511,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
     /* Invoco la función */
     mostrarUsuarios();
-
-
-
-
-    //Funcion para mostrar todos los roles de usuario en la página "Roles"
-    function mostrarRoles(){
-        let roles = "";
-  
-            //Petición ajax
-            $.ajax({
-                url:'includes/functions.php',
-                type: 'POST',
-                data: { roles },
-                success: function(respuesta){
-                    let info = JSON.parse(respuesta);
-                    let resultado = '';
-                    let id = "";
-                    info.forEach(buscado => {
-                        id = buscado.id;
-                        resultado +=`<tr id="${id}">
-                            <td class="align-middle">${id}</td>
-                            <td class="align-middle">${buscado.nombre}</td>                                        
-                            <td class="botonesGrupos text-right">
-                                <button type="button" class="actualizarRol btn btn-outline-primary">
-                                    <ion-icon name="create" class="pt-1"></ion-icon>
-                                </button> 
-                                &nbsp 
-                                <button type="button" class="eliminarRol btn btn-outline-danger">
-                                    <ion-icon name="trash" class="pt-1"></ion-icon>
-                                </button>
-                            </td>
-                        </tr>`;                                                
-                              
-                    });
-  
-                $("#cont_mostrar_roles").html(resultado);        
-  
-            },
-            // Si la petición falla, devuelve en consola el error producido y el estado
-            error: function(estado, error) {
-                console.log("-Error producido: " + error + ". -Estado: " + estado)
-  
-            }
-        });
-    }
-
-    /* Invoco la función */
-    mostrarRoles();
-
-
-
-
-    
-
-
-
-
-
-    
-
 
 
 
