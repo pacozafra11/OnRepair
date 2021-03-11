@@ -4,6 +4,7 @@
      * 
      * @author Francisco José López Zafra
     */
+
     class DB{
 
         private $mysql;
@@ -36,7 +37,10 @@
         }
 
 
-        //Método para comprobar si existe el usuario, en caso afirmativo comprobar si está bloqueado y su password
+        /* 
+        *   Función para comprobar si existe el usuario, en caso afirmativo comprobar si está bloqueado y su password
+        */
+
         public function comprobarUsuario($log, $pass){
             $error= $loginContador= "";
             $contador=0;
@@ -117,32 +121,14 @@
             return $error;
         }
 
-
-
-
-        //Método para bloquear al usuario una vez agotado los 3 intentos de introducir la contraseña
-        function bloquearUsuario($login){
-            $bloqueado=false;
-
-            $conexion = $this->accesoDB();               
-            $sql = "UPDATE usuarios SET bloqueado='1' WHERE email= :login";
-            $resultado = $conexion->prepare($sql); 
-            $resultado = $conexion->prepare($sql);
-            $resultado->bindParam(":login", $login);
-            $resultado->execute();
-            $afectado=$resultado->rowCount();
-
-            if($afectado!=0){
-                $bloqueado = true;
-            } else {        
-                $bloqueado = false;
-            }
-        
-            return $bloqueado;    
-        }
-
     
-        //Función para mostrar tareas, no recibe parámetros
+
+        /* ----------------------------------------------------------------------TAREAS----------------------------------------------------------------------------------------- */
+
+        /* 
+        *   Función para mostrar tareas, no recibe parámetros
+        */
+        
         public function mostrarTareas($ordenTareas){
             $orden = "";
 
@@ -192,8 +178,11 @@
 
 
 
+        /* ----------------------------------------------------------------REPUESTOS EN TAREAS----------------------------------------------------------------------------------- */
 
-        //Función para mostrar los repuestos usados en las tareas, recibe como parámetro el id de la tarea que tiene relacionados los repuestos
+        /* 
+        *   Función para mostrar los repuestos usados en las tareas, recibe como parámetro el id de la tarea que tiene relacionados los repuestos
+        */
         public function mostrarRepTarea($idTarea){
 
             $conexion = $this->accesoDB();
@@ -220,7 +209,11 @@
 
 
 
-        //Función para mostrar maquinas, no recibe parámetros
+        /* ----------------------------------------------------------------------MAQUINAS---------------------------------------------------------------------------------------- */
+
+        /* 
+        *   Función para mostrar maquinas, no recibe parámetros
+        */
         public function mostrarMaquinas(){
 
             $conexion = $this->accesoDB();
@@ -244,7 +237,12 @@
         }
 
 
-        //Función para mostrar grupos de máquinas, no recibe parámetros
+
+        /* ------------------------------------------------------------------GRUPOS DE MAQUINAS-------------------------------------------------------------------------------- */
+
+        /* 
+        *   Función para mostrar grupos de máquinas, no recibe parámetros
+        */
         public function mostrarGrupos(){
 
             $conexion = $this->accesoDB();
@@ -266,8 +264,59 @@
         }
 
 
+         /* 
+        *   Función para modificar, crear o borrar un Grupo de Máquinas
+        *
+        *    @param  string $accion, acción a realizar 
+        *    @param  int $id
+        *    @param  string $nombre  
+        *    @return string $realizado
+        */ 
+        public function accionGrupo($accion, $id, $nombre){
+            $realizado = "";
+            $conexion = $this->accesoDB();
 
-        //Función para mostrar los tipos de averías, no recibe parámetros
+            /* Si la acción es Modificar un Grupo de Máquinas existente */
+            if($accion=="Modificar Grupo de Máquinas"){
+                $sql="UPDATE grupos SET nombre=:nombre WHERE id=:id";
+                $resultado=$conexion->prepare($sql);  
+                $resultado->bindParam(':id', $id);         
+                $resultado->bindParam(':nombre', $nombre);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+            /* Si la acción es crear un nuevo Grupo de Máquinas */
+            }elseif($accion=="Nuevo Grupo de Máquinas") {
+                $sql="INSERT INTO grupos (nombre) VALUES (:nombre)";
+                $resultado=$conexion->prepare($sql);          
+                $resultado->bindParam(':nombre', $nombre);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+                /* Si la acción es borrar un Grupo de Máquinas existente */
+            }elseif($accion=="Borrar Grupo de Máquinas") {                
+                $sql="DELETE FROM grupos WHERE id=:id";
+                $resultado = $conexion->prepare($sql);     
+                $resultado->bindParam(':id', $id);     
+                $resultado->execute();
+                $afectado=$resultado->rowCount();
+            }
+
+            if($afectado!=0){
+                $realizado = "si";            
+            }else{
+                $realizado = "no";
+            }
+            return $realizado;
+        }
+
+
+
+        /* -----------------------------------------------------------------------AVERIAS------------------------------------------------------------------------------------------ */
+
+        /* 
+        *   Función para mostrar los tipos de averías, no recibe parámetros
+        */
         public function mostrarAverias(){
 
             $conexion = $this->accesoDB();
@@ -289,9 +338,60 @@
         }
 
 
+        
+        /* 
+        *   Función para modificar, crear o borrar un Tipo de Averia
+        *
+        *    @param  string $accion, acción a realizar 
+        *    @param  int $id
+        *    @param  string $nombre  
+        *    @return string $realizado
+        */ 
+        public function accionAveria($accion, $id, $nombre){
+            $realizado = "";
+            $conexion = $this->accesoDB();
+
+            /* Si la acción es Modificar un Tipo de Averia existente */
+            if($accion=="Modificar Tipo de Averia"){
+                $sql="UPDATE tipo_averia SET nombre=:nombre WHERE id=:id";
+                $resultado=$conexion->prepare($sql);  
+                $resultado->bindParam(':id', $id);         
+                $resultado->bindParam(':nombre', $nombre);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+            /* Si la acción es crear un nuevo Tipo de Averia */
+            }elseif($accion=="Nuevo Tipo de Averia") {
+                $sql="INSERT INTO tipo_averia (nombre) VALUES (:nombre)";
+                $resultado=$conexion->prepare($sql);          
+                $resultado->bindParam(':nombre', $nombre);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+                /* Si la acción es borrar un Tipo de Averia existente */
+            }elseif($accion=="Borrar Tipo de Averia") {                
+                $sql="DELETE FROM tipo_averia WHERE id=:id";
+                $resultado = $conexion->prepare($sql);     
+                $resultado->bindParam(':id', $id);     
+                $resultado->execute();
+                $afectado=$resultado->rowCount();
+            }
+
+            if($afectado!=0){
+                $realizado = "si";            
+            }else{
+                $realizado = "no";
+            }
+            return $realizado;
+        }
+        
 
 
-        //Función para mostrar los tipos de mantenimientos, no recibe parámetros
+        /* ----------------------------------------------------------------TIPOS DE MANTENIMIENTOS-------------------------------------------------------------------------------- */
+
+        /* 
+        *   Función para mostrar los tipos de mantenimientos, no recibe parámetros
+        */
         public function mostrarMantenimientos(){
 
             $conexion = $this->accesoDB();
@@ -313,9 +413,59 @@
         }
 
 
+        /* 
+        *   Función para modificar, crear o borrar un Tipo de Mantenimiento
+        *
+        *    @param  string $accion, acción a realizar 
+        *    @param  int $id
+        *    @param  string $nombre  
+        *    @return string $realizado
+        */ 
+        public function accionManteni($accion, $id, $nombre){
+            $realizado = "";
+            $conexion = $this->accesoDB();
+
+            /* Si la acción es Modificar un Tipo de Mantenimiento existente */
+            if($accion=="Modificar Tipo de Mantenimiento"){
+                $sql="UPDATE tipo_mantenimiento SET nombre=:nombre WHERE id=:id";
+                $resultado=$conexion->prepare($sql);  
+                $resultado->bindParam(':id', $id);         
+                $resultado->bindParam(':nombre', $nombre);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+            /* Si la acción es crear un nuevo Tipo de Mantenimiento */
+            }elseif($accion=="Nuevo Tipo de Mantenimiento") {
+                $sql="INSERT INTO tipo_mantenimiento (nombre) VALUES (:nombre)";
+                $resultado=$conexion->prepare($sql);          
+                $resultado->bindParam(':nombre', $nombre);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+                /* Si la acción es borrar un Tipo de Mantenimiento existente */
+            }elseif($accion=="Borrar Tipo de Mantenimiento") {                
+                $sql="DELETE FROM tipo_mantenimiento WHERE id=:id";
+                $resultado = $conexion->prepare($sql);     
+                $resultado->bindParam(':id', $id);     
+                $resultado->execute();
+                $afectado=$resultado->rowCount();
+            }
+
+            if($afectado!=0){
+                $realizado = "si";            
+            }else{
+                $realizado = "no";
+            }
+            return $realizado;
+        }
 
 
-        //Función para mostrar los repuestos, no recibe parámetros
+
+        /* ---------------------------------------------------------------------REPUESTOS--------------------------------------------------------------------------------------- */
+        
+        /*
+        *   Función para mostrar los repuestos, no recibe parámetros
+        */
         public function mostrarRepuestos(){
 
             $conexion = $this->accesoDB();
@@ -338,8 +488,11 @@
 
 
 
+        /* ---------------------------------------------------------------------USUARIOS----------------------------------------------------------------------------------------- */
 
-        //Función para mostrar los usuarios, no recibe parámetros
+        /*
+        *   Función para mostrar los usuarios, no recibe parámetros
+        */
         public function mostrarUsuarios(){
 
             $conexion = $this->accesoDB();
@@ -366,7 +519,10 @@
 
 
         /* -----------------------------------------------------------------------ROLES------------------------------------------------------------------------------------------ */
-        //Función para mostrar los roles de usuario, no recibe parámetros
+
+        /* 
+        *   Función para mostrar los roles de usuario, no recibe parámetros
+        */
         public function mostrarRoles(){
 
             $conexion = $this->accesoDB();
@@ -389,7 +545,14 @@
 
 
 
-        //Función para modificar un rol o para crearlo nuevo 
+        /* 
+        *   Función para modificar un rol o para crearlo nuevo 
+        *
+        *    @param  string $accion, acción a realizar 
+        *    @param  int $id
+        *    @param  string $nombre  
+        *    @return string $realizado
+        */ 
         public function accionRol($accion, $id, $nombre){
             $realizado = "";
             $conexion = $this->accesoDB();

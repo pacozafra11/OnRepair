@@ -101,6 +101,8 @@
     }
 
 
+    /* ------------------------------------------------------------Grupos de Máquinas--------------------------------------------------------- */
+
     //Si recibe por el método POST el parámetro "grupos", llama al método mostrarGrupos() para que se cargen todos los datos de la tabla.
     if(isset($_POST['grupos'])){
 
@@ -110,6 +112,24 @@
         echo $json;    
     }
 
+
+     //Si recibe por el método POST el parámetro "accionGrupo", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
+     if(isset($_POST['accionGrupo'])){
+
+        if(!empty($_POST['accionGrupo'])){
+            $accionGrupo=$_POST['accionGrupo'];
+            $accion=$accionGrupo['accion'];
+            $id=htmlentities(addslashes($accionGrupo['id']));
+            $nombre=htmlentities(addslashes($accionGrupo['nombre']));
+        
+            $realizado = $db->accionGrupo($accion, $id, $nombre);            
+            echo $realizado;
+        }      
+    }
+
+
+
+    /* ------------------------------------------------------------Tipos de Averías-------------------------------------------------------------- */
 
     //Si recibe por el método POST el parámetro "averias", llama al método mostrarAverias() para que se cargen todos los datos de la tabla.
     if(isset($_POST['averias'])){
@@ -121,6 +141,23 @@
     }
 
 
+    //Si recibe por el método POST el parámetro "accionAveria", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
+    if(isset($_POST['accionAveria'])){
+
+        if(!empty($_POST['accionAveria'])){
+            $accionAveria=$_POST['accionAveria'];
+            $accion=$accionAveria['accion'];
+            $id=htmlentities(addslashes($accionAveria['id']));
+            $nombre=htmlentities(addslashes($accionAveria['nombre']));
+        
+            $realizado = $db->accionAveria($accion, $id, $nombre);            
+            echo $realizado;
+        }      
+    }
+
+
+    /* ------------------------------------------------------------Tipos de Mantenimiento--------------------------------------------------------- */
+
     //Si recibe por el método POST el parámetro "manteni", llama al método mostrarMantenimientos() para que se cargen todos los datos de la tabla.
     if(isset($_POST['manteni'])){
 
@@ -130,6 +167,23 @@
         echo $json;    
     }
 
+
+    //Si recibe por el método POST el parámetro "accionManteni", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
+    if(isset($_POST['accionManteni'])){
+
+        if(!empty($_POST['accionManteni'])){
+            $accionManteni=$_POST['accionManteni'];
+            $accion=$accionManteni['accion'];
+            $id=htmlentities(addslashes($accionManteni['id']));
+            $nombre=htmlentities(addslashes($accionManteni['nombre']));
+        
+            $realizado = $db->accionManteni($accion, $id, $nombre);            
+            echo $realizado;
+        }      
+    }
+
+
+    /* ---------------------------------------------------------------Repuestos----------------------------------------------------------------- */
 
     //Si recibe por el método POST el parámetro "repuestos", llama al método mostrarRepuestos() para que se cargen todos los datos de la tabla.
     if(isset($_POST['repuestos'])){
@@ -163,7 +217,7 @@
     }
 
 
-    //Si recibe por el método POST el parámetro "nuevoRol", llama al método mostrarRoles() para que se cargen todos los datos de la tabla.
+    //Si recibe por el método POST el parámetro "nuevoRol", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
     if(isset($_POST['accionRol'])){
 
         if(!empty($_POST['accionRol'])){
@@ -172,8 +226,7 @@
             $id=htmlentities(addslashes($accionRol['id']));
             $nombre=htmlentities(addslashes($accionRol['nombre']));
         
-            $realizado = $db->accionRol($accion, $id, $nombre);
-            
+            $realizado = $db->accionRol($accion, $id, $nombre);            
             echo $realizado;
         }      
     }

@@ -19,9 +19,16 @@
     <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 
-    <!-- Script propios para la página -->
-    <script src="js/functions.js"></script>
-    <script src="js/roles.js"></script>
+    <!-- Script propios para las página -->
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" src="js/roles.js"></script>
+    <!-- <script type="text/javascript" src="js/usuarios.js"></script>
+    <script type="text/javascript" src="js/repuestos.js"></script> -->
+    <script type="text/javascript" src="js/mantenimientos.js"></script>
+    <script type="text/javascript" src="js/averias.js"></script>
+    <script type="text/javascript" src="js/grupos.js"></script>
+    <!-- <script src="js/maquinas.js"></script>
+    <script src="js/tareas.js"></script> -->
 
 </body>
 </html>

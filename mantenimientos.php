@@ -20,7 +20,7 @@
                     </div>
                 
                     <div class="col-lg-4 text-right">
-                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearMantenimiento">Nuevo Tipo de Mantenimiento</button>
+                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearManteni">Nuevo Tipo de Mantenimiento</button>
                     </div>
                 </div>
 
@@ -40,6 +40,41 @@
 
             </div>
         </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalManteni" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title text-info" id="tituloModalManteni"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body bg-light justify-content-center">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label for="inputIdManteni">Id</label>
+                                <input type="text" class="form-control" name="inputIdManteni" id="inputIdManteni" placeholder=" --" readonly> 
+                            </div>
+                            <div class="col-lg-10">
+                                <label for="inputNombreManteni">Tipo de Mantenimiento</label>
+                                <input type="text" class="form-control" name="inputNombreManteni" id="inputNombreManteni" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,20}" autofocus required> 
+                            </div>                       
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancelarModalManteni">Cancelar</button>
+                        <button type="button" class="btn btn-success" id="aceptarModalManteni">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>

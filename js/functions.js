@@ -17,6 +17,12 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         mostrarTareas(orden.substr(0,5));
     });
 
+
+/* $('modal').on('hidden', function() {
+        $(this).removeData('modal');
+    }); */
+
+
     
 
     //Funcion para mostrar todas las tareas y sus datos en una tabla en la página "Tareas"
@@ -231,150 +237,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
     
-
-
-
-    //Funcion para mostrar todos los grupos de máquinas en la página "Grupos de máquinas"
-    function mostrarGrupos(){
-        let grupos = "";
-  
-            //Petición ajax
-            $.ajax({
-                url:'includes/functions.php',
-                type: 'POST',
-                data: { grupos },
-                success: function(respuesta){
-                    let info = JSON.parse(respuesta);
-                    let resultado = '';
-                    let id = "";
-                    info.forEach(buscado => {
-                        id = buscado.id;
-                        resultado +=`<tr id="${id}">
-                            <td class="align-middle">${id}</td>
-                            <td class="align-middle">${buscado.nombre}</td>                                        
-                            <td class="botonesGrupos text-right">
-                                <button type="button" class="actualizarAveria btn btn-outline-primary">
-                                    <ion-icon name="create" class="pt-1"></ion-icon>
-                                </button> 
-                                &nbsp 
-                                <button type="button" class="eliminarAveria btn btn-outline-danger">
-                                    <ion-icon name="trash" class="pt-1"></ion-icon>
-                                </button>
-                            </td>
-                        </tr>`;                 
-                    });
-  
-                $("#cont_mostrar_grupos").html(resultado);        
-                             
-  
-            },
-            // Si la petición falla, devuelve en consola el error producido y el estado
-            error: function(estado, error) {
-                console.log("-Error producido: " + error + ". -Estado: " + estado)
-  
-            }
-        });
-    }
-
-    /* Invoco la función */
-    mostrarGrupos();
-
-
-
-
-    //Funcion para mostrar todos los tipos de averías en la página "Tipos de Averías"
-    function mostrarAverias(){
-        let averias = "";
-  
-            //Petición ajax
-            $.ajax({
-                url:'includes/functions.php',
-                type: 'POST',
-                data: { averias },
-                success: function(respuesta){
-                    let info = JSON.parse(respuesta);
-                    let resultado = '';
-                    let id = "";
-                    info.forEach(buscado => {
-                        id = buscado.id;
-                        resultado +=`<tr id="${id}">
-                            <td class="align-middle">${id}</td>
-                            <td class="align-middle">${buscado.nombre}</td>                                        
-                            <td class="botonesGrupos text-right">
-                                <button type="button" class="actualizarAveria btn btn-outline-primary">
-                                    <ion-icon name="create" class="pt-1"></ion-icon>
-                                </button> 
-                                &nbsp 
-                                <button type="button" class="eliminarAveria btn btn-outline-danger">
-                                    <ion-icon name="trash" class="pt-1"></ion-icon>
-                                </button>
-                            </td>
-                        </tr>`;                                                
-                              
-                    });
-  
-                $("#cont_mostrar_averias").html(resultado);        
-  
-            },
-            // Si la petición falla, devuelve en consola el error producido y el estado
-            error: function(estado, error) {
-                console.log("-Error producido: " + error + ". -Estado: " + estado)
-  
-            }
-        });
-    }
-
-    /* Invoco la función */
-    mostrarAverias();
-
-
-
-    //Funcion para mostrar todos los tipos de mantenimiento en la página "Tipos de Mantenimiento"
-    function mostrarMantenimientos(){
-        let manteni = "";
-  
-            //Petición ajax
-            $.ajax({
-                url:'includes/functions.php',
-                type: 'POST',
-                data: { manteni },
-                success: function(respuesta){
-                    let info = JSON.parse(respuesta);
-                    let resultado = '';
-                    let id = "";
-                    info.forEach(buscado => {
-                        id = buscado.id;
-                        resultado +=`<tr id="${id}">
-                            <td class="align-middle">${id}</td>
-                            <td class="align-middle">${buscado.nombre}</td>                                        
-                            <td class="botonesGrupos text-right">
-                                <button type="button" class="actualizarAveria btn btn-outline-primary">
-                                    <ion-icon name="create" class="pt-1"></ion-icon>
-                                </button> 
-                                &nbsp 
-                                <button type="button" class="eliminarAveria btn btn-outline-danger">
-                                    <ion-icon name="trash" class="pt-1"></ion-icon>
-                                </button>
-                            </td>
-                        </tr>`;                                                
-                              
-                    });
-  
-                $("#cont_mostrar_mantenimientos").html(resultado);        
-  
-            },
-            // Si la petición falla, devuelve en consola el error producido y el estado
-            error: function(estado, error) {
-                console.log("-Error producido: " + error + ". -Estado: " + estado)
-  
-            }
-        });
-    }
-
-    /* Invoco la función */
-    mostrarMantenimientos();
-
-
 
 
     //Funcion para mostrar todas los repuestos y sus datos en una tabla en la página "Repuestos"

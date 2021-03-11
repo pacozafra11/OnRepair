@@ -66,13 +66,13 @@
                             </div>
                             <div class="col-lg-10">
                                 <label for="inputNombreRol">Rol</label>
-                                <input type="text" class="form-control" name="inputNombreRol" id="inputNombreRol" placeholder="Añadir nuevo Rol" pattern="[A-Za-z]{3,20}" required> 
+                                <input type="text" class="form-control" name="inputNombreRol" id="inputNombreRol" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,20}" autofocus required> 
                             </div>                       
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="cancelarModalRol">Cancelar</button>
                         <button type="button" class="btn btn-success" id="aceptarModalRol">Aceptar</button>
                     </div>
                 </div>
