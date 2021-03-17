@@ -46,7 +46,7 @@
                     <a href="mantenimientos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuMantenimientos"><ion-icon name="construct" class="lead"></ion-icon> Tipos de mantenimiento</a>
                     <a href="repuestos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRepuestos"><ion-icon name="git-compare" class="lead"></ion-icon> Repuestos</a>
                     <a href="usuarios.php" class="list-group-item list-group-item-action bg-info text-light" id="menuUsuarios"><ion-icon name="contacts" class="lead"></ion-icon> Usuarios</a>
-                    <?php if($rol==1){echo '<a href="roles.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRoles"><ion-icon name="podium" class="lead"></ion-icon> Roles</a>';}?>
+                    <?php if($rol=== "Administrador"){echo '<a href="roles.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRoles"><ion-icon name="podium" class="lead"></ion-icon> Roles</a>';}?>
                 </div>
             </div>
             
@@ -79,7 +79,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <span id="login" class="dropdown-item"><?php echo $login;?></span>
                                     <span id="hora" class="dropdown-item"><?php echo $hora;?></span>
-                                    <span id="rol" class="dropdown-item"><?php if($rol==1){echo "Administrador";}elseif($rol==2){echo "Responsable";}else{echo "Técnico";}?></span>
+                                    <span id="rol" class="dropdown-item"><?php echo $rol;?></span>
                                     <div class="dropdown-divider"></div>
                                     <a href="includes/go_out.php" class="dropdown-item text-danger">Cerrar sesión <ion-icon name="log-out"></ion-icon></a>   
                                 </div>

@@ -102,3 +102,11 @@ body{
 .botonesGrupos{
   padding-left: 2.5em !important;
 }
+
+
+/* Clase span para los avisos fijos/visibles de los campos de texto en los formularios */
+.span{
+  font-size: 10px !important;
+  font-style: italic;
+  color: rgb(83, 83, 83);
+}

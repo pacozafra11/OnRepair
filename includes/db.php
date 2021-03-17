@@ -48,7 +48,11 @@
             date_default_timezone_set('Europe/Madrid');
 
             $conexion = $this->accesoDB();               
-            $sql="SELECT * FROM usuarios WHERE email= :login";
+            $sql="SELECT usuarios.id AS id, usuarios.nombre AS nombre, usuarios.email AS email, usuarios.password AS password,
+                usuarios.bloqueado AS bloqueado, roles.nombre AS rol 
+                        FROM usuarios 
+                        INNER JOIN roles ON usuarios.id_rol = roles.id
+                        WHERE email= :login";
             $resultado = $conexion->prepare($sql);
             $login=htmlentities(addslashes($log));        
             $password=htmlentities(addslashes($pass));
@@ -84,7 +88,7 @@
                         
                         $_SESSION['login'] = $login;
                         $_SESSION['hora'] = date('H:i:s');
-                        $_SESSION['rol'] = $registro["id_rol"];
+                        $_SESSION['rol'] = $registro["rol"];
                         $_SESSION['nombre'] = $registro["nombre"];
                         $_SESSION['ultima_conexion'] = time();   
                         
@@ -496,7 +500,7 @@
         public function mostrarUsuarios(){
 
             $conexion = $this->accesoDB();
-            $sql="SELECT usuarios.id AS id, usuarios.nombre AS nombre, usuarios.email AS email, usuarios.bloqueado AS bloqueado, roles.nombre AS rol
+            $sql="SELECT usuarios.id AS id, usuarios.nombre AS nombre, usuarios.email AS email, usuarios.password AS password, usuarios.bloqueado AS bloqueado, roles.nombre AS rol
                     FROM usuarios
                     INNER JOIN roles ON usuarios.id_rol = roles.id";
                         

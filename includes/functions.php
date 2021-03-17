@@ -196,6 +196,8 @@
 
 
 
+    /* ---------------------------------------------------------------Usuarios----------------------------------------------------------------- */
+    
     //Si recibe por el método POST el parámetro "usuarios", llama al método mostrarUsuarios() para que se cargen todos los datos de la tabla.
     if(isset($_POST['usuarios'])){
 
@@ -206,6 +208,8 @@
     }
 
 
+
+    /* ------------------------------------------------------------------Roles------------------------------------------------------------------- */
 
     //Si recibe por el método POST el parámetro "roles", llama al método mostrarRoles() para que se cargen todos los datos de la tabla.
     if(isset($_POST['roles'])){

@@ -169,6 +169,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 data: { accionGrupo },
                 success: function(respuesta){
                     
+                    
                     //Si se ha modificado
                     if(respuesta=="si"){
 
