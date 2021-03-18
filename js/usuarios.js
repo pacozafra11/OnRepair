@@ -133,9 +133,10 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         let rol = '';
         borrarCamposModal();        
         $('#tituloModalUsuario').text('Nuevo Usuario');
-        $('#inputRolUsuario').text('Seleccionar ...');
+        $('#inputRolUsuario').text('Técnico');
         $('#inputBloqueUsuario').text('No');
         mostrarRoles(rol);
+        $('#filaPassword').show();
         $('#modalUsuario').modal('show');  
                     
     });
@@ -157,6 +158,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         mostrarRoles(rol);
         $('#inputEmailUsuario').val(email);
         $('#inputBloqueUsuario').text(bloque);
+        $('#filaPassword').hide();
         $('#modalUsuario').modal('show');          
     });
 
@@ -189,11 +191,74 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
     /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
-    $(document).on("click", "#aceptarModalUsuario", function(e) {         
-        let accionUsuario;
+    $(document).on("click", "#aceptarModalUsuario", function() {  
+        //Declaro los patrones a comparar
+        var expNombre = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,50}$/;
+        var expEmail = /^[a-zA-Z0-9ñÑ_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;  
+        var expPass = /^[a-zA-Z0-9ñÑ\s]{4,20}$/;
+        var accionUsuario;    
 
-        e.preventDefault();
-        if($('#tituloModalUsuario').text()=="Nuevo Usuario") { 
+        //Recojo el valor de los campos rellenados
+        var nombre = $('#inputNombreUsuario').val();
+        var rol = $('#inputRolUsuario').text();
+        var email = $('#inputEmailUsuario').val();
+        var bloque = $('#inputBloqueUsuario').text();
+        var pass = $('#inputPasswordUsuario').val();
+        var confpass = $('#inputConfPassUsuario').val();
+
+
+        //Compruebo cada campo y maqueto efectos en el formulario
+        //Campo nombre
+        if(!expNombre.test(nombre)){
+            $("#errNombre").fadeIn();
+            $('#inputNombreUsuario').focus().css("border", "3px solid red");
+            return false;
+        
+        } else {
+            $("#errNombre").hide();
+            $('#inputNombreUsuario').css("border", "3px solid #03c003");
+
+            //Campo Email
+            if(!expEmail.test(email)){
+                $("#errEmail").fadeIn();
+                $('#inputEmailUsuario').focus().css("border", "3px solid red");
+                return false;
+
+            } else {
+                $("#errEmail").hide();
+                $('#inputEmailUsuario').css("border", "3px solid #03c003");
+
+                //Si el modal es para crear usuario o para modificarlo
+                if($('#tituloModalUsuario').text() == "Nuevo Usuario"){
+                    
+                    //Campo password o contraseña
+                    if(!expPass.test(pass)){
+                        $("#errPass").fadeIn();
+                        $('#inputPasswordUsuario').focus().css("border", "3px solid red");
+                        return false;
+    
+                    } else {
+                        $("#errPass").hide();
+                        $('#inputPasswordUsuario').css("border", "3px solid #03c003");
+    
+                        //Campo confirmación password o contraseña
+                        if(confpass != pass){
+                            $("#errConfPass").fadeIn();
+                            $('#inputConfPassUsuario').focus().css("border", "3px solid red");
+                            return false;
+                        
+                        } else {
+                            $("#errConfPass").hide();
+                            $('#inputConfPassUsuario').css("border", "3px solid #03c003");
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        /* if($('#tituloModalUsuario').text()=="Nuevo Usuario") { 
 
             //Recojo los datos
             accionUsuario = {
@@ -211,10 +276,10 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 nombre: $('#inputNombreUsuario').val()
             };
 
-        }
+        } */
 
         //Petición ajax
-        $.ajax({
+       /*  $.ajax({
             url:'includes/functions.php',
             type: 'POST',
             data: { accionUsuario },
@@ -243,7 +308,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
             error: function(estado, error) {
                 console.log("-Error producido: " + error + ". -Estado: " + estado)
             }
-        });         
+        });  */        
                     
     });
 

@@ -77,16 +77,62 @@
                                     <?php echo $nombre;?>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <span id="login" class="dropdown-item"><?php echo $login;?></span>
-                                    <span id="hora" class="dropdown-item"><?php echo $hora;?></span>
-                                    <span id="rol" class="dropdown-item"><?php echo $rol;?></span>
+                                    <div class="bg-light ml-2 mr-2 border">
+                                        <span id="login" class="dropdown-item"><?php echo $login;?></span>
+                                        <span class="dropdown-item"><b class="text-info">Hora de Login: </b><span id="hora"><?php echo $hora;?></span></span>
+                                        <span class="dropdown-item"><b class="text-info">Rol: </b><span id="rol"><?php echo $rol;?></span></span>
+                                    </div>
                                     <div class="dropdown-divider"></div>
-                                    <a href="includes/go_out.php" class="dropdown-item text-danger">Cerrar sesión <ion-icon name="log-out"></ion-icon></a>   
+                                        <a href="#" id="cambiarPassword" class="dropdown-item text-warning"><ion-icon name="key"></ion-icon>  Cambiar contraseña</a>
+                                    <div class="dropdown-divider"></div>
+                                        <a href="includes/go_out.php" class="dropdown-item text-danger"><ion-icon name="log-out"></ion-icon>  Cerrar sesión</a>   
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </nav>
+
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalPassword" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+
+                            <form id="formularioPassword">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-warning"> Cambiar Contraseña</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body bg-light justify-content-center">                            
+                                    <div class="row mt-3 mb-3">
+                                        <div class="col-lg-6">
+                                            <label for="passwordUsuario"class="text-success ml-2">Password</label>
+                                            <input type="password" class="form-control" name="passwordUsuario" id="passwordUsuario" placeholder="Añadir Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}">
+                                            <span class="errorModal" id="errPass">Solo admite letras (mayúsculas y minúsculas) y números, entre 4 y 20 caracteres</span>
+                                        </div> 
+                                        <div class="col-lg-6">
+                                            <label for="confPassUsuario"class="text-success ml-2">Confirmar Password</label>
+                                            <input type="password" class="form-control" name="confPassUsuario" id="confPassUsuario" placeholder="Confirmar Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}"> 
+                                            <span class="errorModal" id="errConfPass">Las contraseñas deben coincidir</span>
+                                        </div>                      
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" id="cancelarModalPassword">Cancelar</button>
+                                    <button type="submit" class="btn btn-success" id="aceptarModalPassword">Aceptar</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
 
                 
   

@@ -105,8 +105,11 @@ body{
 
 
 /* Clase span para los avisos fijos/visibles de los campos de texto en los formularios */
-.span{
+.errorModal{
   font-size: 10px !important;
+  
   font-style: italic;
-  color: rgb(83, 83, 83);
+  color: red;
+  display: none;
+  margin-left: 7px;
 }

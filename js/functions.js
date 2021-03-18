@@ -23,6 +23,90 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     }); */
 
 
+    /* Función para borrar por completo el modal de cambio de contraseña */
+    function borrarModal(){
+        $('#passwordUsuario').val("");
+        $('#passwordUsuario').css("border", "none");
+        $("#errPass").hide();
+        $('#confPassUsuario').val("");
+        $('#confPassUsuario').css("border", "none");
+        $("#errConfPass").hide();
+    }
+
+    /* Al pulsar sobre de botón "Cambiar contraseña" en la página Menú */
+    $(document).on("click", "#cambiarPassword", function() {  
+        
+        borrarModal();
+        $('#modalPassword').modal('show');  
+                    
+    });
+
+
+    /* Al pulsar sobre el botón "Aceptar" del Modal para modificar la contraseña */
+    $(document).on("click", "#aceptarModalPassword", function() {
+        var expPass = /^[a-zA-Z0-9ñÑ\s]{4,20}$/;
+        var pass = $('#passwordUsuario').val();
+        var confpass = $('#confPassUsuario').val();
+
+        //Compruebo cada campo y maqueto efectos en el formulario
+         //Campo password o contraseña
+         if(!expPass.test(pass)){
+            $("#errPass").fadeIn();
+            $('#passwordUsuario').focus().css("border", "3px solid red");
+            $('#confPassUsuario').css("border", "none");
+            $("#errConfPass").hide();
+            return false;
+
+        } else {
+            $("#errPass").hide();
+            $("#errConfPass").hide();
+            $('#passwordUsuario').css("border", "3px solid #03c003");
+            $('#confPassUsuario').css("border", "none");
+
+            //Campo confirmación password o contraseña
+            if(confpass != pass){
+                $("#errConfPass").fadeIn();
+                $('#confPassUsuario').css("border", "3px solid red");
+                $('#passwordUsuario').focus().css("border", "none");
+                $('#passwordUsuario').val("");
+                $('#confPassUsuario').val("");
+                return false;
+            
+            } else {
+                $("#errConfPass").hide();
+                $('#confPassUsuario').css("border", "3px solid #03c003");
+
+                if(confirm("¿Seguro que desea cambiar la contraseña?")){
+
+
+                    /* FUNCIÓN AJAX */
+                    
+
+
+                } else {
+                    
+                    borrarModal();
+                    $('#modalPassword').modal('hide');
+                    $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No se ha realizado el cambio de contraseña</b></p>');
+                    $("#modalInfo").modal('show');
+                    setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje */
+                    return false;
+                }
+            }
+        }
+    });
+
+
+    /* Al pulsar sobre de botón "Cancelar" del Modal vacío los campos y oculto el modal*/
+    $(document).on("click", "#cancelarModalPassword", function() {              
+        
+        borrarModal();
+        $('#modalPassword').modal('hide'); 
+
+    });
+
+
+
     
 
     //Funcion para mostrar todas las tareas y sus datos en una tabla en la página "Tareas"

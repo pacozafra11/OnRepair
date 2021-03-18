@@ -38,7 +38,9 @@
         <div class="modal fade" id="modalUsuario" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
-                    <form action="">
+
+                    <form id="formularioModal">
+
                         <div class="modal-header">
                             <h5 class="modal-title text-info" id="tituloModalUsuario"></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -50,8 +52,8 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <label for="inputNombreUsuario" class="text-success ml-2">Nombre</label>
-                                    <input type="text" class="form-control" name="inputNombreUsuario" id="inputNombreUsuario" placeholder="Añadir Nombre ..." pattern="[A-Za-z]{3,50}" autofocus required> 
-                                    <span class="span">*Máximo 50 caractéres, solo admite letras mayúsculas y minúsculas</span>
+                                    <input type="text" class="form-control" name="inputNombreUsuario" id="inputNombreUsuario" placeholder="Añadir Nombre ..."> 
+                                    <span class="errorModal" id="errNombre">Solo admite letras mayúsculas y minúsculas, entre 3 y 50 caracteres</span>
                                 </div> 
                                 <div class="col-lg-6">
                                     <label for="inputRolUsuario" class="text-success ml-2">Rol</label> 
@@ -68,7 +70,8 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <label for="inputEmailUsuario"class="text-success ml-2">Email</label>
-                                    <input type="email" class="form-control" name="inputEmailUsuario" id="inputEmailUsuario" placeholder="Añadir Email ..." required> 
+                                    <input type="email" class="form-control" name="inputEmailUsuario" id="inputEmailUsuario" placeholder="Añadir Email ..." required>
+                                    <span class="errorModal" id="errEmail">Introducir un formato válido de Email</span> 
                                 </div> 
                                 <div class="col-lg-6">
                                     <label for="inputBloqueUsuario" class="text-success ml-2">Bloqueado</label>
@@ -77,22 +80,22 @@
                                             
                                         </button>
                                         <div class="dropdown-menu" role="menu" aria-labelledby="inputBloqueUsuario">
-                                            <a class="bloqueado dropdown-item" href="#">No</a>
                                             <a class="bloqueado dropdown-item" href="#">Sí</a>
+                                            <a class="bloqueado dropdown-item" href="#">No</a>
                                         </div>
                                     </div>
                                 </div>                     
                             </div>
-                            <div class="row mt-3">
+                            <div id="filaPassword" class="row mt-3 mb-3">
                                 <div class="col-lg-6">
                                     <label for="inputPasswordUsuario"class="text-success ml-2">Password</label>
-                                    <input type="password" class="form-control" name="inputPasswordUsuario" id="inputPasswordUsuario" placeholder="Añadir Password ..." pattern="[A-Za-z0-9]{3,20}" required>
-                                    <span class="span">*Máximo 20 caractéres, solo admite letras mayúsculas y minúsculas y números</span> 
+                                    <input type="password" class="form-control" name="inputPasswordUsuario" id="inputPasswordUsuario" placeholder="Añadir Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}">
+                                    <span class="errorModal" id="errPass">Solo admite letras (mayúsculas y minúsculas) y números, entre 4 y 20 caracteres</span>
                                 </div> 
                                 <div class="col-lg-6">
                                     <label for="inputConfPassUsuario"class="text-success ml-2">Confirmar Password</label>
-                                    <input type="password" class="form-control" name="inputConfPassUsuario" id="inputConfPassUsuario" placeholder="Confirmar Password ..." pattern="[A-Za-z0-9]{3,20}" required> 
-                                    <span class="span font-weight-light">*Máximo 20 caractéres, solo admite letras mayúsculas y minúsculas y números</span>
+                                    <input type="password" class="form-control" name="inputConfPassUsuario" id="inputConfPassUsuario" placeholder="Confirmar Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}"> 
+                                    <span class="errorModal" id="errConfPass">Las contraseñas deben coincidir</span>
                                 </div>                      
                             </div>
                         </div>
@@ -101,7 +104,9 @@
                             <button type="button" class="btn btn-danger" id="cancelarModalUsuario">Cancelar</button>
                             <button type="submit" class="btn btn-success" id="aceptarModalUsuario">Aceptar</button>
                         </div>
+
                     </form>
+
                 </div>
             </div>
         </div>
