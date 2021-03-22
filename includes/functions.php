@@ -208,6 +208,25 @@
     }
 
 
+    //Si recibe por el método POST el parámetro "accionUsuario", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
+    if(isset($_POST['accionUsuario'])){
+
+        if(!empty($_POST['accionUsuario'])){
+            $accionUsuario=$_POST['accionUsuario'];
+            $accion=$accionUsuario['accionUsuario'];
+            $id=htmlentities(addslashes($accionUsuario['id']));
+            $nombre=htmlentities(addslashes($accionUsuario['nombre']));
+            $rol=htmlentities(addslashes($accionUsuario['rol']));
+            $email=htmlentities(addslashes($accionUsuario['email']));
+            $bloque=htmlentities(addslashes($accionUsuario['bloque']));
+            $pass=htmlentities(addslashes($accionUsuario['pass']));
+        
+            $realizado = $db->accionUsuario($accion, $id, $nombre, $rol, $email, $bloque, $pass);            
+            echo $realizado;
+        }      
+    }
+
+
 
     /* ------------------------------------------------------------------Roles------------------------------------------------------------------- */
 
@@ -221,7 +240,7 @@
     }
 
 
-    //Si recibe por el método POST el parámetro "nuevoRol", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
+    //Si recibe por el método POST el parámetro "accionRol", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
     if(isset($_POST['accionRol'])){
 
         if(!empty($_POST['accionRol'])){

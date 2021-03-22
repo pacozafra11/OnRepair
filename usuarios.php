@@ -51,20 +51,28 @@
                         <div class="modal-body bg-light justify-content-center">
                             <div class="row mt-3">
                                 <div class="col-lg-6">
+                                    <input type="hidden" class="inputIdUsuario" id="inputIdUsuario">
                                     <label for="inputNombreUsuario" class="text-success ml-2">Nombre</label>
                                     <input type="text" class="form-control" name="inputNombreUsuario" id="inputNombreUsuario" placeholder="Añadir Nombre ..."> 
                                     <span class="errorModal" id="errNombre">Solo admite letras mayúsculas y minúsculas, entre 3 y 50 caracteres</span>
                                 </div> 
                                 <div class="col-lg-6">
                                     <label for="inputRolUsuario" class="text-success ml-2">Rol</label> 
-                                    <div class="dropdown">
+                                    <div class="input-group mb-3">
+                                        <select class="custom-select" id="opcionesRolUsuario" name="inputRolUsuario">
+                                            
+                                        </select>
+                                    </div>                                    
+                                    
+                                    
+                                    <!-- <div class="dropdown">
                                         <button class="btn bg-white text-secondary text-left border col-lg-12 dropdown-toggle" type="button" id="inputRolUsuario" name="inputRolUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             
                                         </button>
                                         <div class="dropdown-menu" id="opcionesRolUsuario" role="menu" aria-labelledby="inputRolUsuario">
                                             
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -86,7 +94,7 @@
                                     </div>
                                 </div>                     
                             </div>
-                            <div id="filaPassword" class="row mt-3 mb-3">
+                            <div id="filaPassword" class="row mt-4 mb-4">
                                 <div class="col-lg-6">
                                     <label for="inputPasswordUsuario"class="text-success ml-2">Password</label>
                                     <input type="password" class="form-control" name="inputPasswordUsuario" id="inputPasswordUsuario" placeholder="Añadir Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}">

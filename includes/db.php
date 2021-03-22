@@ -520,6 +520,64 @@
         }
 
 
+        /* 
+        *   Función para modificar, crear o eliminar un usuario 
+        *
+        *    @param  string $accion, acción a realizar 
+        *    @param  int $id
+        *    @param  string $nombre  
+        *    @param  int $rol  
+        *    @param  string $email  
+        *    @param  string $bloque  
+        *    @param  int $pass  
+        *    @return string $realizado
+        */
+        public function accionUsuario($accion, $id, $nombre, $rol, $email, $bloque, $pass){
+            $realizado = "";
+            $conexion = $this->accesoDB();
+
+            /* Si la acción es Modificar un usuario existente */
+            if($accion=="Modificar Usuario"){
+                $sql="UPDATE usuarios SET nombre=:nombre, email=:email, bloqueado=:bloqueado, id_rol=:rol WHERE id=:id";
+                $resultado=$conexion->prepare($sql);  
+                $resultado->bindParam(':id', $id);         
+                $resultado->bindParam(':nombre', $nombre);
+                $resultado->bindParam(':email', $email);
+                $resultado->bindParam(':rol', $rol);                
+                $resultado->bindParam(':bloqueado', $bloque);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+            /* Si la acción es crear un nuevo usuario */
+            }elseif($accion=="Nuevo Usuario") {
+                $sql="INSERT INTO roles (nombre, email, password, bloqueado, id_rol) VALUES (:nombre, :email, :password, :bloqueado, :id_rol)";
+                $resultado=$conexion->prepare($sql);          
+                $resultado->bindParam(':nombre', $nombre);
+                    //Cifro la contraseña con hash
+                    $password=password_hash($pass, PASSWORD_DEFAULT);
+                $resultado->bindParam(':password', $password);
+                $resultado->bindParam(':email', $email);
+                $resultado->bindParam(':rol', $rol);                
+                $resultado->bindParam(':bloqueado', $bloque);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+                /* Si la acción es borrar un rol existente */
+            }elseif($accion=="Borrar Usuario") {                
+                $sql="DELETE FROM usuarios WHERE id=:id";
+                $resultado = $conexion->prepare($sql);     
+                $resultado->bindParam(':id', $id);     
+                $resultado->execute();
+                $afectado=$resultado->rowCount();
+            }
+
+            if($afectado!=0){
+                $realizado = "si";            
+            }else{
+                $realizado = "no";
+            }
+            return $realizado;
+        }
 
 
         /* -----------------------------------------------------------------------ROLES------------------------------------------------------------------------------------------ */

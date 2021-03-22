@@ -60,7 +60,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                                 </div>
                                 <div class="col-lg-6 pt-1">
                                     <span class="text-success font-weight-bold">Bloqueado: </span><span class="bloqueado">${buscado.bloqueado}</span>
-                                    <input type="hidden" class="password" value="${buscado.password}">
                                 </div>
                             </div>
                                                     
@@ -88,14 +87,13 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     /* Borrar los campos del modal */
     function borrarCamposModal(){
         $('#inputNombreUsuario').val("");
-        $('#inputEmailUsuario').val("");
-        $('#inputBloqueUsuario').val("");        
+        $('#inputEmailUsuario').val("");        
     }
 
 
+    /* Función para mostrar los roles existentes en select del modal, con excepciones */
     function mostrarRoles(rol){
         let roles = "";
-        let select = '';
     
         //Petición ajax para obtener los Roles que existen actualmente
         $.ajax({
@@ -106,13 +104,38 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 let info = JSON.parse(respuesta);
                 let resultado = '';
                 info.forEach(buscado => {
+
+                    //Si la persona Logueada es "Administrador", muestra todos los valores de roles a tomar, incluido el de Administrador
                     if($('#rol').text() === "Administrador"){
-                        resultado += `<a class="rol dropdown-item" href="#">${buscado.nombre}</a>`;
-                                             
-                    } else if($('#rol').text() === "Responsable"){
+                
+                        //Si el formulario/modal es para Nuevo Usuario, se añade "selected" a la opción Técnico, para que sea valor prederterminado.
+                        if($('#tituloModalUsuario').text() === 'Nuevo Usuario'){
+                            buscado.nombre != "Responsable" ? rol_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>" : rol_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>";
+                            resultado += rol_selec;
+
+                        //Si el formulario/modal es para Modificar Usuario, se añade "selected" a la opción que conincida con el valor que tiene ese usuario actualmente,
+                        // para que sea valor prederterminado.
+                        } else {
+                            buscado.nombre != rol ? rol_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>" : rol_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>";
+                            resultado += rol_selec;
+                        }
+                     
+                    //Si la persona Logueada NO es "Administrador", muestra todos los valores de roles a tomar, excepto el de Administrador
+                    } else {
                         if(buscado.nombre != "Administrador"){
-                            resultado += `<a class="rol dropdown-item" href="#">${buscado.nombre}</a>`;
-                        }                          
+                            
+                            //Si el formulario/modal es para Nuevo Usuario, se añade "selected" a la opción Técnico, para que sea valor prederterminado.
+                            if($('#tituloModalUsuario').text() === 'Nuevo Usuario'){
+                                buscado.nombre != "Responsable" ? rol_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>" : rol_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>";
+                                resultado += rol_selec;
+
+                            //Si el formulario/modal es para Modificar Usuario, se añade "selected" a la opción que conincida con el valor que tiene ese usuario actualmente,
+                            // para que sea valor prederterminado.
+                            } else {
+                                buscado.nombre != rol ? rol_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>" : rol_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>";
+                                resultado += rol_selec;
+                            }
+                        }                       
                     }                    
                 });
 
@@ -130,11 +153,9 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
     /* Al pulsar sobre de botón "Nuevo Usuario" en la página Usuarios */
     $(document).on("click", "#crearUsuario", function() {  
-        let rol = '';
+        let rol = 'Técnico';
         borrarCamposModal();        
         $('#tituloModalUsuario').text('Nuevo Usuario');
-        $('#inputRolUsuario').text('Técnico');
-        $('#inputBloqueUsuario').text('No');
         mostrarRoles(rol);
         $('#filaPassword').show();
         $('#modalUsuario').modal('show');  
@@ -143,21 +164,21 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
     /* Al pulsar sobre de botón "Actualizar" de algún registro*/
-    $(document).on("click", ".actualizarUsuario", function() {             
+    $(document).on("click", ".actualizarUsuario", function() {  
+        let id = $(this).parent().siblings().children().siblings('.id').text();           
         let nombre = $(this).parent().siblings().children().siblings('.nombre').text();
         let rol = $(this).parent().siblings().children().siblings('.rol').text();
         let email = $(this).parent().parent().siblings().children().children().siblings('.email').text();
         let bloque = $(this).parent().parent().siblings().children().children().siblings('.bloqueado').text();
-        let password = $(this).parent().parent().siblings().children().siblings('.password').val();
-        console.log(nombre +" + " + rol +" + " + email +" + " + bloque +" + " + password);
          
         borrarCamposModal();   
         $('#tituloModalUsuario').text('Modificar Usuario');
+        $('#inputIdUsuario').val(id);
         $('#inputNombreUsuario').val(nombre);
         $('#inputRolUsuario').text(rol);
         mostrarRoles(rol);
         $('#inputEmailUsuario').val(email);
-        $('#inputBloqueUsuario').text(bloque);
+        $('#inputBloqueUsuario').filter(':selected').val();
         $('#filaPassword').hide();
         $('#modalUsuario').modal('show');          
     });
@@ -190,21 +211,23 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     });
 
 
+
     /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
     $(document).on("click", "#aceptarModalUsuario", function() {  
         //Declaro los patrones a comparar
-        var expNombre = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,50}$/;
-        var expEmail = /^[a-zA-Z0-9ñÑ_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;  
-        var expPass = /^[a-zA-Z0-9ñÑ\s]{4,20}$/;
-        var accionUsuario;    
+        let expNombre = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,50}$/;
+        let expEmail = /^[a-zA-Z0-9ñÑ_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;  
+        let expPass = /^[a-zA-Z0-9ñÑ\s]{4,20}$/;
+        let accionUsuario;    
 
         //Recojo el valor de los campos rellenados
-        var nombre = $('#inputNombreUsuario').val();
-        var rol = $('#inputRolUsuario').text();
-        var email = $('#inputEmailUsuario').val();
-        var bloque = $('#inputBloqueUsuario').text();
-        var pass = $('#inputPasswordUsuario').val();
-        var confpass = $('#inputConfPassUsuario').val();
+        let id = $('#inputIdUsuario').val();
+        let nombre = $('#inputNombreUsuario').val();
+        let rol = $('#inputRolUsuario').text();
+        let email = $('#inputEmailUsuario').val();
+        let bloque = $('#inputBloqueUsuario').text();
+        let pass = $('#inputPasswordUsuario').val();
+        let confpass = $('#inputConfPassUsuario').val();
 
 
         //Compruebo cada campo y maqueto efectos en el formulario
@@ -229,7 +252,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 $('#inputEmailUsuario').css("border", "3px solid #03c003");
 
                 //Si el modal es para crear usuario o para modificarlo
-                if($('#tituloModalUsuario').text() == "Nuevo Usuario"){
+                if($('#tituloModalUsuario').text() === "Nuevo Usuario"){
                     
                     //Campo password o contraseña
                     if(!expPass.test(pass)){
@@ -252,64 +275,66 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                             $('#inputConfPassUsuario').css("border", "3px solid #03c003");
                         }
                     }
-                }
+
+                    //Recojo los datos
+                    accionUsuario = {
+                        accion: $('#tituloModalUsuario').text(),
+                        id: 0,
+                        nombre: nombre,
+                        rol: rol,
+                        email: email,
+                        bloque: bloque,
+                        pass: pass
+                    };
+
+                } else {
+
+                    //Recojo los datos
+                    accionUsuario = {
+                        accion: $('#tituloModalUsuario').text(),
+                        id: id,
+                        nombre: nombre,
+                        rol: rol,
+                        email: email,
+                        bloque: bloque,
+                        pass: 0
+                    };
+                }  
+
+
+                //Petición ajax
+                $.ajax({
+                    url:'includes/functions.php',
+                    type: 'POST',
+                    data: { accionUsuario },
+                    success: function(respuesta){
+                        
+                        //Si se ha modificado
+                        if(respuesta=="si"){
+
+                            $('#modalUsuario').modal('hide');
+                            mostrarUsuarios();
+                            $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="checkmark-circle-outline"></ion-icon> <b>La acción se ha realizado correctamente</b></p>');
+                            $("#modalInfo").modal('show');
+                            setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
+                                                                    
+                        //Si no se ha modificdo
+                        } else{
+                        
+                            $('#modalUsuario').modal('hide');
+                            mostrarUsuarios();
+                            $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción,<br>revisa y modifica los datos introducidos</b></p>');
+                            $("#modalInfo").modal('show');
+                            setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
+                        }
+                    },
+                    // Si la petición falla, devuelve en consola el error producido y el estado
+                    error: function(estado, error) {
+                        console.log("-Error producido: " + error + ". -Estado: " + estado)
+                    }
+                });
             }
-        }
-
-
-
-        /* if($('#tituloModalUsuario').text()=="Nuevo Usuario") { 
-
-            //Recojo los datos
-            accionUsuario = {
-                accion: $('#tituloModalUsuario').text(),
-                id: 0,
-                nombre: $('#inputNombreUsuario').val()
-            };
-        
-        } else if($('#tituloModalUsuario').text()=="Modificar Usuario"){
-
-            //Recojo los datos
-            accionUsuario = {
-                accion: $('#tituloModalUsuario').text(),
-                id: $('#inputIdUsuario').val(),
-                nombre: $('#inputNombreUsuario').val()
-            };
-
-        } */
-
-        //Petición ajax
-       /*  $.ajax({
-            url:'includes/functions.php',
-            type: 'POST',
-            data: { accionUsuario },
-            success: function(respuesta){
-                
-                //Si se ha modificado
-                if(respuesta=="si"){
-
-                    $('#modalUsuario').modal('hide');
-                    mostrarUsuarios();
-                    $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="checkmark-circle-outline"></ion-icon> <b>La acción se ha realizado correctamente</b></p>');
-                    $("#modalInfo").modal('show');
-                    setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                                                            
-                //Si no se ha modificdo
-                } else{
-                
-                    $('#modalUsuario').modal('hide');
-                    mostrarUsuarios();
-                    $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción,<br>revisa y modifica los datos introducidos</b></p>');
-                    $("#modalInfo").modal('show');
-                    setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                }
-            },
-            // Si la petición falla, devuelve en consola el error producido y el estado
-            error: function(estado, error) {
-                console.log("-Error producido: " + error + ". -Estado: " + estado)
-            }
-        });  */        
-                    
+        }                           
     });
 
 

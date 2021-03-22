@@ -26,6 +26,13 @@
                                         
                 </div>
 
+                <div class="row">
+                    <div class="alert alert-warning m-auto" role="alert">
+                        <span class="font-weight-bold ">¡Muy importante!</span>  Mucho cuidado al modificar los valores de "Administrador" y "Responsable",<br>
+                        se verá afectado el funcionamiento de la Web (como sus validaciones o permisos entre otros).
+                    </div>
+                </div>
+
                 <!-- Contenedor que alojará los roles de usuario a mostrar -->
                 <div class="row p-4">
                     <table class="table table-striped border">
