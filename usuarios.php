@@ -59,20 +59,10 @@
                                 <div class="col-lg-6">
                                     <label for="inputRolUsuario" class="text-success ml-2">Rol</label> 
                                     <div class="input-group mb-3">
-                                        <select class="custom-select" id="opcionesRolUsuario" name="inputRolUsuario">
+                                        <select class="custom-select" id="inputRolUsuario" name="inputRolUsuario">
                                             
                                         </select>
                                     </div>                                    
-                                    
-                                    
-                                    <!-- <div class="dropdown">
-                                        <button class="btn bg-white text-secondary text-left border col-lg-12 dropdown-toggle" type="button" id="inputRolUsuario" name="inputRolUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            
-                                        </button>
-                                        <div class="dropdown-menu" id="opcionesRolUsuario" role="menu" aria-labelledby="inputRolUsuario">
-                                            
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -82,16 +72,13 @@
                                     <span class="errorModal" id="errEmail">Introducir un formato válido de Email</span> 
                                 </div> 
                                 <div class="col-lg-6">
-                                    <label for="inputBloqueUsuario" class="text-success ml-2">Bloqueado</label>
-                                    <div class="dropdown">
-                                        <button class="btn bg-white text-secondary text-left border col-lg-12 dropdown-toggle" type="button" id="inputBloqueUsuario" name="inputBloqueUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            
-                                        </button>
-                                        <div class="dropdown-menu" role="menu" aria-labelledby="inputBloqueUsuario">
-                                            <a class="bloqueado dropdown-item" href="#">Sí</a>
-                                            <a class="bloqueado dropdown-item" href="#">No</a>
-                                        </div>
-                                    </div>
+                                    <label for="inputBloqueUsuario" class="text-success ml-2">Bloqueado</label>                                         
+                                    <div class="input-group mb-3">
+                                        <select class="custom-select" id="inputBloqueUsuario" name="inputBloqueUsuario">
+                                            <option value="0" selected>No</option>
+                                            <option value="1">Sí</option>
+                                        </select>
+                                    </div>                                    
                                 </div>                     
                             </div>
                             <div id="filaPassword" class="row mt-4 mb-4">

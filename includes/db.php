@@ -537,7 +537,7 @@
             $conexion = $this->accesoDB();
 
             /* Si la acción es Modificar un usuario existente */
-            if($accion=="Modificar Usuario"){
+            if ($accion == "Modificar Usuario"){
                 $sql="UPDATE usuarios SET nombre=:nombre, email=:email, bloqueado=:bloqueado, id_rol=:rol WHERE id=:id";
                 $resultado=$conexion->prepare($sql);  
                 $resultado->bindParam(':id', $id);         
@@ -549,21 +549,21 @@
                 $afectado=$resultado->rowCount();
 
             /* Si la acción es crear un nuevo usuario */
-            }elseif($accion=="Nuevo Usuario") {
-                $sql="INSERT INTO roles (nombre, email, password, bloqueado, id_rol) VALUES (:nombre, :email, :password, :bloqueado, :id_rol)";
+            } elseif ($accion == "Nuevo Usuario") {
+                $sql="INSERT INTO usuarios (nombre, email, password, bloqueado, id_rol) VALUES (:nombre, :email, :password, :bloqueado, :id_rol)";
                 $resultado=$conexion->prepare($sql);          
                 $resultado->bindParam(':nombre', $nombre);
+                $resultado->bindParam(':email', $email);
                     //Cifro la contraseña con hash
                     $password=password_hash($pass, PASSWORD_DEFAULT);
                 $resultado->bindParam(':password', $password);
-                $resultado->bindParam(':email', $email);
-                $resultado->bindParam(':rol', $rol);                
-                $resultado->bindParam(':bloqueado', $bloque);   
+                $resultado->bindParam(':bloqueado', $bloque);
+                $resultado->bindParam(':id_rol', $rol);                  
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
                 /* Si la acción es borrar un rol existente */
-            }elseif($accion=="Borrar Usuario") {                
+            } elseif ($accion == "Borrar Usuario") {                
                 $sql="DELETE FROM usuarios WHERE id=:id";
                 $resultado = $conexion->prepare($sql);     
                 $resultado->bindParam(':id', $id);     

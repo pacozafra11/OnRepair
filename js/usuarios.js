@@ -28,10 +28,10 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                     buscado.bloqueado=='Sí' ? clase="col-lg-12 bg-secondary text-light border" : clase="col-lg-12 bg-light text-dark border";
                     if($('#rol').text() === "Administrador" || $('#rol').text() === "Responsable"){
                         if($('#rol').text() === "Responsable" && $('#rol').text() === buscado.rol){
-                            botones = "<button type='button' class='actualizarUsuario btn btn-outline-primary m-1'><ion-icon name='create' class='pt-1'></ion-icon></button><button type='button' class='eliminarMaquina btn btn-outline-danger m-1'><ion-icon name='trash' class='pt-1'></ion-icon></button>";
+                            botones = "<button type='button' class='actualizarUsuario btn btn-outline-primary m-1'><ion-icon name='create' class='pt-1'></ion-icon></button><button type='button' class='eliminarUsuario btn btn-outline-danger m-1'><ion-icon name='trash' class='pt-1'></ion-icon></button>";
 
                         } else if($('#rol').text() === "Administrador"){
-                            botones = "<button type='button' class='actualizarUsuario btn btn-outline-primary m-1'><ion-icon name='create' class='pt-1'></ion-icon></button><button type='button' class='eliminarMaquina btn btn-outline-danger m-1'><ion-icon name='trash' class='pt-1'></ion-icon></button>";
+                            botones = "<button type='button' class='actualizarUsuario btn btn-outline-primary m-1'><ion-icon name='create' class='pt-1'></ion-icon></button><button type='button' class='eliminarUsuario btn btn-outline-danger m-1'><ion-icon name='trash' class='pt-1'></ion-icon></button>";
                         }
                     }
                     id = buscado.id;
@@ -139,7 +139,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                     }                    
                 });
 
-                $("#opcionesRolUsuario").html(resultado);
+                $("#inputRolUsuario").html(resultado);
                 
             },
             // Si la petición falla, devuelve en consola el error producido y el estado
@@ -151,6 +151,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     }
 
 
+    
     /* Al pulsar sobre de botón "Nuevo Usuario" en la página Usuarios */
     $(document).on("click", "#crearUsuario", function() {  
         let rol = 'Técnico';
@@ -161,6 +162,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         $('#modalUsuario').modal('show');  
                     
     });
+
 
 
     /* Al pulsar sobre de botón "Actualizar" de algún registro*/
@@ -175,7 +177,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         $('#tituloModalUsuario').text('Modificar Usuario');
         $('#inputIdUsuario').val(id);
         $('#inputNombreUsuario').val(nombre);
-        $('#inputRolUsuario').text(rol);
+        $('#inputRolUsuario').val(rol);
         mostrarRoles(rol);
         $('#inputEmailUsuario').val(email);
         $('#inputBloqueUsuario').filter(':selected').val();
@@ -193,15 +195,13 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         $('#inputRolUsuario').text($(this).text());
     });
 
+
     /* Al pulsar sobre alguna de las opciones del desplegable Bloqueado */
     $(document).on("click", ".bloqueado", function(e) {
 
         e.preventDefault();
         $('#inputBloqueUsuario').text($(this).text());
     });
-
-
-
 
 
     /* Al pulsar sobre de botón "Cancelar" del Modal vacío los campos*/
@@ -212,8 +212,45 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
+    /* Función con la llamada Ajax para pasar el parámetro accionUsuario con todos los datos recogidos para Crear, Modificar o Eliminar un usuario*/
+    function accionUsuarios(accionUsuario){
+        //Petición ajax
+        $.ajax({
+            url:'includes/functions.php',
+            type: 'POST',
+            data: { accionUsuario },
+            success: function(respuesta){
+                
+                //Si se ha modificado
+                if(respuesta == "si"){
+
+                    $('#modalUsuario').modal('hide');
+                    mostrarUsuarios();
+                    $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="checkmark-circle-outline"></ion-icon> <b>La acción se ha realizado correctamente</b></p>');
+                    $("#modalInfo").modal('show');
+                    setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
+                                                            
+                //Si no se ha modificado
+                } else{
+                
+                    $('#modalUsuario').modal('hide');
+                    mostrarUsuarios()
+                    $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción,<br>revisa y modifica los datos introducidos</b></p>');
+                    $("#modalInfo").modal('show');
+                    setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
+                }
+            },
+            // Si la petición falla, devuelve en consola el error producido y el estado
+            error: function(estado, error) {
+                console.log("-Error producido: " + error + ". -Estado: " + estado)
+            }
+        });
+    }
+
+
+
     /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
-    $(document).on("click", "#aceptarModalUsuario", function() {  
+    $(document).on("click", "#aceptarModalUsuario", function(e) {  
         //Declaro los patrones a comparar
         let expNombre = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,50}$/;
         let expEmail = /^[a-zA-Z0-9ñÑ_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;  
@@ -223,9 +260,9 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         //Recojo el valor de los campos rellenados
         let id = $('#inputIdUsuario').val();
         let nombre = $('#inputNombreUsuario').val();
-        let rol = $('#inputRolUsuario').text();
+        let rol = $('#inputRolUsuario').val();
         let email = $('#inputEmailUsuario').val();
-        let bloque = $('#inputBloqueUsuario').text();
+        let bloque = $('#inputBloqueUsuario').val();
         let pass = $('#inputPasswordUsuario').val();
         let confpass = $('#inputConfPassUsuario').val();
 
@@ -252,7 +289,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 $('#inputEmailUsuario').css("border", "3px solid #03c003");
 
                 //Si el modal es para crear usuario o para modificarlo
-                if($('#tituloModalUsuario').text() === "Nuevo Usuario"){
+                if($('#tituloModalUsuario').text() == "Nuevo Usuario"){
                     
                     //Campo password o contraseña
                     if(!expPass.test(pass)){
@@ -274,6 +311,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                             $("#errConfPass").hide();
                             $('#inputConfPassUsuario').css("border", "3px solid #03c003");
                         }
+
                     }
 
                     //Recojo los datos
@@ -282,106 +320,52 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                         id: 0,
                         nombre: nombre,
                         rol: rol,
-                        email: email,
+                        email: email.toLowerCase(),
                         bloque: bloque,
                         pass: pass
                     };
+                    
+                    accionUsuarios(accionUsuario);
 
                 } else {
-
                     //Recojo los datos
                     accionUsuario = {
                         accion: $('#tituloModalUsuario').text(),
                         id: id,
                         nombre: nombre,
                         rol: rol,
-                        email: email,
+                        email: email.toLowerCase(),
                         bloque: bloque,
                         pass: 0
                     };
+
+                    accionUsuarios(accionUsuario);
                 }  
-
-
-                //Petición ajax
-                $.ajax({
-                    url:'includes/functions.php',
-                    type: 'POST',
-                    data: { accionUsuario },
-                    success: function(respuesta){
-                        
-                        //Si se ha modificado
-                        if(respuesta=="si"){
-
-                            $('#modalUsuario').modal('hide');
-                            mostrarUsuarios();
-                            $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="checkmark-circle-outline"></ion-icon> <b>La acción se ha realizado correctamente</b></p>');
-                            $("#modalInfo").modal('show');
-                            setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                                                                    
-                        //Si no se ha modificdo
-                        } else{
-                        
-                            $('#modalUsuario').modal('hide');
-                            mostrarUsuarios();
-                            $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción,<br>revisa y modifica los datos introducidos</b></p>');
-                            $("#modalInfo").modal('show');
-                            setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                        }
-                    },
-                    // Si la petición falla, devuelve en consola el error producido y el estado
-                    error: function(estado, error) {
-                        console.log("-Error producido: " + error + ". -Estado: " + estado)
-                    }
-                });
             }
         }                           
     });
 
 
+
     /* Al pulsar sobre el botón "Borrar" de algún registro */
     $(document).on("click", ".eliminarUsuario", function() {         
         let accionUsuario; 
-        id = $(this).parent().siblings('.id').text();
-        nombre = $(this).parent().siblings('.nombre').text(); 
+        let id = $(this).parent().siblings().children().siblings('.id').text();           
+        let nombre = $(this).parent().siblings().children().siblings('.nombre').text(); 
 
         if(confirm("¿Seguro que quieres borrar el Usuario: " + nombre + "?")){
             //Recojo los datos
             accionUsuario = {
                 accion: "Borrar Usuario",
                 id: id,
-                nombre: nombre
+                nombre: "",
+                rol: 0,
+                email: "",
+                bloque: 0,
+                pass: 0
             };
 
-            //Petición ajax
-            $.ajax({
-                url:'includes/functions.php',
-                type: 'POST',
-                data: { accionUsuario },
-                success: function(respuesta){
-                    
-                    //Si se ha modificado
-                    if(respuesta=="si"){
-
-                        mostrarUsuarios();
-                        $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="checkmark-circle-outline"></ion-icon> <b>La acción se ha realizado correctamente</b></p>');
-                        $("#modalInfo").modal('show');
-                        setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                                                                
-                    //Si no se ha modificdo
-                    } else{
-                    
-                        mostrarUsuarios();
-                        $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción,<br>revisa y modifica los datos introducidos</b></p>');
-                        $("#modalInfo").modal('show');
-                        setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                    }
-                },
-                // Si la petición falla, devuelve en consola el error producido y el estado
-                error: function(estado, error) {
-                    console.log("-Error producido: " + error + ". -Estado: " + estado)
-                }
-            });
-
+            accionUsuarios(accionUsuario);
         }
     });
 

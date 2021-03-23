@@ -94,7 +94,7 @@
 
 
 
-                <!-- Modal -->
+                <!-- Modal con el fromulario para Crear o Modificar usuarios -->
                 <div class="modal fade" id="modalPassword" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
