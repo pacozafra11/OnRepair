@@ -10,13 +10,14 @@
     
         //Iniciar variables
         $login= $hora= $nombre= $ultimaConexion= $tituloPagina= "";
-        $rol= 0;
+        $id= $rol= 0;
 
         //Retomo la sesión
         session_start();    
 
         //Si existe la sesion tomo sus valores, si no existe redirecciono a Index para que se identifique
         if(!empty($_SESSION['login'])){
+            $id=$_SESSION['id'];
             $login=$_SESSION['login'];
             $hora=$_SESSION['hora'];
             $rol=$_SESSION['rol'];
@@ -78,6 +79,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <div class="bg-light ml-2 mr-2 border">
+                                        <input type="hidden" id="id" name="id" value="<?php echo $id;?>">
                                         <span id="login" class="dropdown-item"><?php echo $login;?></span>
                                         <span class="dropdown-item"><b class="text-info">Hora de Login: </b><span id="hora"><?php echo $hora;?></span></span>
                                         <span class="dropdown-item"><b class="text-info">Rol: </b><span id="rol"><?php echo $rol;?></span></span>
@@ -85,7 +87,7 @@
                                     <div class="dropdown-divider"></div>
                                         <a href="#" id="cambiarPassword" class="dropdown-item text-warning"><ion-icon name="key"></ion-icon>  Cambiar contraseña</a>
                                     <div class="dropdown-divider"></div>
-                                        <a href="includes/go_out.php" class="dropdown-item text-danger"><ion-icon name="log-out"></ion-icon>  Cerrar sesión</a>   
+                                        <a href="#" id="cerrarSesion" class="dropdown-item text-danger"><ion-icon name="log-out"></ion-icon>  Cerrar sesión</a>   
                                 </div>
                             </li>
                         </ul>
@@ -102,7 +104,7 @@
                             <form id="formularioPassword">
 
                                 <div class="modal-header">
-                                    <h5 class="modal-title text-warning"> Cambiar Contraseña</h5>
+                                    <h5 class="modal-title text-warning" id="tituloModalPassword"> Cambiar Contraseña</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -124,7 +126,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" id="cancelarModalPassword">Cancelar</button>
+                                    <button type="button" class="btn btn-danger" id="cancelarModalPassword" data-dismiss="modal">Cancelar</button>
                                     <button type="submit" class="btn btn-success" id="aceptarModalPassword">Aceptar</button>
                                 </div>
 

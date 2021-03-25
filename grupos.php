@@ -19,9 +19,11 @@
                         <h2 class="mt-1 text-info"><ion-icon name="filing" class="lead text-warning"></ion-icon> GRUPOS DE MÁQUINAS</h2>                        
                     </div>
                 
-                    <div class="col-lg-3 text-right">
-                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearGrupo">Nuevo Grupo</button>
-                    </div>
+                    <?php if($rol === "Administrador" || $rol === "Responsable"){
+                        echo '<div class="col-lg-3 text-right">
+                                <button type="button" class="btn btn-success mt-2 mr-3" id="crearGrupo">Nuevo Grupo</button>
+                            </div>';}
+                    ?>
                 </div>
 
                 <!-- Contenedor que alojará los grupos de maquinas a mostrar -->

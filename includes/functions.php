@@ -214,7 +214,7 @@
         if(!empty($_POST['accionUsuario'])){
             $accionUsuario=$_POST['accionUsuario'];
             $accion=$accionUsuario['accion'];
-            $id=htmlentities(addslashes($accionUsuario['id']));
+            $id=htmlentities(addslashes((int)$accionUsuario['id']));
             $nombre=htmlentities(addslashes($accionUsuario['nombre']));
             $rol=htmlentities(addslashes($accionUsuario['rol']));
             $email=htmlentities(addslashes($accionUsuario['email']));

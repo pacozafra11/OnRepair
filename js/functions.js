@@ -18,9 +18,9 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     });
 
 
-/* $('modal').on('hidden', function() {
+    /* $('modal').on('hidden', function() {
         $(this).removeData('modal');
-    }); */
+        }); */
 
 
     /* Función para borrar por completo el modal de cambio de contraseña */
@@ -33,6 +33,14 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         $("#errConfPass").hide();
     }
 
+
+    //En caso de cerrar el modal con el botón "Cancelar" o con el botón de la X, en la esquina superior derecha
+    $("#modalPassword").on("hidden.bs.modal", function () {
+        borrarModal();
+    });
+
+
+
     /* Al pulsar sobre de botón "Cambiar contraseña" en la página Menú */
     $(document).on("click", "#cambiarPassword", function() {  
         
@@ -42,15 +50,28 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     });
 
 
+    /* Al pulsar sobre de botón "Cerrar Sesión" en la página Menú para salir de la web */
+    $(document).on("click", "#cerrarSesion", function() {  
+        
+        if(confirm("¿Seguro que desea cerrar la sesión y salir?")){
+            $(location).attr('href', "includes/go_out.php");
+        }       
+                    
+    });
+
+
     /* Al pulsar sobre el botón "Aceptar" del Modal para modificar la contraseña */
-    $(document).on("click", "#aceptarModalPassword", function() {
+    $(document).on("click", "#aceptarModalPassword", function(e) {
+        e.preventDefault();
+
         var expPass = /^[a-zA-Z0-9ñÑ\s]{4,20}$/;
         var pass = $('#passwordUsuario').val();
         var confpass = $('#confPassUsuario').val();
+        var id = parseInt($('#id').val());
 
         //Compruebo cada campo y maqueto efectos en el formulario
-         //Campo password o contraseña
-         if(!expPass.test(pass)){
+        //Campo password o contraseña
+        if(!expPass.test(pass)){
             $("#errPass").fadeIn();
             $('#passwordUsuario').focus().css("border", "3px solid red");
             $('#confPassUsuario').css("border", "none");
@@ -79,9 +100,47 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 if(confirm("¿Seguro que desea cambiar la contraseña?")){
 
 
-                    /* FUNCIÓN AJAX */
+                    //Recojo los datos
+                    accionUsuario = {
+                        accion: "Cambiar Contrasena",
+                        id: id,
+                        nombre: "",
+                        rol: "",
+                        email: "",
+                        bloque: "",
+                        pass: pass
+                    };
                     
+                    /* Petición ajax para pasar el parámetro accionUsuario con todos los datos recogidos para cambiar la contraseña del usuario registrado */
+                    $.ajax({
+                        url:'includes/functions.php',
+                        type: 'POST',
+                        data: { accionUsuario },
+                        success: function(respuesta){
+                            
+                            //Si se ha modificado
+                            if(respuesta == "si"){
 
+                                $('#modalPassword').modal('hide');
+                                $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="thumbs-up"></ion-icon> <b>Contraseña cambiada con exito</b></p>');
+                                $("#modalInfo").modal('show');
+                                setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
+                                                                        
+                            //Si no se ha modificado
+                            } else{
+                            
+                                $('#modalPassword').modal('hide');
+                                $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="thumbs-down"></ion-icon> <b>Cambio de contraseña fallido,<br>revisa y modifica los datos introducidos</b></p>');
+                                $("#modalInfo").modal('show');
+                                setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
+                            }
+                        },
+                        // Si la petición falla, devuelve en consola el error producido y el estado
+                        error: function(estado, error) {
+                            console.log("-Error producido: " + error + ". -Estado: " + estado)
+                        }
+                    });
+                              
 
                 } else {
                     
@@ -96,14 +155,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         }
     });
 
-
-    /* Al pulsar sobre de botón "Cancelar" del Modal vacío los campos y oculto el modal*/
-    $(document).on("click", "#cancelarModalPassword", function() {              
-        
-        borrarModal();
-        $('#modalPassword').modal('hide'); 
-
-    });
 
 
 

@@ -96,7 +96,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" id="cancelarModalUsuario">Cancelar</button>
+                            <button type="button" class="btn btn-danger" id="cancelarModalUsuario" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-success" id="aceptarModalUsuario">Aceptar</button>
                         </div>
 

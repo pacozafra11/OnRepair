@@ -84,11 +84,29 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
     
-    /* Borrar los campos del modal */
+    /* Reinicia por completo los valores del modal */
     function borrarCamposModal(){
         $('#inputNombreUsuario').val("");
-        $('#inputEmailUsuario').val("");        
+        $('#inputNombreUsuario').css("border", "none");
+        $("#errNombre").hide();
+        $('#inputEmailUsuario').val(""); 
+        $('#inputEmailUsuario').css("border", "none");
+        $("#errEmail").hide();
+        $('#inputPasswordUsuario').val("");
+        $('#inputPasswordUsuario').css("border", "none");
+        $("#errPass").hide();
+        $('#inputConfPassUsuario').val(""); 
+        $('#inputConfPassUsuario').css("border", "none"); 
+        $("#errConfPass").hide();     
     }
+
+
+    //En caso de cerrar el modal con el botón "Cancelar" o con el botón de la X, en la esquina superior derecha
+    $("#modalUsuario").on("hidden.bs.modal", function () {
+        borrarCamposModal();
+    });
+
+
 
 
     /* Función para mostrar los roles existentes en select del modal, con excepciones */
@@ -187,7 +205,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
-
     /* Al pulsar sobre alguna de las opciones del desplegable Rol */
     $(document).on("click", ".rol", function(e) {
 
@@ -201,13 +218,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
         e.preventDefault();
         $('#inputBloqueUsuario').text($(this).text());
-    });
-
-
-    /* Al pulsar sobre de botón "Cancelar" del Modal vacío los campos*/
-    $(document).on("click", "#cancelarModalUsuario", function() {              
-        borrarCamposModal();  
-        $('#modalUsuario').modal('hide');          
     });
 
 
@@ -234,7 +244,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 } else{
                 
                     $('#modalUsuario').modal('hide');
-                    mostrarUsuarios()
+                    mostrarUsuarios();
                     $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción,<br>revisa y modifica los datos introducidos</b></p>');
                     $("#modalInfo").modal('show');
                     setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
@@ -251,11 +261,14 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
     /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
     $(document).on("click", "#aceptarModalUsuario", function(e) {  
+        e.preventDefault();
+
         //Declaro los patrones a comparar
         let expNombre = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,50}$/;
         let expEmail = /^[a-zA-Z0-9ñÑ_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;  
         let expPass = /^[a-zA-Z0-9ñÑ\s]{4,20}$/;
         let accionUsuario;    
+        let nuevo;
 
         //Recojo el valor de los campos rellenados
         let id = $('#inputIdUsuario').val();
@@ -266,6 +279,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         let pass = $('#inputPasswordUsuario').val();
         let confpass = $('#inputConfPassUsuario').val();
 
+        $('#tituloModalUsuario').text() === "Nuevo Usuario" ? nuevo = 1 : nuevo = 0;
 
         //Compruebo cada campo y maqueto efectos en el formulario
         //Campo nombre
@@ -289,7 +303,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 $('#inputEmailUsuario').css("border", "3px solid #03c003");
 
                 //Si el modal es para crear usuario o para modificarlo
-                if($('#tituloModalUsuario').text() == "Nuevo Usuario"){
+                if(nuevo == 1){
                     
                     //Campo password o contraseña
                     if(!expPass.test(pass)){

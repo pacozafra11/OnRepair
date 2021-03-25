@@ -20,19 +20,17 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                     let info = JSON.parse(respuesta);
                     let resultado = '';
                     let id = "";
+                    let botones = "";
                     info.forEach(buscado => {
                         id = buscado.id;
+                        if($('#rol').text() === "Administrador" || $('#rol').text() === "Responsable"){                            
+                            botones = "<button type='button' class='actualizarAveria btn btn-outline-primary m-1'><ion-icon name='create' class='pt-1'></ion-icon></button>&nbsp<button type='button' class='eliminarAveria btn btn-outline-danger m-1'><ion-icon name='trash' class='pt-1'></ion-icon></button>";
+                        }
                         resultado +=`<tr id="${id}">
                             <td class="id align-middle">${id}</td>
                             <td class="nombre align-middle">${buscado.nombre}</td>                                        
                             <td class="botonesGrupos text-right">
-                                <button type="button" class="actualizarAveria btn btn-outline-primary">
-                                    <ion-icon name="create" class="pt-1"></ion-icon>
-                                </button> 
-                                &nbsp 
-                                <button type="button" class="eliminarAveria btn btn-outline-danger">
-                                    <ion-icon name="trash" class="pt-1"></ion-icon>
-                                </button>
+                                ${botones}
                             </td>
                         </tr>`;                                                
                               

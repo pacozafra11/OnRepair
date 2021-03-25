@@ -19,9 +19,11 @@
                         <h2 class="mt-1 text-info"><ion-icon name="flash" class="lead text-warning"></ion-icon> TIPOS DE AVERÍAS</h2>                        
                     </div>
                 
-                    <div class="col-lg-3 text-right">
-                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearAveria">Nuevo Tipo de Avería</button>
-                    </div>
+                    <?php if($rol === "Administrador" || $rol === "Responsable"){
+                        echo '<div class="col-lg-4 text-right">
+                                <button type="button" class="btn btn-success mt-2 mr-3" id="crearAveria">Nuevo Tipo de Avería</button>
+                            </div>';}
+                    ?>
                 </div>
 
                 <!-- Contenedor que alojará los tipos de averías a mostrar -->

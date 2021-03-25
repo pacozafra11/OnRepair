@@ -86,6 +86,7 @@
                         //Creo la sesión y le asigno el login y la hora de conexión
                         session_start();
                         
+                        $_SESSION['id'] = $registro["id"];
                         $_SESSION['login'] = $login;
                         $_SESSION['hora'] = date('H:i:s');
                         $_SESSION['rol'] = $registro["rol"];
@@ -534,6 +535,7 @@
         */
         public function accionUsuario($accion, $id, $nombre, $rol, $email, $bloque, $pass){
             $realizado = "";
+            $afectado=0;
             $conexion = $this->accesoDB();
 
             /* Si la acción es Modificar un usuario existente */
@@ -569,6 +571,17 @@
                 $resultado->bindParam(':id', $id);     
                 $resultado->execute();
                 $afectado=$resultado->rowCount();
+
+            } elseif ($accion == "Cambiar Contrasena") { 
+                $sql="UPDATE usuarios SET password=:password WHERE id=:id";
+                $resultado=$conexion->prepare($sql);  
+                $resultado->bindParam(':id', $id);         
+                    //Cifro la contraseña con hash
+                    $password=password_hash($pass, PASSWORD_DEFAULT);
+                $resultado->bindParam(':password', $password);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
             }
 
             if($afectado!=0){

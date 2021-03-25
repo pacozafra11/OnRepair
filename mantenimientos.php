@@ -19,9 +19,11 @@
                         <h2 class="mt-1 text-info"><ion-icon name="construct" class="lead text-warning"></ion-icon> TIPOS DE MANTENIMIENTO</h2>                        
                     </div>
                 
-                    <div class="col-lg-4 text-right">
-                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearManteni">Nuevo Tipo de Mantenimiento</button>
-                    </div>
+                    <?php if($rol === "Administrador" || $rol === "Responsable"){
+                        echo '<div class="col-lg-4 text-right">
+                                <button type="button" class="btn btn-success mt-2 mr-3" id="crearManteni">Nuevo Tipo de Mantenimiento</button>
+                            </div>';}
+                    ?>
                 </div>
 
                 <!-- Contenedor que alojará los tipos de mantenimineto a mostrar -->
