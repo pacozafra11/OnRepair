@@ -99,7 +99,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
                 if(confirm("¿Seguro que desea cambiar la contraseña?")){
 
-
                     //Recojo los datos
                     accionUsuario = {
                         accion: "Cambiar Contrasena",
@@ -327,7 +326,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                         id = buscado.id;
                         resultado +=
                         `<div class="row m-3" id="${id}">
-                            <div class="col-lg-12 bg-light text-dark border">                               
+                            <div class="col-lg-12 bg-light text-dark border pt-2">                               
                                 <div class="row">
                                     <div class="col-lg-1"><span class="text-success font-weight-bold">Id: </span>${id}</div>
                                     <div class="col-lg-2"><span class="text-success font-weight-bold">Nombre: </span>${buscado.nombre}</div>

@@ -60,14 +60,14 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <input type="hidden" name="inputIdManteni" id="inputIdManteni">
-                                <label for="inputNombreManteni">Tipo de Mantenimiento</label>
-                                <input type="text" class="form-control" name="inputNombreManteni" id="inputNombreManteni" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,50}" autofocus required> 
-                                <span class="errorModal" id="errNombreManteni">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , entre 3 y 50 caracteres</span>
+                                <label for="inputNombreManteni" class="text-success ml-2">Tipo de Mantenimiento *</label>
+                                <input type="text" class="form-control" name="inputNombreManteni" id="inputNombreManteni" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,50}"  mixlength="3" maxlength="50" autofocus required> 
+                                <span class="errorModal" id="errNombreManteni">Solo admite letras mayúsculas, minúsculas, números y los signos ". , - () " , entre 3 y 50 caracteres</span>
                             </div>                       
                         </div>
                         <div class="row mt-2">
                             <div class="col-lg-12 text-center text-warning">
-                                <span>* Campos requeridos, no pueden quedar vacíos</span> 
+                                <span>* Campo requerido, no pueden quedar vacío</span> 
                             </div>                     
                         </div>
                     </div>

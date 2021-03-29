@@ -92,11 +92,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     });
 
 
-    /* Al pulsar sobre de botón "Cancelar" del Modal vacío los campos*/
-    $(document).on("click", "#cancelarModalRol", function() {             
-        borrarCamposModal();  
-        $('#modalRol').modal('hide');          
-    });
 
 
     var accionRol;

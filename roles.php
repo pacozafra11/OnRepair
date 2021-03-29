@@ -72,8 +72,8 @@
                                 <div class="col-lg-12">
                                     <input type="hidden" name="inputIdRol" id="inputIdRol">
                                     <label for="inputNombreRol" class="text-success ml-2">Rol *</label>
-                                    <input type="text" class="form-control" name="inputNombreRol" id="inputNombreRol" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,20}" autofocus required> 
-                                    <span class="errorModal" id="errNombreRol">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , entre 3 y 20 caracteres</span>
+                                    <input type="text" class="form-control" name="inputNombreRol" id="inputNombreRol" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,20}" mixlength="3" maxlength="20" autofocus required> 
+                                    <span class="errorModal" id="errNombreRol">Solo admite letras mayúsculas, minúsculas y números, entre 3 y 20 caracteres</span>
                                 </div>                       
                             </div>
                             <div class="row mt-2">

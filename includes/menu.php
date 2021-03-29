@@ -114,12 +114,12 @@
                                     <div class="row mt-3 mb-3">
                                         <div class="col-lg-6">
                                             <label for="passwordUsuario"class="text-success ml-2">Password</label>
-                                            <input type="password" class="form-control" name="passwordUsuario" id="passwordUsuario" placeholder="Añadir Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}">
-                                            <span class="errorModal" id="errPass">Solo admite letras (mayúsculas y minúsculas) y números, entre 4 y 20 caracteres</span>
+                                            <input type="password" class="form-control" name="passwordUsuario" id="passwordUsuario" placeholder="Añadir Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}"  mixlength="4" maxlength="20" autofocus required>
+                                            <span class="errorModal" id="errPass">Solo admite letras mayúsculas, minúsculas y números, entre 4 y 20 caracteres</span>
                                         </div> 
                                         <div class="col-lg-6">
                                             <label for="confPassUsuario"class="text-success ml-2">Confirmar Password</label>
-                                            <input type="password" class="form-control" name="confPassUsuario" id="confPassUsuario" placeholder="Confirmar Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}"> 
+                                            <input type="password" class="form-control" name="confPassUsuario" id="confPassUsuario" placeholder="Confirmar Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}"  mixlength="4" maxlength="20" required> 
                                             <span class="errorModal" id="errConfPass">Las contraseñas deben coincidir</span>
                                         </div>                      
                                     </div>

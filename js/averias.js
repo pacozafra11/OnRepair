@@ -51,11 +51,20 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     mostrarAverias();
 
 
-    /* Borrar campos modal */
+    /* Reinicia por completo los valores del modal */
     function borrarCamposModal(){
-        $('#inputNombreAveria').val("");
         $('#inputIdAveria').val("");
-    }
+        $('#inputNombreAveria').val("");
+        $('#inputNombreAveria').css("border", "none");
+        $("#errNombreAveria").hide();        
+    } 
+
+
+    //En caso de cerrar el modal con el botón "Cancelar" o con el botón de la X, en la esquina superior derecha
+    $("#modalManteni").on("hidden.bs.modal", function () {
+        borrarCamposModal();
+    });
+
     
 
     /* Al pulsar sobre de botón "Nuevo Tipo de Averia" en la página Tipos de Averías */
@@ -80,39 +89,13 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     });
 
 
-    /* Al pulsar sobre de botón "Cancelar" del Modal vacío los campos*/
-    $(document).on("click", "#cancelarModalAveria", function() {              
-        borrarCamposModal();  
-        $('#modalAveria').modal('hide');          
-    });
+    
+    var accionAveria;
 
-
-    /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
-    $(document).on("click", "#aceptarModalAveria", function() {         
-        let accionAveria;
-
-        if($('#tituloModalAveria').text()=="Nuevo Tipo de Averia") { 
-
-            //Recojo los datos
-            accionAveria = {
-                accion: $('#tituloModalAveria').text(),
-                id: 0,
-                nombre: $('#inputNombreAveria').val()
-            };
-        
-        } else if($('#tituloModalAveria').text()=="Modificar Tipo de Averia"){
-
-            //Recojo los datos
-            accionAveria = {
-                accion: $('#tituloModalAveria').text(),
-                id: $('#inputIdAveria').val(),
-                nombre: $('#inputNombreAveria').val()
-            };
-
-        }
-
-        //Petición ajax
-        $.ajax({
+    /* Función con la llamada Ajax para pasar el parámetro accionAveria con todos los datos recogidos para Crear, Modificar o Eliminar un tipo de avería*/
+    function accionAverias(accionAveria){
+         //Petición ajax
+         $.ajax({
             url:'includes/functions.php',
             type: 'POST',
             data: { accionAveria },
@@ -141,14 +124,51 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
             error: function(estado, error) {
                 console.log("-Error producido: " + error + ". -Estado: " + estado)
             }
-        });         
+        }); 
+    }
+
+
+
+    /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
+    $(document).on("click", "#aceptarModalAveria", function(e) {         
+        //Detengo la acción por defecto del envío del formulario y su propagación
+        e.preventDefault();
+        e.stopPropagation();
+ 
+        //Declaro el patron a comparar
+        let expNombre = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\(\)\s]{3,50}$/;     
+     
+        //Recojo el valor del campo rellenado
+        let id = $('#inputIdAveria').val();
+        let nombre = $('#inputNombreAveria').val();         
+         
+        //Compruebo el campo y maqueto efectos en el formulario
+        //Campo Nombre
+        if(!expNombre.test(nombre)){
+            $("#errNombreAveria").fadeIn();
+            $('#inputNombreAveria').focus().css("border", "3px solid red");
+            return false;
+
+        } else {
+            $("#errNombreAveria").hide();
+            $('#inputNombreAveria').css("border", "3px solid #03c003");
+
+            //Recojo los datos
+            accionAveria = {
+                accion: $('#tituloModalAveria').text(),
+                id: id,
+                nombre: nombre
+            };
+                    
+            //LLamo a la función y le paso los datos por parámetro para la petición Ajax
+            accionAverias(accionAveria);            
+        }        
                     
     });
 
 
     /* Al pulsar sobre el botón "Borrar" de algún registro */
     $(document).on("click", ".eliminarAveria", function() {         
-        let accionAveria; 
         id = $(this).parent().siblings('.id').text();
         nombre = $(this).parent().siblings('.nombre').text(); 
 
@@ -160,35 +180,8 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 nombre: nombre
             };
 
-            //Petición ajax
-            $.ajax({
-                url:'includes/functions.php',
-                type: 'POST',
-                data: { accionAveria },
-                success: function(respuesta){
-                    
-                    //Si se ha modificado
-                    if(respuesta=="si"){
-
-                        mostrarAverias();
-                        $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="checkmark-circle-outline"></ion-icon> <b>La acción se ha realizado correctamente</b></p>');
-                        $("#modalInfo").modal('show');
-                        setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                                                                
-                    //Si no se ha modificdo
-                    } else{
-                    
-                        mostrarAverias();
-                        $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción,<br>revisa y modifica los datos introducidos</b></p>');
-                        $("#modalInfo").modal('show');
-                        setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                    }
-                },
-                // Si la petición falla, devuelve en consola el error producido y el estado
-                error: function(estado, error) {
-                    console.log("-Error producido: " + error + ". -Estado: " + estado)
-                }
-            });
+            //LLamo a la función y le paso los datos por parámetro para la petición Ajax
+            accionAverias(accionAveria);
 
         }
     });

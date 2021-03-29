@@ -50,12 +50,20 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     /* Invoco la función */
     mostrarMantenimientos();
 
-    
-    /* Borrar los campos del modal */
+
+    /* Reinicia por completo los valores del modal */
     function borrarCamposModal(){
-        $('#inputNombreGrupo').val("");
-        $('#inputIdGrupo').val("");
-    }
+        $('#inputIdManteni').val("");
+        $('#inputNombreManteni').val("");
+        $('#inputNombreManteni').css("border", "none");
+        $("#errNombreManteni").hide();        
+    } 
+
+
+    //En caso de cerrar el modal con el botón "Cancelar" o con el botón de la X, en la esquina superior derecha
+    $("#modalManteni").on("hidden.bs.modal", function () {
+        borrarCamposModal();
+    });
     
 
     /* Al pulsar sobre de botón "Nuevo Tipo de Mantenimiento" en la página Tipos de Mantenimiento */
@@ -80,37 +88,12 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     });
 
 
-    /* Al pulsar sobre de botón "Cancelar" del Modal vacío los campos*/
-    $(document).on("click", "#cancelarModalManteni", function() {              
-        borrarCamposModal();  
-        $('#modalManteni').modal('hide');          
-    });
 
 
-    /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
-    $(document).on("click", "#aceptarModalManteni", function() {         
-        let accionManteni;
+    var accionManteni;
 
-        if($('#tituloModalManteni').text()=="Nuevo Tipo de Mantenimiento") { 
-
-            //Recojo los datos
-            accionManteni = {
-                accion: $('#tituloModalManteni').text(),
-                id: 0,
-                nombre: $('#inputNombreManteni').val()
-            };
-        
-        } else if($('#tituloModalManteni').text()=="Modificar Tipo de Mantenimiento"){
-
-            //Recojo los datos
-            accionManteni = {
-                accion: $('#tituloModalManteni').text(),
-                id: $('#inputIdManteni').val(),
-                nombre: $('#inputNombreManteni').val()
-            };
-
-        }
-
+    /* Función con la llamada Ajax para pasar el parámetro accionManteni con todos los datos recogidos para Crear, Modificar o Eliminar un tipo de mantenimiento*/
+    function accionMantenimiento(accionManteni){
         //Petición ajax
         $.ajax({
             url:'includes/functions.php',
@@ -141,14 +124,52 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
             error: function(estado, error) {
                 console.log("-Error producido: " + error + ". -Estado: " + estado)
             }
-        });         
+        }); 
+    }
+
+
+
+    /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
+    $(document).on("click", "#aceptarModalManteni", function(e) {         
+        //Detengo la acción por defecto del envío del formulario y su propagación
+        e.preventDefault();
+        e.stopPropagation();
+ 
+        //Declaro el patron a comparar
+        let expNombre = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\(\)\s]{3,50}$/;     
+     
+        //Recojo el valor del campo rellenado
+        let id = $('#inputIdManteni').val();
+        let nombre = $('#inputNombreManteni').val();         
+         
+        //Compruebo el campo y maqueto efectos en el formulario
+        //Campo Nombre
+        if(!expNombre.test(nombre)){
+            $("#errNombreManteni").fadeIn();
+            $('#inputNombreManteni').focus().css("border", "3px solid red");
+            return false;
+
+        } else {
+            $("#errNombreManteni").hide();
+            $('#inputNombreManteni').css("border", "3px solid #03c003");
+
+            //Recojo los datos
+            accionManteni = {
+                accion: $('#tituloModalManteni').text(),
+                id: id,
+                nombre: nombre
+            };
                     
-    });
+            //LLamo a la función y le paso los datos por parámetro para la petición Ajax
+            accionMantenimiento(accionManteni);            
+        }
+    }); 
+
+    
 
 
     /* Al pulsar sobre el botón "Borrar" de algún registro */
     $(document).on("click", ".eliminarManteni", function() {         
-        let accionManteni; 
         id = $(this).parent().siblings('.id').text();
         nombre = $(this).parent().siblings('.nombre').text(); 
 
@@ -160,36 +181,8 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 nombre: nombre
             };
 
-            //Petición ajax
-            $.ajax({
-                url:'includes/functions.php',
-                type: 'POST',
-                data: { accionManteni },
-                success: function(respuesta){
-                    
-                    //Si se ha modificado
-                    if(respuesta=="si"){
-
-                        mostrarMantenimientos();
-                        $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="checkmark-circle-outline"></ion-icon> <b>La acción se ha realizado correctamente</b></p>');
-                        $("#modalInfo").modal('show');
-                        setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                                                                
-                    //Si no se ha modificdo
-                    } else{
-                    
-                        mostrarMantenimientos();
-                        $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción,<br>revisa y modifica los datos introducidos</b></p>');
-                        $("#modalInfo").modal('show');
-                        setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                    }
-                },
-                // Si la petición falla, devuelve en consola el error producido y el estado
-                error: function(estado, error) {
-                    console.log("-Error producido: " + error + ". -Estado: " + estado)
-                }
-            });
-
+            //LLamo a la función y le paso los datos por parámetro para la petición Ajax
+            accionMantenimiento(accionManteni);
         }
     });
 

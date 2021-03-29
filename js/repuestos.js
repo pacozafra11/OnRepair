@@ -165,9 +165,9 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         e.stopPropagation();
 
         //Declaro los patrones a comparar
-        let expRef = /^[a-zA-Z0-9ñÑ,.-]{3,12}/;
-        let expNombre = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]{3,50}$/;  
-        let expDesc = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ,.-\s]{0,800}$/;    
+        let expRef = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\(\)\s]{3,12}/;
+        let expNombre = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\(\)\s]{3,50}$/;  
+        let expDesc = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\(\)\s]{0,800}$/;    
     
         //Recojo el valor de los campos rellenados
         let ref = $('#inputIdRepuesto').val();

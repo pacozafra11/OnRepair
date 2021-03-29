@@ -15,7 +15,7 @@
                 <div class="row pb-2"> 
                     
                     <!-- Contenedor que contiene el título de la página -->
-                    <div class="col-lg-9 text-left mt-2">
+                    <div class="col-lg-8 text-left mt-2">
                         <h2 class="mt-1 text-info"><ion-icon name="flash" class="lead text-warning"></ion-icon> TIPOS DE AVERÍAS</h2>                        
                     </div>
                 
@@ -58,19 +58,22 @@
 
                     <div class="modal-body bg-light justify-content-center">
                         <div class="row">
-                            <div class="col-lg-2">
-                                <label for="inputIdAveria">Id</label>
-                                <input type="text" class="form-control" name="inputIdAveria" id="inputIdAveria" placeholder=" --" readonly> 
-                            </div>
-                            <div class="col-lg-10">
-                                <label for="inputNombreAveria">Tipo de Averia</label>
-                                <input type="text" class="form-control" name="inputNombreAveria" id="inputNombreAveria" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,20}" autofocus required> 
+                            <div class="col-lg-12">
+                                <input type="hidden" name="inputIdAveria" id="inputIdAveria"> 
+                                <label for="inputNombreAveria" class="text-success ml-2">Tipo de Averia *</label>
+                                <input type="text" class="form-control" name="inputNombreAveria" id="inputNombreAveria" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,50}" mixlength="3" maxlength="50" autofocus required> 
+                                <span class="errorModal" id="errNombreAveria">Solo admite letras mayúsculas, minúsculas, números y los signos " . , - () " , entre 3 y 50 caracteres</span>
                             </div>                       
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-12 text-center text-warning">
+                                <span>* Campo requerido, no pueden quedar vacío</span> 
+                            </div>                     
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="cancelarModalAveria">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="cancelarModalAveria" data-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-success" id="aceptarModalAveria">Aceptar</button>
                     </div>
                 </div>
