@@ -493,6 +493,52 @@
 
 
 
+        public function accionRepuesto($accion, $id_old, $id_new, $nombre, $desc){
+            $realizado = "";
+            $afectado=0;
+            $conexion = $this->accesoDB();
+
+            /* Si la acción es Modificar un repuesto existente */
+            if ($accion == "Modificar Repuesto"){
+                $sql="UPDATE repuestos SET referencia=:idNew, nombre=:nombre, descripcion=:descripcion WHERE referencia=:idOld";
+                $resultado=$conexion->prepare($sql);  
+                $resultado->bindParam(':idOld', $id_old); 
+                $resultado->bindParam(':idNew', $id_new);        
+                $resultado->bindParam(':nombre', $nombre);
+                $resultado->bindParam(':descripcion', $desc);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+            /* Si la acción es crear un nuevo repuesto */
+            } elseif ($accion == "Nuevo Repuesto") {
+                $sql="INSERT INTO repuestos (referencia, nombre, descripcion) VALUES (:idNew, :nombre, :descripcion)";
+                $resultado=$conexion->prepare($sql);           
+                $resultado->bindParam(':idNew', $id_new);        
+                $resultado->bindParam(':nombre', $nombre);
+                $resultado->bindParam(':descripcion', $desc);                   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+                /* Si la acción es borrar un repuesto existente */
+            } elseif ($accion == "Borrar Repuesto") {                
+                $sql="DELETE FROM repuestos WHERE referencia=:idOld";
+                $resultado = $conexion->prepare($sql);     
+                $resultado->bindParam(':idOld', $id_old);     
+                $resultado->execute();
+                $afectado=$resultado->rowCount();
+
+            }
+
+            if($afectado!=0){
+                $realizado = "si";            
+            }else{
+                $realizado = "no";
+            }
+            return $realizado;
+        }
+
+
+
         /* ---------------------------------------------------------------------USUARIOS----------------------------------------------------------------------------------------- */
 
         /*
@@ -564,7 +610,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-                /* Si la acción es borrar un rol existente */
+                /* Si la acción es borrar un usuario existente */
             } elseif ($accion == "Borrar Usuario") {                
                 $sql="DELETE FROM usuarios WHERE id=:id";
                 $resultado = $conexion->prepare($sql);     

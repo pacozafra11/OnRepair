@@ -39,8 +39,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
 
-                    <form id="formularioModal">
-
+                    <form>
                         <div class="modal-header">
                             <h5 class="modal-title text-info" id="tituloModalUsuario"></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -52,8 +51,8 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <input type="hidden" class="inputIdUsuario" id="inputIdUsuario">
-                                    <label for="inputNombreUsuario" class="text-success ml-2">Nombre</label>
-                                    <input type="text" class="form-control" name="inputNombreUsuario" id="inputNombreUsuario" placeholder="Añadir Nombre ..."> 
+                                    <label for="inputNombreUsuario" class="text-success ml-2">Nombre *</label>
+                                    <input type="text" class="form-control" name="inputNombreUsuario" id="inputNombreUsuario" placeholder="Añadir Nombre ..." required> 
                                     <span class="errorModal" id="errNombre">Solo admite letras mayúsculas y minúsculas, entre 3 y 50 caracteres</span>
                                 </div> 
                                 <div class="col-lg-6">
@@ -67,7 +66,7 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-lg-6">
-                                    <label for="inputEmailUsuario"class="text-success ml-2">Email</label>
+                                    <label for="inputEmailUsuario"class="text-success ml-2">Email *</label>
                                     <input type="email" class="form-control" name="inputEmailUsuario" id="inputEmailUsuario" placeholder="Añadir Email ..." required>
                                     <span class="errorModal" id="errEmail">Introducir un formato válido de Email</span> 
                                 </div> 
@@ -83,15 +82,20 @@
                             </div>
                             <div id="filaPassword" class="row mt-4 mb-4">
                                 <div class="col-lg-6">
-                                    <label for="inputPasswordUsuario"class="text-success ml-2">Password</label>
+                                    <label for="inputPasswordUsuario"class="text-success ml-2">Password *</label>
                                     <input type="password" class="form-control" name="inputPasswordUsuario" id="inputPasswordUsuario" placeholder="Añadir Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}">
                                     <span class="errorModal" id="errPass">Solo admite letras (mayúsculas y minúsculas) y números, entre 4 y 20 caracteres</span>
                                 </div> 
                                 <div class="col-lg-6">
-                                    <label for="inputConfPassUsuario"class="text-success ml-2">Confirmar Password</label>
+                                    <label for="inputConfPassUsuario"class="text-success ml-2">Confirmar Password *</label>
                                     <input type="password" class="form-control" name="inputConfPassUsuario" id="inputConfPassUsuario" placeholder="Confirmar Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}"> 
                                     <span class="errorModal" id="errConfPass">Las contraseñas deben coincidir</span>
                                 </div>                      
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-lg-12 text-center text-warning">
+                                    <span>* Campos requeridos, no pueden quedar vacíos</span> 
+                                </div>                     
                             </div>
                         </div>
 

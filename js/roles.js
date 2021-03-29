@@ -53,17 +53,27 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     mostrarRoles();
 
 
-    /* Borrar los campos del modal */
+    /* Reinicia por completo los valores del modal */
     function borrarCamposModal(){
-        $('#inputNombreGrupo').val("");
-        $('#inputIdGrupo').val("");
-    }
+        $('#inputIdRol').val("");
+        $('#inputNombreRol').val("");
+        $('#inputNombreRol').css("border", "none");
+        $("#errNombreRol").hide();        
+    } 
+
+
+    //En caso de cerrar el modal con el botón "Cancelar" o con el botón de la X, en la esquina superior derecha
+    $("#modalRol").on("hidden.bs.modal", function () {
+        borrarCamposModal();
+    });
     
+
 
     /* Al pulsar sobre de botón "Nuevo Rol" en la página Rol */
     $(document).on("click", "#crearRol", function() {  
         borrarCamposModal();         
         $('#tituloModalRol').text('Nuevo Rol');
+        $('#inputIdRol').val("");
         $('#modalRol').modal('show');  
                     
     });
@@ -89,30 +99,10 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     });
 
 
-    /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
-    $(document).on("click", "#aceptarModalRol", function() {         
-        let accionRol;
+    var accionRol;
 
-        if($('#tituloModalRol').text()=="Nuevo Rol") { 
-
-            //Recojo los datos
-            accionRol = {
-                accion: $('#tituloModalRol').text(),
-                id: 0,
-                nombre: $('#inputNombreRol').val()
-            };
-        
-        } else if($('#tituloModalRol').text()=="Modificar Rol"){
-
-            //Recojo los datos
-            accionRol = {
-                accion: $('#tituloModalRol').text(),
-                id: $('#inputIdRol').val(),
-                nombre: $('#inputNombreRol').val()
-            };
-
-        }
-
+    /* Función con la llamada Ajax para pasar el parámetro accionRol con todos los datos recogidos para Crear, Modificar o Eliminar un rol*/
+    function accionRoles(accionRol){
         //Petición ajax
         $.ajax({
             url:'includes/functions.php',
@@ -143,14 +133,53 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
             error: function(estado, error) {
                 console.log("-Error producido: " + error + ". -Estado: " + estado)
             }
-        });         
+        }); 
+    }
+
+
+
+
+    /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
+    $(document).on("click", "#aceptarModalRol", function(e) {  
+        //Detengo la acción por defecto del envío del formulario y su propagación
+        e.preventDefault();
+        e.stopPropagation();
+ 
+        //Declaro el patron a comparar
+        let expNombre = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]{3,20}$/;     
+     
+        //Recojo el valor del campo rellenado
+        let id = $('#inputIdRol').val();
+        let nombre = $('#inputNombreRol').val();         
+         
+        //Compruebo el campo y maqueto efectos en el formulario
+        //Campo Nombre
+        if(!expNombre.test(nombre)){
+            $("#errNombreRol").fadeIn();
+            $('#inputNombreRol').focus().css("border", "3px solid red");
+            return false;
+
+        } else {
+            $("#errNombreRol").hide();
+            $('#inputNombreRol').css("border", "3px solid #03c003");
+
+            //Recojo los datos
+            accionRol = {
+                accion: $('#tituloModalRol').text(),
+                id: id,
+                nombre: nombre
+            };
                     
-    });
+            //LLamo a la función y le paso los datos por parámetro para la petición Ajax
+            accionRoles(accionRol);            
+        }
+    }); 
+
+               
 
 
     /* Al pulsar sobre el botón "Borrar" de algún registro */
     $(document).on("click", ".eliminarRol", function() {         
-        let accionRol; 
         id = $(this).parent().siblings('.id').text();
         nombre = $(this).parent().siblings('.nombre').text(); 
 
@@ -162,35 +191,8 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 nombre: nombre
             };
 
-            //Petición ajax
-            $.ajax({
-                url:'includes/functions.php',
-                type: 'POST',
-                data: { accionRol },
-                success: function(respuesta){
-                    
-                    //Si se ha modificado
-                    if(respuesta=="si"){
-
-                        mostrarRoles();
-                        $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="checkmark-circle-outline"></ion-icon> <b>La acción se ha realizado correctamente</b></p>');
-                        $("#modalInfo").modal('show');
-                        setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                                                                
-                    //Si no se ha modificdo
-                    } else{
-                    
-                        mostrarRoles();
-                        $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción,<br>revisa y modifica los datos introducidos</b></p>');
-                        $("#modalInfo").modal('show');
-                        setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
-                    }
-                },
-                // Si la petición falla, devuelve en consola el error producido y el estado
-                error: function(estado, error) {
-                    console.log("-Error producido: " + error + ". -Estado: " + estado)
-                }
-            });
+            //LLamo a la función y le paso los datos por parámetro para la petición Ajax
+            accionRoles(accionRol);
 
         }
     });

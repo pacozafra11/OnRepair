@@ -24,7 +24,7 @@
     <script type="text/javascript" src="js/functions.js"></script>
     <script type="text/javascript" src="js/roles.js"></script>
     <script type="text/javascript" src="js/usuarios.js"></script>
-    <!-- <script type="text/javascript" src="js/repuestos.js"></script> -->
+    <script type="text/javascript" src="js/repuestos.js"></script>
     <script type="text/javascript" src="js/mantenimientos.js"></script>
     <script type="text/javascript" src="js/averias.js"></script>
     <script type="text/javascript" src="js/grupos.js"></script>

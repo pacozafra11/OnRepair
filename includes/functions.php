@@ -195,6 +195,21 @@
     }
 
 
+    //Si recibe por el método POST el parámetro "accionRepuesto", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
+    if(isset($_POST['accionRepuesto'])){
+
+        if(!empty($_POST['accionRepuesto'])){
+            $accionRepuesto=$_POST['accionRepuesto'];
+            $accion=$accionRepuesto['accion'];
+            $id_old=htmlentities(addslashes($accionRepuesto['id_old']));
+            $id_new=htmlentities(addslashes($accionRepuesto['id_new']));
+            $nombre=htmlentities(addslashes($accionRepuesto['nombre']));
+            $desc=htmlentities(addslashes($accionRepuesto['desc']));
+        
+            $realizado = $db->accionRepuesto($accion, $id_old, $id_new, $nombre, $desc);            
+            echo $realizado;
+        }      
+    }
 
     /* ---------------------------------------------------------------Usuarios----------------------------------------------------------------- */
     

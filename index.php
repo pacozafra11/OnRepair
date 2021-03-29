@@ -56,6 +56,7 @@
         //Si todo está correcto, envío los datos a la función para comprobar si existe el usuario y si es correcta la contraseña
         if($emailOk && $passwordOk){
 
+            
             $error = $db->comprobarUsuario($email, $password);
 
             //Si es correcto el resultado redirecciono

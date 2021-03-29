@@ -19,9 +19,11 @@
                         <h2 class="mt-1 text-info"><ion-icon name="git-compare" class="lead text-warning"></ion-icon> REPUESTOS</h2>                        
                     </div>
                 
-                    <div class="col-lg-4 text-right">
-                        <button type="button" class="btn btn-success mt-2 mr-3" id="crearRepuesto">Nuevo Repuesto</button>
-                    </div>
+                    <?php if($rol === "Administrador" || $rol === "Responsable"){
+                        echo '<div class="col-lg-4 text-right">
+                                <button type="button" class="btn btn-success mt-2 mr-3" id="crearRepuesto">Nuevo Repuesto</button>
+                            </div>';}
+                    ?>
                 </div>
 
                 <!-- Contenedor que alojará las repuestos a mostrar -->
@@ -31,6 +33,62 @@
 
             </div>
         </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalRepuesto" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+
+                    <form>
+                        <div class="modal-header">
+                            <h5 class="modal-title text-info" id="tituloModalRepuesto"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body bg-light justify-content-center">
+                            <div class="row mt-3">
+                                <div class="col-lg-4">
+                                    <!-- <input type="hidden" class="inputIdRepuesto" id="inputIdRepuesto"> -->
+                                    <label for="inputIdRepuesto" class="text-success ml-2">Referencia *</label>
+                                    <input type="text" class="form-control" name="inputIdRepuesto" id="inputIdRepuesto" placeholder="Añadir referencia ..." required> 
+                                    <span class="errorModal" id="errIdRepuesto">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , entre 3 y 12 caracteres</span>
+                                </div> 
+                                <div class="col-lg-8">
+                                    <label for="inputNombreRepuesto" class="text-success ml-2">Nombre *</label>
+                                    <input type="text" class="form-control" name="inputNombreRepuesto" id="inputNombreRepuesto" placeholder="Añadir nombre ..." required> 
+                                    <span class="errorModal" id="errNombreRepuesto">Solo admite letras mayúsculas, minúsculas y números entre 3 y 50 caracteres</span>                                   
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <label for="inputDescRepuesto"class="text-success ml-2">Descripción</label>
+                                   <!--  <input type="email" class="form-control" name="inputDescRepuesto" id="inputDescRepuesto" placeholder="Añadir descripción ..."> -->
+                                    <textarea class="form-control" name="inputDescRepuesto" id="inputDescRepuesto" placeholder="Añadir descripción ..." rows="4" maxlength="800"></textarea>
+                                    <span class="errorModal" id="errDescRepuesto">Solo admite letras mayúsculas, minúsculas, números y los signos " . , - " , entre 0 y 800 caracteres</span> 
+                                </div>                     
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-lg-12 text-center text-warning">
+                                    <span>* Campos requeridos, no pueden quedar vacíos</span> 
+                                </div>                     
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" id="cancelarModalRepuesto" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success" id="aceptarModalRepuesto">Aceptar</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
 
     </div>
 </div>

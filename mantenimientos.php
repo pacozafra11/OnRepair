@@ -58,19 +58,22 @@
 
                     <div class="modal-body bg-light justify-content-center">
                         <div class="row">
-                            <div class="col-lg-2">
-                                <label for="inputIdManteni">Id</label>
-                                <input type="text" class="form-control" name="inputIdManteni" id="inputIdManteni" placeholder=" --" readonly> 
-                            </div>
-                            <div class="col-lg-10">
+                            <div class="col-lg-12">
+                                <input type="hidden" name="inputIdManteni" id="inputIdManteni">
                                 <label for="inputNombreManteni">Tipo de Mantenimiento</label>
-                                <input type="text" class="form-control" name="inputNombreManteni" id="inputNombreManteni" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,20}" autofocus required> 
+                                <input type="text" class="form-control" name="inputNombreManteni" id="inputNombreManteni" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,50}" autofocus required> 
+                                <span class="errorModal" id="errNombreManteni">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , entre 3 y 50 caracteres</span>
                             </div>                       
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-12 text-center text-warning">
+                                <span>* Campos requeridos, no pueden quedar vacíos</span> 
+                            </div>                     
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="cancelarModalManteni">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="cancelarModalManteni" data-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-success" id="aceptarModalManteni">Aceptar</button>
                     </div>
                 </div>

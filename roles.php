@@ -28,8 +28,9 @@
 
                 <div class="row">
                     <div class="alert alert-warning m-auto" role="alert">
-                        <span class="font-weight-bold ">¡Muy importante!</span>  Mucho cuidado al modificar los valores de "Administrador" y "Responsable",<br>
-                        se verá afectado el funcionamiento de la Web (como sus validaciones o permisos entre otros).
+                        <p class="font-weight-bold text-danger text-center">¡Muy importante!</p>
+                        <p class="text-center"><span class="font-weight-bold">NO MODIFICAR los valores NI ELIMINAR "Administrador" y "Responsable"</span>,<br>
+                        se verá afectado el funcionamiento de la Web (como sus validaciones o permisos entre otros).</p>
                     </div>
                 </div>
 
@@ -58,30 +59,35 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title text-info" id="tituloModalRol"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body bg-light justify-content-center">
-                        <div class="row">
-                            <div class="col-lg-2">
-                                <label for="inputIdRol">Id</label>
-                                <input type="text" class="form-control" name="inputIdRol" id="inputIdRol" placeholder=" --" readonly> 
-                            </div>
-                            <div class="col-lg-10">
-                                <label for="inputNombreRol">Rol</label>
-                                <input type="text" class="form-control" name="inputNombreRol" id="inputNombreRol" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,20}" autofocus required> 
-                            </div>                       
+                    <form>
+                        <div class="modal-header">
+                            <h5 class="modal-title text-info" id="tituloModalRol"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="cancelarModalRol">Cancelar</button>
-                        <button type="button" class="btn btn-success" id="aceptarModalRol">Aceptar</button>
-                    </div>
+                        <div class="modal-body bg-light justify-content-center">
+                            <div class="row">                          
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="inputIdRol" id="inputIdRol">
+                                    <label for="inputNombreRol" class="text-success ml-2">Rol *</label>
+                                    <input type="text" class="form-control" name="inputNombreRol" id="inputNombreRol" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,20}" autofocus required> 
+                                    <span class="errorModal" id="errNombreRol">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , entre 3 y 20 caracteres</span>
+                                </div>                       
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-lg-12 text-center text-warning">
+                                    <span>* Campos requeridos, no pueden quedar vacíos</span> 
+                                </div>                     
+                            </div>
+                        </div>                    
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" id="cancelarModalRol" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-success" id="aceptarModalRol">Aceptar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -261,11 +261,13 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
     /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
     $(document).on("click", "#aceptarModalUsuario", function(e) {  
+        //Detengo la acción por defecto del envío del formulario y su propagación
         e.preventDefault();
+        e.stopPropagation();
 
         //Declaro los patrones a comparar
         let expNombre = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,50}$/;
-        let expEmail = /^[a-zA-Z0-9ñÑ_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;  
+        let expEmail = /^[a-z0-9ñÑ_\.\-]+@[a-z0-9\-]+\.[a-z0-9\-\.]+$/;  
         let expPass = /^[a-zA-Z0-9ñÑ\s]{4,20}$/;
         let accionUsuario;    
         let nuevo;
@@ -334,17 +336,18 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                         id: 0,
                         nombre: nombre,
                         rol: rol,
-                        email: email.toLowerCase(),
+                        email: email.toLowerCase(),     //Paso todos los caractéres a minúscula...por si acaso
                         bloque: bloque,
                         pass: pass
                     };
                     
+                    //LLamo a la función y le paso los datos por paármetros para la petición Ajax
                     accionUsuarios(accionUsuario);
 
                 } else {
                     //Recojo los datos
                     accionUsuario = {
-                        accion: $('#tituloModalUsuario').text(),
+                        accion: $('#tituloModalUsuario').text(),    //Paso todos los caractéres a minúscula...por si acaso
                         id: id,
                         nombre: nombre,
                         rol: rol,
@@ -353,6 +356,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                         pass: 0
                     };
 
+                    //LLamo a la función y le paso los datos por paármetros para la petición Ajax
                     accionUsuarios(accionUsuario);
                 }  
             }
@@ -379,6 +383,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 pass: 0
             };
 
+            //LLamo a la función y le paso los datos por paármetros para la petición Ajax
             accionUsuarios(accionUsuario);
         }
     });
