@@ -113,3 +113,10 @@ body{
   display: none;
   margin-left: 7px;
 }
+
+
+/* Tamaño de letra para las clases desc, pertenecientes a todos los campos de Descripción */
+.desc{
+  font-size:0.9em;
+  font-style: italic;
+}

@@ -42,8 +42,8 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-12 pt-1">
-                                        <span class="text-success font-weight-bold">Descripción: </span><span class="desc">${buscado.descripcion}</span>
+                                    <div class="col-lg-12  pt-2 pb-2">
+                                        <span class="text-success font-weight-bold">Descripción: </span><span class="desc text-muted">${buscado.descripcion}</span>
                                     </div>
                                 </div>
                                                     
@@ -69,8 +69,8 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
-     /* Reinicia por completo los valores del modal */
-     function borrarCamposModal(){
+    /* Reinicia por completo los valores del modal */
+    function borrarCamposModal(){
         $('#inputIdRepuesto').val("");
         $('#inputIdRepuesto').css("border", "none");
         $("#errIdRepuesto").hide();

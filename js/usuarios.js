@@ -54,7 +54,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                                     ${botones}
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row pb-2">
                                 <div class="col-lg-6 pt-1">
                                     <span class="text-success font-weight-bold">Email: </span><span class="email">${buscado.email}</span>
                                 </div>
@@ -134,7 +134,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                         //Si el formulario/modal es para Modificar Usuario, se añade "selected" a la opción que conincida con el valor que tiene ese usuario actualmente,
                         // para que sea valor prederterminado.
                         } else {
-                            buscado.nombre != rol ? rol_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>" : rol_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>";
+                            buscado.nombre == rol ? rol_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>" : rol_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>";
                             resultado += rol_selec;
                         }
                      
@@ -150,7 +150,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                             //Si el formulario/modal es para Modificar Usuario, se añade "selected" a la opción que conincida con el valor que tiene ese usuario actualmente,
                             // para que sea valor prederterminado.
                             } else {
-                                buscado.nombre != rol ? rol_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>" : rol_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>";
+                                buscado.nombre == rol ? rol_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>" : rol_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>";
                                 resultado += rol_selec;
                             }
                         }                       
@@ -187,7 +187,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     $(document).on("click", ".actualizarUsuario", function() {  
         let id = $(this).parent().siblings().children().siblings('.id').text();           
         let nombre = $(this).parent().siblings().children().siblings('.nombre').text();
-        let rol = $(this).parent().siblings().children().siblings('.rol').text();
+        var rol = $(this).parent().siblings().children().siblings('.rol').text();
         let email = $(this).parent().parent().siblings().children().children().siblings('.email').text();
         let bloque = $(this).parent().parent().siblings().children().children().siblings('.bloqueado').text();
          
@@ -195,10 +195,8 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         $('#tituloModalUsuario').text('Modificar Usuario');
         $('#inputIdUsuario').val(id);
         $('#inputNombreUsuario').val(nombre);
-        $('#inputRolUsuario').val(rol);
         mostrarRoles(rol);
         $('#inputEmailUsuario').val(email);
-        $('#inputBloqueUsuario').filter(':selected').val();
         $('#filaPassword').hide();
         $('#modalUsuario').modal('show');          
     });

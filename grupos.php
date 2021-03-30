@@ -12,6 +12,7 @@
 
         <div class="content">
             <div class="container">
+                
                 <div class="row pb-2"> 
                     
                     <!-- Contenedor que contiene el título de la página -->

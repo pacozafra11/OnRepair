@@ -309,67 +309,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
-    //Funcion para mostrar todas las máquinas y sus datos en una tabla en la página "Maquinas"
-    function mostrarMaquinas(){
-        let maquinas = "";
-  
-            //Petición ajax
-            $.ajax({
-                url:'includes/functions.php',
-                type: 'POST',
-                data: { maquinas },
-                success: function(respuesta){
-                    let info = JSON.parse(respuesta);
-                    let resultado = '';
-                    let id = "";
-                    info.forEach(buscado => {
-                        id = buscado.id;
-                        resultado +=
-                        `<div class="row m-3" id="${id}">
-                            <div class="col-lg-12 bg-light text-dark border pt-2">                               
-                                <div class="row">
-                                    <div class="col-lg-1"><span class="text-success font-weight-bold">Id: </span>${id}</div>
-                                    <div class="col-lg-2"><span class="text-success font-weight-bold">Nombre: </span>${buscado.nombre}</div>
-                                    <div class="col-lg-2"><span class="text-success font-weight-bold">Marca: </span>${buscado.marca}</div>
-                                    <div class="col-lg-2"><span class="text-success font-weight-bold">Modelo: </span>${buscado.modelo}</div>
-                                    <div class="col-lg-3"><span class="text-success font-weight-bold">Grupo de Máquina: </span>${buscado.grupo}</div>
-                                    <div class="col-lg-2"> 
-                                        <button type="button" class="actualizarMaquina btn btn-outline-primary m-1">
-                                            <ion-icon name="create" class="pt-1"></ion-icon>
-                                        </button> 
-                    
-                                        <button type="button" class="eliminarMaquina btn btn-outline-danger m-1">
-                                            <ion-icon name="trash" class="pt-1"></ion-icon>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-12 pt-1">
-                                        <span class="text-success font-weight-bold">Descripción: </span>${buscado.descripcion}
-                                    </div>
-                                </div>    
-                                                           
-                            </div>                   
-                        </div>`;  
-                    });
-  
-                $("#cont_mostrar_maquinas").html(resultado);        
-                             
-  
-            },
-            // Si la petición falla, devuelve en consola el error producido y el estado
-            error: function(estado, error) {
-                console.log("-Error producido: " + error + ". -Estado: " + estado)
-  
-            }
-        });
-    }
-
-    /* Invoco la función */
-    mostrarMaquinas();
-
-
 
 
 });
