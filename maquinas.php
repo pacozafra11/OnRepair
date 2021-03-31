@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="modal-body bg-light justify-content-center">
-                    
+
                         <div class="row">
                             <!-- Nombre -->
                             <div class="col-lg-6">
@@ -71,7 +71,7 @@
                             <div class="col-lg-6">
                                 <label for="inputMarcaMaquina" class="text-success ml-2">Marca *</label>
                                 <input type="text" class="form-control" name="inputMarcaMaquina" id="inputMarcaMaquina" placeholder="Añadir marca ..." minlength="3" maxlength="50" required> 
-                                <span class="errorModal" id="errMarcaMaquina">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-()/" , entre 3 y 50 caracteres</span>                                   
+                                <span class="errorModal" id="errMarcaMaquina">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , entre 3 y 50 caracteres</span>                                   
                             </div>
                         </div>
 
@@ -80,7 +80,7 @@
                             <div class="col-lg-6">
                                 <label for="inputModeloMaquina" class="text-success ml-2">Modelo</label>
                                 <input type="text" class="form-control" name="inputModeloMaquina" id="inputModeloMaquina" placeholder="Añadir modelo ..." maxlength="50"> 
-                                <span class="errorModal" id="errModeloMaquina">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-()/" , entre 3 y 50 caracteres</span>
+                                <span class="errorModal" id="errModeloMaquina">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , entre 3 y 50 caracteres</span>
                             </div> 
                             <!-- Grupo de Máquinas -->
                             <div class="col-lg-6">
@@ -100,7 +100,7 @@
                                 <label for="inputDescMaquina"class="text-success ml-2">Descripción</label>
                                 
                                 <textarea class="form-control" name="inputDescMaquina" id="inputDescMaquina" placeholder="Añadir descripción ..." rows="3" maxlength="800"></textarea>
-                                <span class="errorModal" id="errDescMaquina">Solo admite letras mayúsculas, minúsculas, números y los signos " . , - () " , entre 0 y 800 caracteres</span> 
+                                <span class="errorModal" id="errDescMaquina">Solo admite letras mayúsculas, minúsculas, números y los signos " . , - " , máximo 800 caracteres</span> 
                             </div>                     
                         </div>
                         <div class="row mt-2">

@@ -159,7 +159,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
-    /* Función con la llamada Ajax para pasar el parámetro accionRepuesto con todos los datos recogidos para Crear, Modificar o Eliminar una Maquina*/
+    /* Función con la llamada Ajax para pasar el parámetro accionMaquina con todos los datos recogidos para Crear, Modificar o Eliminar una Maquina*/
     function accionMaquinas(accionMaquina){
         //Petición ajax
         $.ajax({
@@ -210,7 +210,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         let desc = $(this).parent().parent().siblings().children().children().siblings('.desc').text();  
          
         borrarCamposModal();   
-        $('#tituloModalMaquina').text('Modificar Maquina');
+        $('#tituloModalMaquina').text('Modificar Máquina');
         $('#inputIdMaquina').val(id);
         $('#inputNombreMaquina').val(nombre);
         $('#inputMarcaMaquina').val(marca);
@@ -223,5 +223,121 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
+
+     /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
+     $(document).on("click", "#aceptarModalMaquina", function(e) {  
+        //Detengo la acción por defecto del envío del formulario y su propagación
+        e.preventDefault();
+        e.stopPropagation();
+
+        //Declaro los patrones a comparar
+        let expNombre = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\(\)\/\s]{3,50}$/; 
+        let expMarca = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\s]{3,50}/;
+        let expModelo = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\s]{3,50}/;
+        let expDesc = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\s]{0,800}$/;    
+    
+        //Recojo el valor de los campos rellenados
+        let id = $('#inputIdMaquina').val();
+        let nombre = $('#inputNombreMaquina').val();
+        let marca = $('#inputMarcaMaquina').val();
+        let modelo = $('#inputModeloMaquina').val();
+        let grupo = $('#inputGrupoMaquina').val();
+        let desc = $('#inputDescMaquina').val();
+        
+        //Compruebo cada campo y maqueto efectos en el formulario
+        //Campo Nombre
+        if(!expNombre.test(nombre)){
+            $("#errNombreMaquina").fadeIn();
+            $('#inputNombreMaquina').focus().css("border", "3px solid red");
+            return false;
+        
+        } else {
+            $("#errNombreMaquina").hide();
+            $('#inputNombreMaquina').css("border", "3px solid #03c003");
+
+            //Campo Marca
+            if(!expMarca.test(marca)){
+                $("#errMarcaMaquina").fadeIn();
+                $('#inputMarcaMaquina').focus().css("border", "3px solid red");
+                return false;
+
+            } else {
+                $("#errMarcaMaquina").hide();
+                $('#inputMarcaMaquina').css("border", "3px solid #03c003");
+
+
+                if(!expModelo.test(modelo)){
+                    $("#errModeloMaquina").fadeIn();
+                    $('#inputModeloMaquina').focus().css("border", "3px solid red");
+                    return false;
+
+                } else {
+                    $("#errModeloMaquina").hide();
+                    $('#inputModeloMaquina').css("border", "3px solid #03c003");
+
+                    //Campo Grupo de máquina
+                    if(grupo==0){
+                        $("#errGrupoMaquina").fadeIn();
+                        $('#inputGrupoMaquina').focus().css("border", "3px solid red");
+                        return false;
+
+                    } else {
+                        $("#errGrupoMaquina").hide();
+                        $('#inputGrupoMaquina').css("border", "3px solid #03c003");
+                    
+                        //Campo Descripción
+                        if(!expDesc.test(desc)){
+                            $("#errDescMaquina").fadeIn();
+                            $('#inputDescMaquina').focus().css("border", "3px solid red");
+                            return false;
+
+                        } else {
+                            $("#errDescMaquina").hide();
+                            $('#inputDescMaquina').css("border", "3px solid #03c003");
+                            
+                            //Recojo los datos
+                            accionMaquina = {
+                                accion: $('#tituloModalMaquina').text(),
+                                id: id,
+                                nombre: nombre,
+                                marca: marca,
+                                modelo: modelo,
+                                grupo: grupo,
+                                desc: desc
+                            };
+                        
+                            //LLamo a la función y le paso los datos por parámetros para la petición Ajax
+                            accionMaquinas(accionMaquina);
+                        }
+                    }
+                }
+            }
+        }                           
+    });
+
+
+
+
+    /* Al pulsar sobre el botón "Borrar" de algún registro */
+    $(document).on("click", ".eliminarMaquina", function() {        
+        id = $(this).parent().siblings().children().siblings('.id').text();           
+        let nombre = $(this).parent().siblings().children().siblings('.nombre').text();
+
+        if(confirm("¿Seguro que quieres borrar la Maquina: " + nombre + "?")){
+            //Recojo los datos
+            accionMaquina = {
+                accion: "Borrar Máquina",
+                id: id,
+                nombre: nombre,
+                marca: "",
+                modelo: "",
+                grupo: 0,
+                desc: ""
+            };
+
+           //LLamo a la función y le paso los datos por parámetros para la petición Ajax
+           accionMaquinas(accionMaquina);
+        }
+    });
 
 });

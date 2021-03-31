@@ -68,7 +68,7 @@
                                 <div class="col-lg-12">
                                     <label for="inputDescRepuesto"class="text-success ml-2">Descripción</label>
                                     <textarea class="form-control" name="inputDescRepuesto" id="inputDescRepuesto" placeholder="Añadir descripción ..." rows="4" maxlength="800"></textarea>
-                                    <span class="errorModal" id="errDescRepuesto">Solo admite letras mayúsculas, minúsculas, números y los signos " . , - () " , entre 0 y 800 caracteres</span> 
+                                    <span class="errorModal" id="errDescRepuesto">Solo admite letras mayúsculas, minúsculas, números y los signos " . , - () " , máximo 800 caracteres</span> 
                                 </div>                     
                             </div>
                             <div class="row mt-2">

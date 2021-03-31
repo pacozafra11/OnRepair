@@ -243,6 +243,67 @@
 
 
 
+        /* 
+        *   Función para modificar, crear o borrar una Máquina
+        *
+        *    @param  string $accion, acción a realizar 
+        *    @param  int $id
+        *    @param  string $nombre
+        *    @param  string $marca
+        *    @param  string $modelo
+        *    @param  int $grupo  
+        *    @return string $desc
+        */
+        public function accionMaquina($accion, $id, $nombre, $marca, $modelo, $grupo, $desc){
+            $realizado = "";
+            $afectado=0;
+            $conexion = $this->accesoDB();
+
+            /* Si la acción es Modificar una máquina existente */
+            if ($accion == "Modificar Máquina"){
+                $sql="UPDATE maquinas SET nombre=:nombre, marca=:marca, modelo=:modelo, id_grupo=:grupo, descripcion=:descripcion WHERE id=:id";
+                $resultado=$conexion->prepare($sql);  
+                $resultado->bindParam(':id', $id);         
+                $resultado->bindParam(':nombre', $nombre);
+                $resultado->bindParam(':marca', $marca);
+                $resultado->bindParam(':modelo', $modelo);
+                $resultado->bindParam(':grupo', $grupo);
+                $resultado->bindParam(':descripcion', $desc);   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+            /* Si la acción es crear una nueva máquina*/
+            } elseif ($accion == "Nueva Máquina") {
+                $sql="INSERT INTO maquinas (nombre, marca, modelo, descripcion, id_grupo) VALUES (:nombre, :marca, :modelo, :descripcion, :grupo)";
+                $resultado=$conexion->prepare($sql);           
+                $resultado->bindParam(':nombre', $nombre);
+                $resultado->bindParam(':marca', $marca);
+                $resultado->bindParam(':modelo', $modelo);
+                $resultado->bindParam(':grupo', $grupo);
+                $resultado->bindParam(':descripcion', $desc);                    
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+                /* Si la acción es borrar una máquina existente */
+            } elseif ($accion == "Borrar Máquina") {                
+                $sql="DELETE FROM maquinas WHERE id=:id";
+                $resultado = $conexion->prepare($sql);     
+                $resultado->bindParam(':id', $id);     
+                $resultado->execute();
+                $afectado=$resultado->rowCount();
+
+            }
+
+            if($afectado!=0){
+                $realizado = "si";            
+            }else{
+                $realizado = "no";
+            }
+            return $realizado;
+        }
+
+
+
         /* ------------------------------------------------------------------GRUPOS DE MAQUINAS-------------------------------------------------------------------------------- */
 
         /* 
@@ -493,6 +554,15 @@
 
 
 
+        /* 
+        *   Función para modificar, crear o borrar un Repuesto
+        *
+        *    @param  string $accion, acción a realizar 
+        *    @param  int $id_old
+        *    @param  int $id_new
+        *    @param  string $nombre  
+        *    @return string $desc
+        */
         public function accionRepuesto($accion, $id_old, $id_new, $nombre, $desc){
             $realizado = "";
             $afectado=0;

@@ -89,7 +89,9 @@
             echo $json;           
     }
 
-  
+
+
+    /* ------------------------------------------------------------Máquinas------------------------------------------------------------- */
 
     //Si recibe por el método POST el parámetro "tareas", llama al método mostrarMaquinas() para que se cargen todos los datos de la tabla.
     if(isset($_POST['maquinas'])){
@@ -98,6 +100,25 @@
 
         $json = json_encode($maquinas);   //Retorna la representación JSON del valor dado
         echo $json;    
+    }
+
+
+    //Si recibe por el método POST el parámetro "accionMaquina", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
+    if(isset($_POST['accionMaquina'])){
+
+        if(!empty($_POST['accionMaquina'])){
+            $accionMaquina=$_POST['accionMaquina'];
+            $accion=$accionMaquina['accion'];
+            $id=htmlentities(addslashes($accionMaquina['id']));
+            $nombre=htmlentities(addslashes($accionMaquina['nombre']));
+            $marca=htmlentities(addslashes($accionMaquina['marca']));
+            $modelo=htmlentities(addslashes($accionMaquina['modelo']));
+            $grupo=htmlentities((int)addslashes($accionMaquina['grupo']));
+            $desc=htmlentities(addslashes($accionMaquina['desc']));
+        
+            $realizado = $db->accionMaquina($accion, $id, $nombre, $marca, $modelo, $grupo, $desc);            
+            echo $realizado;
+        }      
     }
 
 

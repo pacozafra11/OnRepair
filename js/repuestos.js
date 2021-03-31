@@ -218,7 +218,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                         desc: desc
                     };
                    
-                    //LLamo a la función y le paso los datos por paármetros para la petición Ajax
+                    //LLamo a la función y le paso los datos por parámetros para la petición Ajax
                     accionRepuestos(accionRepuesto);
                 }
             }
@@ -242,7 +242,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 desc: ""
             };
 
-            //LLamo a la función y le paso los datos por paármetros para la petición Ajax
+            //LLamo a la función y le paso los datos por parámetros para la petición Ajax
             accionRepuestos(accionRepuesto);
         }
     });
