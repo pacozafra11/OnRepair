@@ -29,7 +29,7 @@
     <script type="text/javascript" src="js/averias.js"></script>
     <script type="text/javascript" src="js/grupos.js"></script>
     <script type="text/javascript" src="js/maquinas.js"></script>
-    <script src="js/tareas.js"></script>
+    <script type="text/javascript" src="js/tareas.js"></script>
 
 </body>
 </html>

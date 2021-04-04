@@ -28,10 +28,14 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                 let info = JSON.parse(respuesta);
                 let resultado = '';
                 let id = "";
+                let botones = "";
                 info.forEach(buscado => {
                     buscado.finalizada==1 ? buscado.finalizada='Sí' : buscado.finalizada='No';
                     buscado.finalizada=='No' ? clase="col-lg-12 bg-warning text-light border" : clase="col-lg-12 bg-light text-dark border";
                     id = buscado.id;
+                    if($('#rol').text() === "Administrador" || $('#rol').text() === "Responsable"){                            
+                        botones = "<button type='button' class='eliminarTarea btn btn-outline-danger m-1'><ion-icon name='trash' class='pt-1'></ion-icon></button>";
+                    }
                     resultado +=
                     `<div class="row p-2 pl-4 pr-4" id="${id}">
                         <div class="${clase}">
@@ -40,13 +44,8 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                                 <tr>
                                     <td colspan="2"><span class="text-success font-weight-bold">Título </span><span class"titulo">${buscado.titulo}</span></td>
                                     <td class="colDerecha text-right">
-                                        <button type="button" class="actualizarTarea btn btn-outline-primary mt-2">
-                                            <ion-icon name="create" class="pt-1"></ion-icon>
-                                        </button> 
-                                        &nbsp 
-                                        <button type="button" class="eliminarTarea btn btn-outline-danger mt-2">
-                                            <ion-icon name="trash" class="pt-1"></ion-icon>
-                                        </button>
+                                        <button type='button' class='actualizarTarea btn btn-outline-primary m-1'><ion-icon name='create' class='pt-1'></ion-icon></button>&nbsp
+                                        ${botones}
                                     </td>
                                 </tr>
                                 <tr>
@@ -111,6 +110,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
             var idTarea = $(this).closest(".row").attr("id");
             mostrarRepTareas(idTarea);
             $(hermano).toggleClass("hide");
+            $(hermano).fadeIn();
 
         } else {
             $(hermano).toggleClass("hide");
@@ -125,6 +125,8 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     //Funcion para mostrar todos los repuestos usados en tareas en la página "Tareas", en una fila inferior de cada tarea
     function mostrarRepTareas(idTarea){
         let repTarea = idTarea;
+        let tecnico = $("#"+idTarea).children('.tecnico').text();   //'.tecnico'
+        console.log(tecnico);
 
             //Petición ajax
             $.ajax({
@@ -135,16 +137,27 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                     let info = JSON.parse(respuesta);
                     let resultado = '';
                     let id = "";
+                    
+                    resultado += "<div class='col-lg-12 text-right'><button type='button' class='nuevoRepTarea btn btn-success m-2' id='crearTarea'>Nuevo repuesto en esta tarea</button></div>";
 
                     if(typeof info !== "string"){
+
                         info.forEach(buscado => {                        
                         id = buscado.referencia + "_" + buscado.id;
-                        resultado +=`<div class="align-text-bottom col-lg-4"><span class="text-success font-weight-bold">Referencia </span>${buscado.referencia}</div>
-                                    <div class="align-text-bottom col-lg-6"><span class="text-success font-weight-bold">Nombre </span>${buscado.nombre}</div>  
-                                    <div class="align-text-bottom col-lg-2"><span class="text-success font-weight-bold">Cantidad </span>${buscado.cantidad}</div>`;                    
+                        resultado +=`<div class="col-lg-3 mt-2"><span class="text-success font-weight-bold">Referencia </span><span class="refRepTarea">${buscado.referencia}</span></div>
+                                    <div class="col-lg-5 mt-2"><span class="text-success font-weight-bold">Nombre </span><span class="nombreRepTarea">${buscado.nombre}</span></div>  
+                                    <div class="col-lg-2 mt-2"><span class="text-success font-weight-bold">Cantidad </span><span class="cantRepTarea">${buscado.cantidad}</span></div>
+                                    <div class="col-lg-2">
+                                        <button type='button' class='actualizarRepTarea btn btn-outline-primary'>
+                                            <ion-icon name='create' class='pt-1'></ion-icon>
+                                        </button>
+                                        <button type='button' class='eliminarRepTarea btn btn-outline-danger'>
+                                            <ion-icon name='trash' class='pt-1'></ion-icon>
+                                        </button>
+                                    </div>`;                   
                         });
                     } else {
-                        resultado +=`<div class="align-text-bottom col-lg-12 text-secondary">${info}</div>`; 
+                        resultado +=`<div class="align-text-bottom col-lg-12 text-secondary pb-2">${info}</div>`; 
                     }
 
                 $("#r" + idTarea).html(resultado);        

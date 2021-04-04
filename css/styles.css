@@ -104,6 +104,7 @@ body{
 }
 
 
+
 /* Clase span para los avisos fijos/visibles de los campos de texto en los formularios */
 .errorModal{
   font-size: 10px !important;
@@ -138,3 +139,9 @@ body{
 /* #cont_maquinas{
   position:absolute;
 } */
+
+
+/* Botones de Repuestos en Tareas */
+.nuevoRepTarea, .actualizarRepTarea, .eliminarRepTarea{
+  transform: scale(0.6);
+}

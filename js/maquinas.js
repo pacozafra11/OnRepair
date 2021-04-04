@@ -401,21 +401,21 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         id += $(this).find(e.target).attr("name");
         $("#artBusqueda").hide();
 
-        $(id).css('transform','scaleY(1.10)');
+        $(id).css('transform','scale(1.05)');
         setTimeout(function(){ 
-            $(id).css('transform','scaleY(0.9)');
+            $(id).css('transform','scale(0.95)');
             setTimeout(function(){ 
-                $(id).css('transform','scaleY(1.10)');
+                $(id).css('transform','scale(1.05)');
                 setTimeout(function(){ 
-                    $(id).css('transform','scaleY(0.9)'); 
+                    $(id).css('transform','scale(0.95)'); 
                     setTimeout(function(){ 
-                        $(id).css('transform','scaleY(1.10)');
+                        $(id).css('transform','scale(1.05)');
                         setTimeout(function(){ 
-                            $(id).css('transform','scaleY(0.9)');
+                            $(id).css('transform','scale(0.95)');
                             setTimeout(function(){ 
-                                $(id).css('transform','scaleY(1.10)');
+                                $(id).css('transform','scale(1.05)');
                                 setTimeout(function(){ 
-                                    $(id).css('transform','scaleY(1)'); 
+                                    $(id).css('transform','scale(1)'); 
                                 }, 800); 
                             }, 800);  
                         }, 800); 
