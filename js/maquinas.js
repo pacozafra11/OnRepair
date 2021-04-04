@@ -28,6 +28,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                         }
                         resultado +=
                         `<div class="row m-3" id="${id}">
+
                             <div class="col-lg-12 bg-light text-dark border pt-2">                               
                                 <div class="row">
                                     <div class="col-lg-1">
@@ -57,7 +58,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                                 </div>    
                                                         
                             </div>                   
-                        </div>`;  
+                        </div><a name="${id}"></a>`;  
                     });
 
                 $("#cont_mostrar_maquinas").html(resultado);        
@@ -223,15 +224,14 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
-
-     /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
-     $(document).on("click", "#aceptarModalMaquina", function(e) {  
+    /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
+    $(document).on("click", "#aceptarModalMaquina", function(e) {  
         //Detengo la acción por defecto del envío del formulario y su propagación
         e.preventDefault();
         e.stopPropagation();
 
         //Declaro los patrones a comparar
-        let expNombre = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\(\)\/\s]{3,50}$/; 
+        let expNombre = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\(\)\/\s]{3,50}$/;
         let expMarca = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\s]{3,50}/;
         let expModelo = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\s]{3,50}/;
         let expDesc = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\s]{0,800}$/;    
@@ -340,4 +340,93 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         }
     });
 
+
+
+
+    var busca = ''; 
+    //Al escribir en la barra de busqueda mostrará los resultados que coincidan
+    $("#busqueda").on("keyup", function(e){
+        //Detengo la acción por defecto del envío del formulario y su propagación
+        e.preventDefault();
+        e.stopPropagation();
+        let expNombre = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\(\)\/\s]{0,50}$/;
+        let busqueda = $("#busqueda").val(); 
+
+        if(!expNombre.test(busqueda)){
+            $("#errBusqueda").fadeIn();
+            $('#busqueda').focus().css("background-color", "#ec8383", "important");
+            return false;
+            
+        } else {
+            $("#errBusqueda").hide();
+            $('#busqueda').focus().css("background-color", "white", "important");
+
+            if($("#busqueda").val()!=""){
+             
+                //Petición ajax
+                $.ajax({
+                    url:'includes/functions.php',
+                    type: 'POST',
+                    data: { busqueda },
+                    success: function(respuesta){
+                        busca = JSON.parse(respuesta);
+                        let resultado = '';
+                        busca.forEach(buscado => {
+                            resultado += `<li><a href="#${buscado.id}" name="${buscado.id}" class="list-group-item list-group-item-action border-info">${buscado.nombre}</a></li>`;
+                        });
+                       
+                        $("#resBusqueda").html(resultado);
+                        $("#artBusqueda").show();
+                    },
+                    // Si la petición falla, devuelve en consola el error producido y el estado
+                    error: function(estado, error) {
+                        console.log("-Error producido: " + error + ". -Estado: " + estado)
+
+                    }
+                });
+            } else {
+                $("#artBusqueda").hide();
+            }
+        }
+
+    });
+
+
+
+    //Al seleccionar un nombre en el contenedor de coincidencias de busqueda
+    $("#resBusqueda").on("click", function (e) { 
+
+        $("#busqueda").val($(this).find(e.target).text());
+        let id = "#";
+        id += $(this).find(e.target).attr("name");
+        $("#artBusqueda").hide();
+
+        $(id).css('transform','scaleY(1.10)');
+        setTimeout(function(){ 
+            $(id).css('transform','scaleY(0.9)');
+            setTimeout(function(){ 
+                $(id).css('transform','scaleY(1.10)');
+                setTimeout(function(){ 
+                    $(id).css('transform','scaleY(0.9)'); 
+                    setTimeout(function(){ 
+                        $(id).css('transform','scaleY(1.10)');
+                        setTimeout(function(){ 
+                            $(id).css('transform','scaleY(0.9)');
+                            setTimeout(function(){ 
+                                $(id).css('transform','scaleY(1.10)');
+                                setTimeout(function(){ 
+                                    $(id).css('transform','scaleY(1)'); 
+                                }, 800); 
+                            }, 800);  
+                        }, 800); 
+                    }, 800); 
+                }, 800); 
+            }, 800); 
+        }, 800); //Temporizadores para la animación de tamaño     
+       
+    });
+
+
+
 });
+

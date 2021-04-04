@@ -21,24 +21,32 @@
                     </div>
 
                     <!-- Campo de busqueda -->
-                    <div class="col-lg-5 text-center">
-                        <form class="form-inline position-relative d-inline-block mt-2">
-                            <input class="form-control mr-sm-2 border border-info mt-1" type="search" id="busqueda" placeholder="Buscar por nombre" aria-label="Search" pattern="[a-zA-Z 0-9 áéíóúñÑ-]{0,50}" required>
+                    <div class="col-lg-4 text-center w-100 mt-1">
+                        <form class="form-inline d-inline-block mt-1 w-100">
+                            <input class="form-control mr-sm-2 border border-info mt-1 w-100" type="search" id="busqueda" placeholder="Buscar por nombre ..." aria-label="Search" maxlength="50">
+                            <span class="errorModal" id="errBusqueda">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-()/" , entre 3 y 50 caracteres</span>
                         </form>
                     </div>
                 
                     <!-- Botón Crear Máquina segun permisos -->
                     <?php if($rol === "Administrador" || $rol === "Responsable"){
-                        echo '<div class="col-lg-3 text-right">
+                        echo '<div class="col-lg-4 text-right">
                                 <button type="button" class="btn btn-success mt-2 mr-3" id="crearMaquina">Nueva Máquina</button>
                             </div>';}
-                    ?>
+                    ?>                    
+                </div> 
+
+                <!-- Contenedor para los resultados de busqueda --> 
+                <div class="col d-flex justify-content-center">
+                    <div class="card" id="artBusqueda">     
+                        <ul class="m-auto" id="resBusqueda"></ul>
+                    </div>
                 </div>
 
                 <!-- Contenedor que alojará las maquinas a mostrar -->
                 <div id="cont_mostrar_maquinas">
                                 
-                </div>
+                </div>               
 
             </div>
         </div>

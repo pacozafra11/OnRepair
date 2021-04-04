@@ -122,6 +122,23 @@
     }
 
 
+
+
+    //Si recibe por POST el parámetro "busqueda", , pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
+    $busqueda="";
+    if(isset($_POST['busqueda'])){
+
+        if(!empty($_POST['busqueda'])){
+        
+            $busqueda=htmlentities(addslashes($_POST['busqueda']));    
+
+            $resultado = $db->buscarNombres($busqueda);        
+            $json = json_encode($resultado);    //Retorna la representación JSON del valor dado
+            echo $json;
+        }    
+    }
+
+
     /* ------------------------------------------------------------Grupos de Máquinas--------------------------------------------------------- */
 
     //Si recibe por el método POST el parámetro "grupos", llama al método mostrarGrupos() para que se cargen todos los datos de la tabla.

@@ -39,6 +39,8 @@
 
         /* 
         *   Función para comprobar si existe el usuario, en caso afirmativo comprobar si está bloqueado y su password
+        *
+        *   @access public
         */
 
         public function comprobarUsuario($log, $pass){
@@ -132,6 +134,8 @@
 
         /* 
         *   Función para mostrar tareas, no recibe parámetros
+        *
+        *   @access public
         */
         
         public function mostrarTareas($ordenTareas){
@@ -140,11 +144,11 @@
             /* Según se seleccione en el dropdown de ordenación */
             switch ($ordenTareas) {
                 case "máqui":
-                    $orden = "id_maquina ASC";
+                    $orden = "maquina";
                     break;
 
                 case "técni":
-                    $orden = "id_usuario DESC";
+                    $orden = "tecnico";
                     break;
 
                 case "final":
@@ -187,6 +191,8 @@
 
         /* 
         *   Función para mostrar los repuestos usados en las tareas, recibe como parámetro el id de la tarea que tiene relacionados los repuestos
+        *
+        *   @access public
         */
         public function mostrarRepTarea($idTarea){
 
@@ -218,6 +224,8 @@
 
         /* 
         *   Función para mostrar maquinas, no recibe parámetros
+        *
+        *   @access public
         */
         public function mostrarMaquinas(){
 
@@ -246,6 +254,7 @@
         /* 
         *   Función para modificar, crear o borrar una Máquina
         *
+        *   @access public
         *    @param  string $accion, acción a realizar 
         *    @param  int $id
         *    @param  string $nombre
@@ -303,11 +312,44 @@
         }
 
 
+        /**
+         * Función pública, devuelve un array asociativo que contiene el codigo y nombre de los productos que comiencen con 
+         * los caracteres o palabras pasadas como parámetro.
+         * 
+         * @access public
+         * @param string
+         * @return array
+         */
+        public function buscarNombres($nombre){
+            $registros="";
+            $nombre1= $nombre . "%";
+
+            $conexion = $this->accesoDB();
+               
+            $sql="SELECT id, nombre FROM maquinas WHERE nombre LIKE :nombre";
+            $resultado = $conexion->prepare($sql);        
+            $resultado->execute(array(":nombre"=>$nombre1));
+
+            if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
+
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
+            } else {
+                $registros = array(array("nombre"=>"No hay datos que mostrar"));
+            }         
+            return $registros; 
+        }
+
+
 
         /* ------------------------------------------------------------------GRUPOS DE MAQUINAS-------------------------------------------------------------------------------- */
 
         /* 
         *   Función para mostrar grupos de máquinas, no recibe parámetros
+        *
+        *   @access public
         */
         public function mostrarGrupos(){
 
@@ -330,9 +372,11 @@
         }
 
 
+
          /* 
         *   Función para modificar, crear o borrar un Grupo de Máquinas
         *
+        *    @access public
         *    @param  string $accion, acción a realizar 
         *    @param  int $id
         *    @param  string $nombre  

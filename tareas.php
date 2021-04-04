@@ -29,9 +29,9 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                                     <a href="#" class="ordenTareas dropdown-item">fecha, ascendente</a>
-                                    <a href="#" class="ordenTareas dropdown-item">máquina, Id ascendente</a>
-                                    <a href="#" class="ordenTareas dropdown-item">técnico, alfabéticamente</a>
                                     <a href="#" class="ordenTareas dropdown-item">finalizada</a>
+                                    <a href="#" class="ordenTareas dropdown-item">máquina, nombre</a>
+                                    <a href="#" class="ordenTareas dropdown-item">técnico, alfabéticamente</a>                                    
                                 </div>
                             </div>                            
                         </div>

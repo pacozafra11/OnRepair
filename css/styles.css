@@ -107,9 +107,9 @@ body{
 /* Clase span para los avisos fijos/visibles de los campos de texto en los formularios */
 .errorModal{
   font-size: 10px !important;
-  
   font-style: italic;
   color: red;
+  color: 241, 132, 132;
   display: none;
   margin-left: 7px;
 }
@@ -120,3 +120,21 @@ body{
   font-size:0.9em;
   font-style: italic;
 }
+
+
+/*Contenedor para el resultado de las busquedas*/
+#artBusqueda{
+  /* NO USAR POSITION ABSOLUTE, BLOQUEARÍA EL SCROLL DEL CONTENEDOR */
+  /* position:absolute; */
+  display: none;
+  background-color: #17a2b8;
+}
+
+#resBusqueda li:hover{
+  font-weight: bold;
+}
+
+/* NO USAR POSITION ABSOLUTE, BLOQUEARÍA EL SCROLL DEL CONTENEDOR */
+/* #cont_maquinas{
+  position:absolute;
+} */
