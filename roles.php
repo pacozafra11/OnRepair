@@ -85,7 +85,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" id="cancelarModalRol" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-success" id="aceptarModalRol">Aceptar</button>
+                            <button type="submit" class="btn btn-success" id="aceptarModalRol">Aceptar</button>
                         </div>
                     </form>
                 </div>

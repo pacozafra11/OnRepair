@@ -53,13 +53,13 @@
                                 <!-- Referencia -->
                                 <div class="col-lg-4">
                                     <label for="inputIdRepuesto" class="text-success ml-2">Referencia *</label>
-                                    <input type="text" class="form-control" name="inputIdRepuesto" id="inputIdRepuesto" placeholder="Añadir referencia ..."  minlength="3" maxlength="12" autofocus required> 
+                                    <input type="text" class="form-control" name="inputIdRepuesto" id="inputIdRepuesto" placeholder="Añadir referencia ..." pattern="[A-Za-z\.\,\-\(\)]{3,12}" minlength="3" maxlength="12" autofocus required> 
                                     <span class="errorModal" id="errIdRepuesto">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-()" , entre 3 y 12 caracteres</span>
                                 </div> 
                                 <!-- Nombre -->
                                 <div class="col-lg-8">
                                     <label for="inputNombreRepuesto" class="text-success ml-2">Nombre *</label>
-                                    <input type="text" class="form-control" name="inputNombreRepuesto" id="inputNombreRepuesto" placeholder="Añadir nombre ..." minlength="3" maxlength="50" required> 
+                                    <input type="text" class="form-control" name="inputNombreRepuesto" id="inputNombreRepuesto" placeholder="Añadir nombre ..." pattern="[A-Za-z\.\,\-\(\)]{3,50}" minlength="3" maxlength="50" required> 
                                     <span class="errorModal" id="errNombreRepuesto">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-()" , entre 3 y 50 caracteres</span>                                   
                                 </div>
                             </div>
@@ -82,7 +82,6 @@
                             <button type="button" class="btn btn-danger" id="cancelarModalRepuesto" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-success" id="aceptarModalRepuesto">Aceptar</button>
                         </div>
-
                     </form>
 
                 </div>

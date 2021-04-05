@@ -52,7 +52,7 @@
                                 <div class="col-lg-6">
                                     <input type="hidden" class="inputIdUsuario" id="inputIdUsuario">
                                     <label for="inputNombreUsuario" class="text-success ml-2">Nombre *</label>
-                                    <input type="text" class="form-control" name="inputNombreUsuario" id="inputNombreUsuario" placeholder="Añadir Nombre ..."  minlength="3" maxlength="50" autofocus required> 
+                                    <input type="text" class="form-control" name="inputNombreUsuario" id="inputNombreUsuario" placeholder="Añadir Nombre ..." minlength="3" maxlength="50" pattern="[A-Za-z]{3,50}" autofocus required> 
                                     <span class="errorModal" id="errNombre">Solo admite letras mayúsculas y minúsculas, entre 3 y 50 caracteres</span>
                                 </div> 
                                 <div class="col-lg-6">
@@ -103,7 +103,6 @@
                             <button type="button" class="btn btn-danger" id="cancelarModalUsuario" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-success" id="aceptarModalUsuario">Aceptar</button>
                         </div>
-
                     </form>
 
                 </div>

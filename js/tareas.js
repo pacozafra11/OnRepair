@@ -42,28 +42,28 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
                             <table class="tablasTareas">
                                 <tr>
-                                    <td colspan="2"><span class="text-success font-weight-bold">Título </span><span class"titulo">${buscado.titulo}</span></td>
+                                    <td colspan="2"><span class="text-success font-weight-bold">Título </span><span class="titulo">${buscado.titulo}</span></td>
                                     <td class="colDerecha text-right">
                                         <button type='button' class='actualizarTarea btn btn-outline-primary m-1'><ion-icon name='create' class='pt-1'></ion-icon></button>&nbsp
                                         ${botones}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td rowspan="4"><span class="text-success font-weight-bold">Descripción </span><br><span class"desc">${buscado.descripcion}</span></td>
-                                    <td class="pl-3"><span class="text-success font-weight-bold">Máquina </span><span class"maquina">${buscado.maquina}</span></td>
-                                    <td class="colDerecha"><span class="text-success font-weight-bold">Id </span><span class"id">${id}</span></td> 
+                                    <td rowspan="4"><span class="text-success font-weight-bold">Descripción </span><br><span class="desc">${buscado.descripcion}</span></td>
+                                    <td class="pl-3"><span class="text-success font-weight-bold">Máquina </span><span class="maquina">${buscado.maquina}</span></td>
+                                    <td class="colDerecha"><span class="text-success font-weight-bold">Id </span><span class="id">${id}</span></td> 
                                 </tr>
                                 <tr>                                    
-                                    <td class="pl-3"><span class="text-success font-weight-bold">Técnico </span><span class"tecnico">${buscado.tecnico}</span></td>
-                                    <td class="colDerecha"><span class="text-success font-weight-bold">Tiempo Empleado </span>${buscado.tiempo}</span>h</td>                                          
+                                    <td class="pl-3"><span class="text-success font-weight-bold">Técnico </span><span class="tecnico">${buscado.tecnico}</span></td>
+                                    <td class="colDerecha"><span class="text-success font-weight-bold">Tiempo Empleado </span><span class="tiempo">${buscado.tiempo}</span>h</td>                                          
                                 </tr>
                                 <tr>
-                                    <td class="pl-3"><span class="text-success font-weight-bold">Fecha </span><span class"fecha">${buscado.fecha}</td>
-                                    <td class="colDerecha"><span class="text-success font-weight-bold">Tipo de Avería </span><span class"averia">${buscado.averia}</span></td>
+                                    <td class="pl-3"><span class="text-success font-weight-bold">Fecha </span><span class="fecha">${buscado.fecha}</td>
+                                    <td class="colDerecha"><span class="text-success font-weight-bold">Tipo de Avería </span><span class="averia">${buscado.averia}</span></td>
                                 </tr>
                                 <tr>
-                                    <td class="pl-3"><span class="text-success font-weight-bold">Finalizada </span><span class"final">${buscado.finalizada}</span></td>
-                                    <td class="colDerecha"><span class="text-success font-weight-bold">Tipo de Mantenimiento </span><span class"mant">${buscado.mantenimiento}</span></td>
+                                    <td class="pl-3"><span class="text-success font-weight-bold">Finalizada </span><span class="final">${buscado.finalizada}</span></td>
+                                    <td class="colDerecha"><span class="text-success font-weight-bold">Tipo de Mantenimiento </span><span class="mant">${buscado.mantenimiento}</span></td>
                                 </tr>
                                 <tr>
                                     <td colspan="3">                                        
@@ -97,9 +97,336 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
+    
+    /* Reinicia por completo los valores del modal */
+    function borrarCamposModal(){
+        $('#inputIdTarea').val("");
+
+        $('#inputTituloTarea').val("");
+        $('#inputTituloTarea').css("border", "none");
+        $("#errTituloTarea").hide();
+
+        //$('#inputFechaTarea').val("");        
+        $('#inputFechaTarea').css("border", "none");
+        $("#errFechaTarea").hide();
+
+        //$('#inputTiempoTarea').val(""); 
+        $('#inputTiempoTarea').css("border", "none"); 
+        $("#errTiempoTarea").hide(); 
+
+        //$('#inputMaquinaTarea').val(""); 
+        $('#inputMaquinaTarea').css("border", "none"); 
+        $("#errMaquinaTarea").hide(); 
+
+        //$('#inputTecnicoTarea').val(""); 
+        $('#inputTecnicoTarea').css("border", "none"); 
+        $("#errTecnicoTarea").hide(); 
+
+        //$('#inputAveriaTarea').val(""); 
+        $('#inputAveriaTarea').css("border", "none"); 
+        $("#errAveriaTarea").hide(); 
+
+        //$('#inputMantTarea').val(""); 
+        $('#inputMantTarea').css("border", "none"); 
+        $("#errMantTarea").hide();
+
+        $('#inputDescTarea').val(""); 
+        $('#inputDescTarea').css("border", "none"); 
+        $("#errDescTarea").hide();     
+    }
 
 
-    /* Al pulsar sobre alguno de los botones "Repuestos utilizados" de cada tarea, invocará a la función que traerá la llamada, y mostrará u ocultará la información */
+    //En caso de cerrar el modal con el botón "Cancelar" o con el botón de la X, en la esquina superior derecha
+    $("#modalTarea").on("hidden.bs.modal", function () {
+        borrarCamposModal();
+    });
+
+
+
+
+    /* Función para mostrar la fecha en el modal, si recibe fecha por parámetro es la que coge por valor, si no, 
+    el valor tomado es la fecha actual en el momento de abrir el modal */
+    function mostrarFecha(fecha){
+        let mes = "";
+        let dia = "";
+        let ano = "";
+
+        if(fecha==""){
+            var fecha2 = new Date(); //Fecha actual
+            fecha = fecha2;
+
+            mes = fecha.getMonth()+1; //obteniendo mes
+            dia = fecha.getDate(); //obteniendo dia
+            ano = fecha.getFullYear(); //obteniendo año
+            if(dia<10)
+            dia='0'+dia; //agrega cero si el menor de 10
+            if(mes<10)
+            mes='0'+mes //agrega cero si el menor de 10
+        
+            $('#inputFechaTarea').val(ano+"-"+mes+"-"+dia);
+
+        } else {
+            $('#inputFechaTarea').val(fecha);
+        }
+
+        
+    }
+
+
+
+    /* Función para mostrar la hora en el modal, en el input para indicar el tiempo empleado */
+    function mostrarTiempos(tiempo){
+
+        //Si no recibe tiempo, parámetro vacío, pone como valor 0
+        if(tiempo==""){
+            $('#inputTiempoTarea').val("00:00");
+
+        //Si recibe parámetro adapta el formato y lo introduce como valor
+        } else {
+            $('#inputTiempoTarea').val("0" + tiempo.replace(".",':'));
+        }
+    }
+
+
+
+    /* Función para mostrar si la tarea es finalizada o no, en caso de nueva tarea, el valor seleccionado va a ser Sí por defecto */
+    function mostrarFinalizadas(final){
+        let resultado = '';
+
+        //Si el formulario/modal es para Nuevo, se añade "selected" a la opción "Sí", para que sea valor predeterminado.
+        if($('#tituloModalTarea').text() === 'Nueva Tarea'){
+            resultado += "<option value='1' selected>Sí</option><option value='0'>No</option>";
+
+        //Si el formulario/modal es para Modificar, se añade "selected" a la opción que coincida con el valor que tiene ese grupo actualmente,
+        // para que sea valor prederterminado.
+        } else {
+            final === "No" ? final_selec="<option value='1'>Sí</option><option value='0' selected>No</option>" : final_selec="<option value='1' selected>Sí</option><option value='0'>No</option>";
+            resultado += final_selec;
+        }
+
+        $('#inputFinalTarea').html(resultado); 
+    }
+
+
+
+
+    /* Función para mostrar las máquinas existentes en select del modal */
+    function mostrarMaquinas(maquina){
+        let maquinas = "";
+    
+        //Petición ajax para obtener los Roles que existen actualmente
+        $.ajax({
+            url:'includes/functions.php',
+            type: 'POST',
+            data: { maquinas },
+            success: function(respuesta){
+                let info = JSON.parse(respuesta);
+                let resultado = '<option value="0" class="text-muted">Elegir una máquina ...</option>"';
+                info.forEach(buscado => {                    
+                
+                    //Si el formulario/modal es para Nuevo, se añade "selected" a la opción "Elegir una máquina", para que sea valor predeterminado.
+                    if($('#tituloModalTarea').text() === 'Nueva Tarea'){
+                        resultado += "<option value='" + buscado.id + "'>" + buscado.nombre + "</option>";
+
+                    //Si el formulario/modal es para Modificar, se añade "selected" a la opción que coincida con el valor que tiene ese grupo actualmente,
+                    // para que sea valor prederterminado.
+                    } else {
+                        buscado.nombre != maquina ? maquina_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>" : maquina_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>";
+                        resultado += maquina_selec;
+                    }                                                         
+                });
+
+                $("#inputMaquinaTarea").html(resultado);                
+            },
+            // Si la petición falla, devuelve en consola el error producido y el estado
+            error: function(estado, error) {
+                console.log("-Error producido: " + error + ". -Estado: " + estado)
+
+            }
+        });        
+    }
+
+
+    /* Función para mostrar los técnicos existentes en select del modal */
+    function mostrarTecnicos(tecnico){
+        let usuarios = "";
+    
+        //Petición ajax para obtener los Roles que existen actualmente
+        $.ajax({
+            url:'includes/functions.php',
+            type: 'POST',
+            data: { usuarios },
+            success: function(respuesta){
+                let info = JSON.parse(respuesta);
+                let resultado = '<option value="0" class="text-muted">Elegir un técnico ...</option>"';
+                info.forEach(buscado => {                    
+                
+                    //Si el formulario/modal es para Nuevo, se añade "selected" a la opción "Elegir un técnico", para que sea valor prederterminado.
+                    if($('#tituloModalTarea').text() === 'Nueva Tarea'){
+                        resultado += "<option value='" + buscado.id + "'>" + buscado.nombre + "</option>";
+
+                    //Si el formulario/modal es para Modificar, se añade "selected" a la opción que conincida con el valor que tiene ese grupo actualmente,
+                    // para que sea valor prederterminado.
+                    } else {
+                        buscado.nombre != tecnico ? tecnico_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>" : tecnico_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>";
+                        resultado += tecnico_selec;
+                    }                                                         
+                });
+
+                $("#inputTecnicoTarea").html(resultado);                
+            },
+            // Si la petición falla, devuelve en consola el error producido y el estado
+            error: function(estado, error) {
+                console.log("-Error producido: " + error + ". -Estado: " + estado)
+
+            }
+        });        
+    }
+
+
+    /* Función para mostrar los tipos de mantenimientos existentes en select del modal */
+    function mostrarMantenimientos(mante){
+        let manteni = "";
+    
+        //Petición ajax para obtener los Roles que existen actualmente
+        $.ajax({
+            url:'includes/functions.php',
+            type: 'POST',
+            data: { manteni },
+            success: function(respuesta){
+                let info = JSON.parse(respuesta);
+                let resultado = '<option value="0" class="text-muted">Elegir un tipo ...</option>"';
+                info.forEach(buscado => {                    
+                
+                    //Si el formulario/modal es para Nuevo, se añade "selected" a la opción "Elegir un tipo", para que sea valor prederterminado.
+                    if($('#tituloModalTarea').text() === 'Nueva Tarea'){
+                        resultado += "<option value='" + buscado.id + "'>" + buscado.nombre + "</option>";
+
+                    //Si el formulario/modal es para Modificar, se añade "selected" a la opción que conincida con el valor que tiene ese mantenimiento actualmente,
+                    // para que sea valor prederterminado.
+                    } else {
+                        buscado.nombre != mante ? mante_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>" : mante_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>";
+                        resultado += mante_selec;
+                    }                                                         
+                });
+
+                $("#inputMantTarea").html(resultado);                
+            },
+            // Si la petición falla, devuelve en consola el error producido y el estado
+            error: function(estado, error) {
+                console.log("-Error producido: " + error + ". -Estado: " + estado)
+
+            }
+        });        
+    }
+
+
+
+
+     /* Función para mostrar los tipos de averias existentes en select del modal */
+     function mostrarAverias(averia){
+        let averias = "";
+    
+        //Petición ajax para obtener los Roles que existen actualmente
+        $.ajax({
+            url:'includes/functions.php',
+            type: 'POST',
+            data: { averias },
+            success: function(respuesta){
+                let info = JSON.parse(respuesta);
+                let resultado = '<option value="0" class="text-muted">Elegir un tipo ...</option>"';
+                info.forEach(buscado => {                    
+                
+                    //Si el formulario/modal es para Nuevo, se añade "selected" a la opción "Elegir un tipo", para que sea valor prederterminado.
+                    if($('#tituloModalTarea').text() === 'Nueva Tarea'){
+                        resultado += "<option value='" + buscado.id + "'>" + buscado.nombre + "</option>";
+
+                    //Si el formulario/modal es para Modificar, se añade "selected" a la opción que conincida con el valor que tiene ese grupo actualmente,
+                    // para que sea valor prederterminado.
+                    } else {
+                        buscado.nombre != averia ? averia_selec="<option value='" + buscado.id + "'>" + buscado.nombre + "</option>" : averia_selec="<option value='" + buscado.id + "' selected>" + buscado.nombre + "</option>";
+                        resultado += averia_selec;
+                    }                                                         
+                });
+
+                $("#inputAveriaTarea").html(resultado);                
+            },
+            // Si la petición falla, devuelve en consola el error producido y el estado
+            error: function(estado, error) {
+                console.log("-Error producido: " + error + ". -Estado: " + estado)
+
+            }
+        });        
+    }
+
+
+
+    /* Al pulsar sobre de botón "Nueva Tarea" en la página Tareas */
+    $(document).on("click", "#crearTarea", function() { 
+        let fecha = '';
+        let tiempo = '';
+        let final = '';
+        let maquina = ''; 
+        let tecnico = ''; 
+        let mante = ''; 
+        let averia = ''; 
+
+        borrarCamposModal();        
+        $('#tituloModalTarea').text('Nueva Tarea');
+        mostrarFecha(fecha);
+        mostrarTiempos(tiempo);
+        mostrarFinalizadas(final);
+        mostrarMaquinas(maquina);
+        mostrarTecnicos(tecnico);
+        mostrarMantenimientos(mante);
+        mostrarAverias(averia);
+        $('#modalTarea').modal('show');                      
+    });
+
+
+
+
+    //Variables generales
+    var id;
+    var accionTarea;
+ 
+ 
+      /* Al pulsar sobre de botón "Actualizar" de algún registro*/
+      $(document).on("click", ".actualizarTarea", function() {  
+        id = $(this).parent().parent().siblings().children().children('.id').text();           
+        let titulo = $(this).parent().siblings().children().siblings('.titulo').text();
+        let maquina = $(this).parent().parent().siblings().children().children('.maquina').text();
+        let tecnico = $(this).parent().parent().siblings().children().children('.tecnico').text();
+        let fecha = $(this).parent().parent().siblings().children().children('.fecha').text();
+        let final = $(this).parent().parent().siblings().children().children('.final').text();
+        let tiempo = $(this).parent().parent().siblings().children().children('.tiempo').text();
+        let averia = $(this).parent().parent().siblings().children().children('.averia').text();
+        let mant = $(this).parent().parent().siblings().children().children('.mant').text();
+        let desc = $(this).parent().parent().siblings().children().children('.desc').text();  
+         
+        borrarCamposModal();   
+        $('#tituloModalTarea').text('Modificar Máquina');
+        $('#inputIdTarea').val(id);
+        $('#inputTituloTarea').val(titulo);
+        mostrarFecha(fecha);
+        mostrarTiempos(tiempo);
+        mostrarFinalizadas(final);
+        mostrarMaquinas(maquina);
+        mostrarTecnicos(tecnico);
+        mostrarMantenimientos(mant);
+        mostrarAverias(averia);       
+        $('#inputDescTarea').val(desc);
+        $('#modalTarea').modal('show');          
+    });
+
+
+
+    
+ 
+
+/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
+
+/* Al pulsar sobre alguno de los botones "Repuestos utilizados" de cada tarea, invocará a la función que traerá la llamada, y mostrará u ocultará la información */
     $(document).on("click", ".mostrarRepuestosTarea", function(e) {
          
         e.preventDefault();
@@ -138,7 +465,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                     let resultado = '';
                     let id = "";
                     
-                    resultado += "<div class='col-lg-12 text-right'><button type='button' class='nuevoRepTarea btn btn-success m-2' id='crearTarea'>Nuevo repuesto en esta tarea</button></div>";
+                    resultado += "<div class='col-lg-12 text-right'><button type='button' class='nuevoRepTarea btn btn-success m-2' id='crearRepTarea'>Nuevo repuesto en esta tarea</button></div>";
 
                     if(typeof info !== "string"){
 
@@ -170,6 +497,43 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
             }
         });
     }
+
+
+
+
+
+    function borrarCamposModal2(){
+        $('#inputDescTarea').val(""); 
+        $('#inputDescTarea').css("border", "none"); 
+        $("#errDescTarea").hide();     
+    }
+
+
+    //En caso de cerrar el modal con el botón "Cancelar" o con el botón de la X, en la esquina superior derecha
+    $("#modalRepTarea").on("hidden.bs.modal", function () {
+        borrarCamposModal2();
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+    /* Al pulsar sobre de botón "Nueva repuesto en esta tarea" en la página Tareas, apartado "Repuestos utilizados" */
+    $(document).on("click", "#crearRepTarea", function() { 
+        let repuesto = '';
+
+        borrarCamposModal2(); 
+        mostrarRepuestos(repuesto); 
+        $('#modalRepTarea').modal('show');      
+                             
+    });
 
 
 });

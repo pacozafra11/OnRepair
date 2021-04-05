@@ -50,32 +50,36 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title text-info" id="tituloModalGrupo"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body bg-light justify-content-center">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <input type="hidden" name="inputIdGrupo" id="inputIdGrupo">
-                                <label for="inputNombreGrupo" class="text-success ml-2">Grupo de Máquinas *</label>
-                                <input type="text" class="form-control" name="inputNombreGrupo" id="inputNombreGrupo" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,20}" autofocus required> 
-                            </div>                       
+                    <form>
+                        <div class="modal-header">
+                            <h5 class="modal-title text-info" id="tituloModalGrupo"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-lg-12 text-center text-warning">
-                            <span>* Campo requerido, no pueden quedar vacío</span> 
-                        </div>                     
-                    </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="cancelarModalGrupo" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-success" id="aceptarModalGrupo">Aceptar</button>
-                    </div>
+                        <div class="modal-body bg-light justify-content-center">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="inputIdGrupo" id="inputIdGrupo">
+                                    <label for="inputNombreGrupo" class="text-success ml-2">Grupo de Máquinas *</label>
+                                    <input type="text" class="form-control" name="inputNombreGrupo" id="inputNombreGrupo" placeholder="Añadir nuevo ..." pattern="[A-Za-z\.\,\-\(\)]{3,20}" autofocus required> 
+                                    <span class="errorModal" id="errNombreGrupo">Solo admite letras mayúsculas, minúsculas, números y los signos " . , - () " , entre 3 y 50 caracteres</span>
+                                </div>                       
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-lg-12 text-center text-warning">
+                                    <span>* Campo requerido, no pueden quedar vacío</span> 
+                                </div>                     
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" id="cancelarModalGrupo" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success" id="aceptarModalGrupo">Aceptar</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
