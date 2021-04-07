@@ -307,22 +307,22 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                     
                     //Campo password o contraseña
                     if(!expPass.test(pass)){
-                        $("#errPass").fadeIn();
+                        $('#errPassword').fadeIn();
                         $('#inputPasswordUsuario').focus().css("border", "3px solid red");
                         return false;
     
                     } else {
-                        $("#errPass").hide();
+                        $("#errPassword").hide();
                         $('#inputPasswordUsuario').css("border", "3px solid #03c003");
     
                         //Campo confirmación password o contraseña
                         if(confpass != pass){
-                            $("#errConfPass").fadeIn();
+                            $("#errConfPassword").fadeIn();
                             $('#inputConfPassUsuario').focus().css("border", "3px solid red");
                             return false;
                         
                         } else {
-                            $("#errConfPass").hide();
+                            $("#errConfPassword").hide();
                             $('#inputConfPassUsuario').css("border", "3px solid #03c003");
                         }
 

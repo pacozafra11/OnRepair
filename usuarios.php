@@ -80,16 +80,16 @@
                                     </div>                                    
                                 </div>                     
                             </div>
-                            <div id="filaPassword" class="row mt-4 mb-4">
+                            <div id="filaPassword" class="row mt-4">
                                 <div class="col-lg-6">
-                                    <label for="inputPasswordUsuario"class="text-success ml-2">Password *</label>
-                                    <input type="password" class="form-control" name="inputPasswordUsuario" id="inputPasswordUsuario" placeholder="Añadir Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}" minlength="4" maxlength="20">
-                                    <span class="errorModal" id="errPass">Solo admite letras mayúsculas, minúsculas y números, entre 4 y 20 caracteres</span>
+                                    <label for="inputPasswordUsuario"class="text-success ml-2">Password *</label>                                   
+                                    <input type="password" class="form-control" name="inputPasswordUsuario" id="inputPasswordUsuario" placeholder="Añadir Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}" minlength="4" maxlength="20"> 
+                                    <span class="errorModal" id="errPassword">Solo admite letras mayúsculas, minúsculas y números, entre 4 y 20 caracteres</span>
                                 </div> 
                                 <div class="col-lg-6">
                                     <label for="inputConfPassUsuario"class="text-success ml-2">Confirmar Password *</label>
                                     <input type="password" class="form-control" name="inputConfPassUsuario" id="inputConfPassUsuario" placeholder="Confirmar Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}" minlength="4" maxlength="20"> 
-                                    <span class="errorModal" id="errConfPass">Las contraseñas deben coincidir</span>
+                                    <span class="errorModal" id="errConfPassword">Las contraseñas deben coincidir</span>
                                 </div>                      
                             </div>
                             <div class="row mt-2">
