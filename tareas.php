@@ -66,8 +66,8 @@
                                             <div class="col-lg-6">
                                                 <!-- Id -->
                                                 <input type="hidden" class="inputIdTarea" id="inputIdTarea"> 
-                                                <label for="inputTituloTarea" class="text-success ml-2">Título *</label>
-                                                <input type="text" class="form-control" name="inputTituloTarea" id="inputTituloTarea" placeholder="Añadir titulo ..."  minlength="3" maxlength="50" pattern="[A-Za-z0-9\.\,\-]{3,50}" autofocus required> 
+                                                <label for="inputTituloTarea" class="text-success ml-2">Título *</label>                                                                        <!--  pattern="[A-Za-z0-9\.\,\-]{3,50}" -->
+                                                <input type="text" class="form-control" name="inputTituloTarea" id="inputTituloTarea" placeholder="Añadir titulo ..."  minlength="3" maxlength="50" autofocus required> 
                                                 <span class="errorModal" id="errTituloTarea">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , entre 3 y 50 caracteres</span>
                                             </div> 
                                             <!-- Fecha -->
@@ -81,9 +81,9 @@
                                         <div class="row mt-3">
                                             <!-- Tiempo empleado -->
                                             <div class="col-lg-6">
-                                                <label for="inputTiempoTarea" class="text-success ml-2">Tiempo Empleado *</label><span>(entre 00:00 y 08:00 h)</span>
+                                                <label for="inputTiempoTarea" class="text-success ml-2">Tiempo Empleado *</label><span>(entre 00:15 y 08:00 h)</span>
                                                 <input type="time" class="form-control" name="inputTiempoTarea" id="inputTiempoTarea" min="00:15" max="08:00" pattern="[0-9]{2}:[0-9]{2}" required>
-                                                <span class="errorModal" id="errTiempoTarea">Solo admite formato hora</span>
+                                                <span class="errorModal" id="errTiempoTarea">Solo admite formato hora, entre 00:15 y 08:00 h</span>
                                             </div> 
                                             <!-- Finalizada -->
                                             <div class="col-lg-6">
@@ -147,8 +147,8 @@
                                             <div class="col-lg-12">
                                                 <label for="inputDescTarea"class="text-success ml-2">Descripción *</label>
                                                 
-                                                <textarea class="form-control" name="inputDescTarea" id="inputDescTarea" placeholder="Añadir descripción de la tarea..." rows="3" maxlength="800" required></textarea>
-                                                <span class="errorModal" id="errDescTarea">Solo admite letras mayúsculas, minúsculas, números y los signos " . , - " , máximo 800 caracteres</span> 
+                                                <textarea class="form-control" name="inputDescTarea" id="inputDescTarea" placeholder="Añadir descripción de la tarea..." rows="3" minlengh="5" maxlength="800" required></textarea>
+                                                <span class="errorModal" id="errDescTarea">Solo admite letras mayúsculas, minúsculas, números y los signos " . , - " , entre 5 y 800 caracteres</span> 
                                             </div>                     
                                         </div>
                                         <div class="row mt-2">
@@ -215,8 +215,8 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" id="cancelarModalTarea" data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-success" id="aceptarModalTarea">Aceptar</button>
+                                        <button type="button" class="btn btn-danger" id="cancelarModalRepTarea" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-success" id="aceptarModalRepTarea">Aceptar</button>
                                     </div>                                        
                                 </form>
 

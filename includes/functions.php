@@ -79,6 +79,34 @@
 
 
 
+    //Si recibe por el método POST el parámetro "accionTarea", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
+    if(isset($_POST['accionTarea'])){
+
+        if(!empty($_POST['accionTarea'])){
+            $accionTarea=$_POST['accionTarea'];
+            $accion=$accionTarea['accion'];
+            $id=htmlentities(addslashes($accionTarea['id']));
+            $titulo=htmlentities(addslashes($accionTarea['titulo']));
+            $fecha=htmlentities(addslashes($accionTarea['fecha']));
+            $tiempo=htmlentities(floatval(addslashes($accionTarea['tiempo'])));
+            $final=htmlentities(addslashes($accionTarea['final']));
+            $maquina=htmlentities(addslashes($accionTarea['maquina']));
+            $tecnico=htmlentities(addslashes($accionTarea['tecnico']));
+            $averia=htmlentities(addslashes($accionTarea['averia']));
+            $mant=htmlentities(addslashes($accionTarea['mant']));
+            $desc=htmlentities(addslashes($accionTarea['desc']));
+        
+            $realizado = $db->accionTarea($accion, $id, $titulo, $fecha, $tiempo, $final, $maquina, $tecnico, $averia, $mant, $desc);            
+            echo $realizado;                                       
+        }      
+    }
+
+
+
+    /* -------------------------------------------------------Repuestos en Tarea----------------------------------------------------------- */
+
+
+
     //Si recibe por el método POST el parámetro "resTareas", llama al método mostrarRepTareas() para que se cargen todos los datos de la tabla.
     if(isset($_POST['repTarea'])){
 

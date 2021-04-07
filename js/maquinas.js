@@ -343,7 +343,10 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
+    /* Funciones para el buscador rectivo en la página máquinas */
+
     var busca = ''; 
+
     //Al escribir en la barra de busqueda mostrará los resultados que coincidan
     $("#busqueda").on("keyup", function(e){
         //Detengo la acción por defecto del envío del formulario y su propagación
@@ -393,7 +396,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
-    //Al seleccionar un nombre en el contenedor de coincidencias de busqueda
+    //Al seleccionar un nombre en el contenedor de coincidencias de busqueda crea una pequeña animación
     $("#resBusqueda").on("click", function (e) { 
 
         $("#busqueda").val($(this).find(e.target).text());

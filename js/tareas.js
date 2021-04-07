@@ -55,7 +55,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                                 </tr>
                                 <tr>                                    
                                     <td class="pl-3"><span class="text-success font-weight-bold">Técnico </span><span class="tecnico">${buscado.tecnico}</span></td>
-                                    <td class="colDerecha"><span class="text-success font-weight-bold">Tiempo Empleado </span><span class="tiempo">${buscado.tiempo}</span>h</td>                                          
+                                    <td class="colDerecha"><span class="text-success font-weight-bold">Tiempo Empleado </span><span class="tiempo">${buscado.tiempo}</span> h</td>                                          
                                 </tr>
                                 <tr>
                                     <td class="pl-3"><span class="text-success font-weight-bold">Fecha </span><span class="fecha">${buscado.fecha}</td>
@@ -179,13 +179,48 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
         //Si no recibe tiempo, parámetro vacío, pone como valor 0
         if(tiempo==""){
-            $('#inputTiempoTarea').val("00:00");
+            $('#inputTiempoTarea').val("");
 
         //Si recibe parámetro adapta el formato y lo introduce como valor
         } else {
             $('#inputTiempoTarea').val("0" + tiempo.replace(".",':'));
         }
     }
+
+
+
+    /* Función para comprobar el campo tiempo y formatearlo a double para almacenar en base de datos */
+    function comprobarTiempo(tiempo){
+        //Patron para comparar
+        let expTiempo = /[0-9]{2}:[0-9]{2}$/;
+
+        //Declaro variable
+        let resultado = false;
+
+        if(tiempo != "" || tiempo != null || tiempo != "undefined"){
+            
+            if(expTiempo.test(tiempo)){
+                tiempo = tiempo.replace(":", ".");
+                tiempo = parseFloat(tiempo);
+
+                if(tiempo>=0.15 && tiempo<=8.00){            
+                    resultado = true;
+
+                } else {
+                    resultado = false;
+                }
+
+            } else {
+                resultado = false;
+            }
+            
+        } else {
+            resultado = false;
+        }
+
+        return resultado;
+    }
+
 
 
 
@@ -405,7 +440,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         let desc = $(this).parent().parent().siblings().children().children('.desc').text();  
          
         borrarCamposModal();   
-        $('#tituloModalTarea').text('Modificar Máquina');
+        $('#tituloModalTarea').text('Modificar Tarea');
         $('#inputIdTarea').val(id);
         $('#inputTituloTarea').val(titulo);
         mostrarFecha(fecha);
@@ -421,7 +456,210 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
+
+    /* Función con la llamada Ajax para pasar el parámetro accionTarea con todos los datos recogidos para Crear, Modificar o Eliminar una Tarea*/
+    function accionTareas(accionTarea){
+        //Petición ajax
+        $.ajax({
+            url:'includes/functions.php',
+            type: 'POST',
+            data: { accionTarea },
+            success: function(respuesta){
+
+                //Si se ha modificado
+                if(respuesta == "si"){
+
+                    $('#modalTarea').modal('hide');
+                    mostrarTareas();
+                    $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="checkmark-circle-outline"></ion-icon> <b>La acción se ha realizado correctamente</b></p>');
+                    $("#modalInfo").modal('show');
+                    setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
+                                                            
+                //Si no se ha modificado
+                } else{
+                
+                    $('#modalTarea').modal('hide');
+                    mostrarTareas();
+                    $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción, revisa y modifica los datos introducidos</b></p>');
+                    $("#modalInfo").modal('show');
+                    setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2500); //Temporizador para desaparecer el mensaje
+                }
+            },
+            // Si la petición falla, devuelve en consola el error producido y el estado
+            error: function(estado, error) {
+                console.log("-Error producido: " + error + ". -Estado: " + estado)
+            }
+        });
+    }
+
+
     
+    /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
+    $(document).on("click", "#aceptarModalTarea", function(e) {  
+        //Detengo la acción por defecto del envío del formulario y su propagación
+        e.preventDefault();
+        e.stopPropagation();
+
+        //Declaro los patrones a comparar
+        let expTitulo = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\s]{3,50}$/;
+        let expFecha = /\d{4}-\d{2}-\d{2}$/;
+        let expDesc = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\-\,\.\s]{5,800}$/;    
+    
+        //Recojo el valor de los campos rellenados
+        let id = $('#inputIdTarea').val();
+        let titulo = $('#inputTituloTarea').val();
+        let maquina = $('#inputMaquinaTarea').val();
+        let tecnico = $('#inputTecnicoTarea').val();
+        let fecha = $('#inputFechaTarea').val();
+        let final = $('#inputFinalTarea').val();
+        let tiempo = $('#inputTiempoTarea').val();
+        let averia = $('#inputAveriaTarea').val();
+        let mant = $('#inputMantTarea').val();
+        let desc = $('#inputDescTarea').val();
+
+        
+        //Compruebo cada campo y maqueto efectos en el formulario
+        //Campo Título
+        if(!expTitulo.test(titulo)){
+            $("#errTituloTarea").fadeIn();
+            $('#inputTituloTarea').focus().css("border", "3px solid red");
+            return false;
+        
+        } else {
+            $("#errTituloTarea").hide();
+            $('#inputTituloTarea').css("border", "3px solid #03c003");
+
+            //Campo Fecha
+            if(!expFecha.test(fecha)){
+                $("#errFechaTarea").fadeIn();
+                $('#inputFechaTarea').focus().css("border", "3px solid red");
+                return false;
+
+            } else {
+                $("#errFechaTarea").hide();
+                $('#inputFechaTarea').css("border", "3px solid #03c003");
+
+                //Campo Tiempo empleado
+                if(!comprobarTiempo(tiempo)){
+                    $("#errTiempoTarea").fadeIn();
+                    $('#inputTiempoTarea').focus().css("border", "3px solid red");
+                    return false;
+
+                } else {
+                    $("#errTiempoTarea").hide();
+                    $('#inputTiempoTarea').css("border", "3px solid #03c003");
+
+                    //Formateo el tiempo a número flotante para la base de datos
+                    tiempo = tiempo.replace(":", ".");
+                    tiempo = parseFloat(tiempo);
+
+                    //Campo Máquina
+                    if(maquina==0){
+                        $("#errMaquinaTarea").fadeIn();
+                        $('#inputMaquinaTarea').focus().css("border", "3px solid red");
+                        return false;
+
+                    } else {
+                        $("#errMaquinaTarea").hide();
+                        $('#inputMaquinaTarea').css("border", "3px solid #03c003");
+                    
+                        //Campo Técnico
+                        if(tecnico==0){
+                            $("#errTecnicoTarea").fadeIn();
+                            $('#inputTecnicoTarea').focus().css("border", "3px solid red");
+                            return false;
+
+                        } else {
+                            $("#errTecnicoTarea").hide();
+                            $('#inputTecnicoTarea').css("border", "3px solid #03c003");
+
+                            //Campo Tipo de Avería
+                            if(averia==0){
+                                $("#errAveriaTarea").fadeIn();
+                                $('#inputAveriaTarea').focus().css("border", "3px solid red");
+                                return false;
+
+                            } else {
+                                $("#errAveriaTarea").hide();
+                                $('#inputAveriaTarea').css("border", "3px solid #03c003");
+
+                                //Campo Tipo de Mantenimiento
+                                if(mant==0){
+                                    $("#errMantTarea").fadeIn();
+                                    $('#inputMantTarea').focus().css("border", "3px solid red");
+                                    return false;
+
+                                } else {
+                                    $("#errMantTarea").hide();
+                                    $('#inputMantTarea').css("border", "3px solid #03c003");
+    
+                                    //Campo Descripción
+                                    if(!expDesc.test(desc)){
+                                        $("#errDescTarea").fadeIn();
+                                        $('#inputDescTarea').focus().css("border", "3px solid red");
+                                        return false;
+
+                                    } else {
+                                        $("#errDescTarea").hide();
+                                        $('#inputDescTarea').css("border", "3px solid #03c003");
+
+                                        //Recojo los datos
+                                        accionTarea = {
+                                            accion: $('#tituloModalTarea').text(),
+                                            id: id,
+                                            titulo: titulo,
+                                            fecha: fecha,
+                                            tiempo: tiempo,
+                                            final: final,
+                                            maquina: maquina,
+                                            tecnico: tecnico,
+                                            averia: averia,
+                                            mant: mant,
+                                            desc: desc
+                                        };
+                                    
+                                        //LLamo a la función y le paso los datos por parámetros para la petición Ajax
+                                        accionTareas(accionTarea);
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                }
+            }
+        }                           
+    });
+
+
+
+
+
+    /* Al pulsar sobre el botón "Borrar" de algún registro */
+    $(document).on("click", ".eliminarTarea", function() {        
+        id = $(this).parent().parent().siblings().children().children('.id').text();           
+        let titulo = $(this).parent().siblings().children().siblings('.titulo').text();
+
+        if(confirm('¿Seguro que quieres borrar la Tarea: "' + titulo + '" ?')){
+             //Recojo los datos
+             accionTarea = {
+                accion: "Borrar Tarea",
+                id: id,
+                titulo: titulo,
+                fecha: "",
+                tiempo: "",
+                final: "",
+                maquina: "",
+                tecnico: "",
+                averia: "",
+                mant: "",
+                desc: ""
+            };
+
+           //LLamo a la función y le paso los datos por parámetros para la petición Ajax
+           accionTareas(accionTarea);
+        }
+    });
+
  
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */

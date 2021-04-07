@@ -187,6 +187,80 @@
 
 
 
+        /* 
+        *   Función para modificar, crear o borrar una Tarea
+        *
+        *   @access public
+        *    @param  string $accion 
+        *    @param  int $id
+        *    @param  string $titulo
+        *    @param  date $fecha
+        *    @param  double $tiempo
+        *    @param  int $maquina 
+        *    @param  int $tecnico
+        *    @param  int $averia
+        *    @param  int $mant 
+        *    @return string $desc
+        */
+        public function accionTarea($accion, $id, $titulo, $fecha, $tiempo, $final, $maquina, $tecnico, $averia, $mant, $desc){
+            $realizado = "";
+            $afectado=0;
+            $conexion = $this->accesoDB();
+
+            /* Si la acción es Modificar una Tarea existente */
+            if ($accion == "Modificar Tarea"){
+                $sql="UPDATE tareas SET titulo=:titulo, descripcion=:descripcion, tiempo=:tiempo, fecha=:fecha, finalizada=:final, id_tipo_mantenimiento=:mant, id_tipo_averia=:averia, id_usuario=:tecnico, id_maquina=:maquina WHERE id=:id";
+                $resultado=$conexion->prepare($sql);  
+                $resultado->bindParam(':id', $id);         
+                $resultado->bindParam(':titulo', $titulo);
+                $resultado->bindParam(':descripcion', $desc); 
+                $resultado->bindParam(':tiempo', $tiempo);
+                $resultado->bindParam(':fecha', $fecha);
+                $resultado->bindParam(':final', $final);
+                $resultado->bindParam(':mant', $mant);
+                $resultado->bindParam(':averia', $averia);
+                $resultado->bindParam(':tecnico', $tecnico);
+                $resultado->bindParam(':maquina', $maquina);
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+            /* Si la acción es crear una nueva Tarea*/
+            } elseif ($accion == "Nueva Tarea") {
+                $sql="INSERT INTO tareas (titulo, descripcion, tiempo, fecha, finalizada, id_tipo_mantenimiento, id_tipo_averia, id_usuario, id_maquina) VALUES (:titulo, :descripcion, :tiempo, :fecha, :final, :mant, :averia, :tecnico, :maquina)";
+                $resultado=$conexion->prepare($sql);           
+                $resultado->bindParam(':titulo', $titulo);
+                $resultado->bindParam(':descripcion', $desc); 
+                $resultado->bindParam(':tiempo', $tiempo);
+                $resultado->bindParam(':fecha', $fecha);
+                $resultado->bindParam(':final', $final);
+                $resultado->bindParam(':mant', $mant);
+                $resultado->bindParam(':averia', $averia);
+                $resultado->bindParam(':tecnico', $tecnico);
+                $resultado->bindParam(':maquina', $maquina);                    
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+                /* Si la acción es borrar una Tarea existente */
+            } elseif ($accion == "Borrar Tarea") {                
+                $sql="DELETE FROM tareas WHERE id=:id";
+                $resultado = $conexion->prepare($sql);     
+                $resultado->bindParam(':id', $id);     
+                $resultado->execute();
+                $afectado=$resultado->rowCount();
+
+            }
+
+            if($afectado!=0){
+                $realizado = "si";            
+            }else{
+                $realizado = "no";
+            }
+            return $realizado;
+        }
+
+
+
+
         /* ----------------------------------------------------------------REPUESTOS EN TAREAS----------------------------------------------------------------------------------- */
 
         /* 
