@@ -188,9 +188,10 @@
                                     <div class="modal-body bg-light justify-content-center">
                                         <div class="row">
                                             <!-- Referencia -->
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-8">
                                                 <!-- Id Tarea-->
-                                                <input type="hidden" class="inputIdTareaRep" id="inputIdTareaRep"> 
+                                                <!-- <input type="hidden" id="inputRefRepTarea">  -->
+                                                <input type="hidden" id="idTarea">
                                                 <label for="inputNomRepTarea" class="text-success ml-2">Nombre repuesto utilizado *</label>
                                                 <div class="input-group mb-3">
                                                     <select class="custom-select" name="inputNomRepTarea" id="inputNomRepTarea" required>
@@ -200,9 +201,9 @@
                                                 <span class="errorModal" id="errNomRepTarea">Debe seleccionar una de las opciones</span>                                                              
                                             </div> 
                                             <!-- Cantidad -->
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <label for="inputCantRepTarea" class="text-success ml-2">Cantidad *</label>
-                                                <input type="number" class="form-control" name="inputCantRepTarea" id="inputCantRepTarea" min="1" max="1000" required> 
+                                                <input type="number" class="form-control" name="inputCantRepTarea" id="inputCantRepTarea" min="1" max="1000" minlength="1" maxlength="4" required> 
                                                 <span class="errorModal" id="errFechaTarea">Solo admite números enteros del 0 al 1000</span>                                   
                                             </div>
                                         </div>                     

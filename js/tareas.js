@@ -71,7 +71,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                                             <ion-icon name="git-compare"></ion-icon> Repuestos utilizados
                                         </a>                                       
                                         
-                                        <div id="r${id}" class="contRepuestosTarea row hide"></div>
+                                        <div id="r${id}" class="contRepuestosTarea container-fluid hide"></div>
                                     </td>                                    
                                 </tr>                                
                             </table>  
@@ -396,63 +396,63 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
-    /* Al pulsar sobre de botón "Nueva Tarea" en la página Tareas */
-    $(document).on("click", "#crearTarea", function() { 
-        let fecha = '';
-        let tiempo = '';
-        let final = '';
-        let maquina = ''; 
-        let tecnico = ''; 
-        let mante = ''; 
-        let averia = ''; 
+        /* Al pulsar sobre de botón "Nueva Tarea" en la página Tareas */
+        $(document).on("click", "#crearTarea", function() { 
+            let fecha = '';
+            let tiempo = '';
+            let final = '';
+            let maquina = ''; 
+            let tecnico = ''; 
+            let mante = ''; 
+            let averia = ''; 
 
-        borrarCamposModal();        
-        $('#tituloModalTarea').text('Nueva Tarea');
-        mostrarFecha(fecha);
-        mostrarTiempos(tiempo);
-        mostrarFinalizadas(final);
-        mostrarMaquinas(maquina);
-        mostrarTecnicos(tecnico);
-        mostrarMantenimientos(mante);
-        mostrarAverias(averia);
-        $('#modalTarea').modal('show');                      
-    });
-
-
+            borrarCamposModal();        
+            $('#tituloModalTarea').text('Nueva Tarea');
+            mostrarFecha(fecha);
+            mostrarTiempos(tiempo);
+            mostrarFinalizadas(final);
+            mostrarMaquinas(maquina);
+            mostrarTecnicos(tecnico);
+            mostrarMantenimientos(mante);
+            mostrarAverias(averia);
+            $('#modalTarea').modal('show');                      
+        });
 
 
-    //Variables generales
-    var id;
-    var accionTarea;
- 
- 
-      /* Al pulsar sobre de botón "Actualizar" de algún registro*/
-      $(document).on("click", ".actualizarTarea", function() {  
-        id = $(this).parent().parent().siblings().children().children('.id').text();           
-        let titulo = $(this).parent().siblings().children().siblings('.titulo').text();
-        let maquina = $(this).parent().parent().siblings().children().children('.maquina').text();
-        let tecnico = $(this).parent().parent().siblings().children().children('.tecnico').text();
-        let fecha = $(this).parent().parent().siblings().children().children('.fecha').text();
-        let final = $(this).parent().parent().siblings().children().children('.final').text();
-        let tiempo = $(this).parent().parent().siblings().children().children('.tiempo').text();
-        let averia = $(this).parent().parent().siblings().children().children('.averia').text();
-        let mant = $(this).parent().parent().siblings().children().children('.mant').text();
-        let desc = $(this).parent().parent().siblings().children().children('.desc').text();  
-         
-        borrarCamposModal();   
-        $('#tituloModalTarea').text('Modificar Tarea');
-        $('#inputIdTarea').val(id);
-        $('#inputTituloTarea').val(titulo);
-        mostrarFecha(fecha);
-        mostrarTiempos(tiempo);
-        mostrarFinalizadas(final);
-        mostrarMaquinas(maquina);
-        mostrarTecnicos(tecnico);
-        mostrarMantenimientos(mant);
-        mostrarAverias(averia);       
-        $('#inputDescTarea').val(desc);
-        $('#modalTarea').modal('show');          
-    });
+
+
+        //Variables generales
+        var id;
+        var accionTarea;
+    
+    
+        /* Al pulsar sobre de botón "Actualizar" de algún registro*/
+        $(document).on("click", ".actualizarTarea", function() {  
+            id = $(this).parent().parent().siblings().children().children('.id').text();           
+            let titulo = $(this).parent().siblings().children().siblings('.titulo').text();
+            let maquina = $(this).parent().parent().siblings().children().children('.maquina').text();
+            let tecnico = $(this).parent().parent().siblings().children().children('.tecnico').text();
+            let fecha = $(this).parent().parent().siblings().children().children('.fecha').text();
+            let final = $(this).parent().parent().siblings().children().children('.final').text();
+            let tiempo = $(this).parent().parent().siblings().children().children('.tiempo').text();
+            let averia = $(this).parent().parent().siblings().children().children('.averia').text();
+            let mant = $(this).parent().parent().siblings().children().children('.mant').text();
+            let desc = $(this).parent().parent().siblings().children().children('.desc').text();  
+            
+            borrarCamposModal();   
+            $('#tituloModalTarea').text('Modificar Tarea');
+            $('#inputIdTarea').val(id);
+            $('#inputTituloTarea').val(titulo);
+            mostrarFecha(fecha);
+            mostrarTiempos(tiempo);
+            mostrarFinalizadas(final);
+            mostrarMaquinas(maquina);
+            mostrarTecnicos(tecnico);
+            mostrarMantenimientos(mant);
+            mostrarAverias(averia);       
+            $('#inputDescTarea').val(desc);
+            $('#modalTarea').modal('show');          
+        });
 
 
 
@@ -664,14 +664,14 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
 
-/* Al pulsar sobre alguno de los botones "Repuestos utilizados" de cada tarea, invocará a la función que traerá la llamada, y mostrará u ocultará la información */
+    /* Al pulsar sobre alguno de los botones "Repuestos utilizados" de cada tarea, invocará a la función que traerá la llamada, y mostrará u ocultará la información */
     $(document).on("click", ".mostrarRepuestosTarea", function(e) {
          
         e.preventDefault();
         var hermano = $(this).siblings();
         var clase = $(this).siblings().attr("class");
 
-        if(clase == "contRepuestosTarea row hide"){
+        if(clase == "contRepuestosTarea container-fluid hide"){
             var idTarea = $(this).closest(".row").attr("id");
             mostrarRepTareas(idTarea);
             $(hermano).toggleClass("hide");
@@ -703,22 +703,23 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                     let resultado = '';
                     let id = "";
                     
-                    resultado += "<div class='col-lg-12 text-right'><button type='button' class='nuevoRepTarea btn btn-success m-2' id='crearRepTarea'>Nuevo repuesto en esta tarea</button></div>";
+                    resultado += "<div class='row'><div class='col-lg-12 text-right'><button type='button' class='nuevoRepTarea btn btn-success mb-2 mr-5' id='crearRepTarea'><abbr title='Añadir Nuevo Repuesto a la Tarea'><ion-icon class='lead pt-1' name='add'></ion-icon></abbr></button></div></div>";
 
                     if(typeof info !== "string"){
 
                         info.forEach(buscado => {                        
-                        id = buscado.referencia + "_" + buscado.id;
-                        resultado +=`<div class="col-lg-3 mt-2"><span class="text-success font-weight-bold">Referencia </span><span class="refRepTarea">${buscado.referencia}</span></div>
-                                    <div class="col-lg-5 mt-2"><span class="text-success font-weight-bold">Nombre </span><span class="nombreRepTarea">${buscado.nombre}</span></div>  
-                                    <div class="col-lg-2 mt-2"><span class="text-success font-weight-bold">Cantidad </span><span class="cantRepTarea">${buscado.cantidad}</span></div>
-                                    <div class="col-lg-2">
-                                        <button type='button' class='actualizarRepTarea btn btn-outline-primary'>
-                                            <ion-icon name='create' class='pt-1'></ion-icon>
-                                        </button>
-                                        <button type='button' class='eliminarRepTarea btn btn-outline-danger'>
-                                            <ion-icon name='trash' class='pt-1'></ion-icon>
-                                        </button>
+                        resultado +=`<div class="row">
+                                        <div class="col-lg-3 mt-2"><span class="text-success font-weight-bold">Referencia </span><span class="refRepTarea">${buscado.referencia}</span></div>
+                                        <div class="col-lg-5 mt-2"><span class="text-success font-weight-bold">Nombre </span><span class="nombreRepTarea">${buscado.nombre}</span></div>  
+                                        <div class="col-lg-2 mt-2"><span class="text-success font-weight-bold">Cantidad </span><span class="cantRepTarea">${buscado.cantidad}</span></div>
+                                        <div class="col-lg-2 mr-0">
+                                            <button type='button' class='actualizarRepTarea btn btn-outline-primary'>
+                                                <ion-icon name='create' class='pt-1'></ion-icon>
+                                            </button>
+                                            <button type='button' class='eliminarRepTarea btn btn-outline-danger'>
+                                                <ion-icon name='trash' class='pt-1'></ion-icon>
+                                            </button>
+                                        </div>
                                     </div>`;                   
                         });
                     } else {
@@ -755,22 +756,161 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
 
+    /* Función para mostrar los Repuestos existentes en select del modal */
+    function mostrarRepuestos(repuesto){
+        let repuestos = "";
+    
+        //Petición ajax para obtener los Roles que existen actualmente
+        $.ajax({
+            url:'includes/functions.php',
+            type: 'POST',
+            data: { repuestos },
+            success: function(respuesta){
+                let info = JSON.parse(respuesta);
+                let resultado = '<option value="0" class="text-muted">Elegir un repuesto ...</option>"';
+                info.forEach(buscado => {                    
+
+                    //Si el formulario/modal es para Nuevo, se añade "selected" a la opción "Elegir un repuesto", para que sea valor predeterminado.
+                    if($('#tituloModalRepTarea').text() === 'Nuevo Repuesto en Tarea'){
+                        resultado += "<option value='" + buscado.referencia + "'>" + buscado.nombre + "</option>";
+
+                    //Si el formulario/modal es para Modificar, se añade "selected" a la opción que conincida con el valor que tiene ese repuesto actualmente,
+                    // para que sea valor predeterminado.
+                    } else {
+                        buscado.referencia != repuesto ? repuesto_selec="<option value='" + buscado.referencia + "'>" + buscado.nombre + "</option>" : repuesto_selec="<option value='" + buscado.referencia + "' selected>" + buscado.nombre + "</option>";
+                        resultado += repuesto_selec;
+                    }                                                         
+                });
+
+                $("#inputNomRepTarea").html(resultado);                
+            },
+            // Si la petición falla, devuelve en consola el error producido y el estado
+            error: function(estado, error) {
+                console.log("-Error producido: " + error + ". -Estado: " + estado)
+
+            }
+        });        
+    }
 
 
+    var referencia = '';
 
-
-
-
-
-
-    /* Al pulsar sobre de botón "Nueva repuesto en esta tarea" en la página Tareas, apartado "Repuestos utilizados" */
+    /* Al pulsar sobre de botón "+" en el apartado Repuestos utilizados de cada tarea, para añadir un nuevo repuesto utilizado */
     $(document).on("click", "#crearRepTarea", function() { 
-        let repuesto = '';
 
-        borrarCamposModal2(); 
-        mostrarRepuestos(repuesto); 
-        $('#modalRepTarea').modal('show');      
-                             
+        let idTarea = $(this).parent().parent().parent().attr('id').replace("r", ""); 
+
+        borrarCamposModal2();        
+        $('#tituloModalRepTarea').text('Nuevo Repuesto en Tarea');
+        $('#idTarea').val(idTarea);
+        mostrarRepuestos(referencia);
+        $('#modalRepTarea').modal('show');                      
+    });
+
+ 
+ 
+    /* Al pulsar sobre de botón "Actualizar" de algún registro en los apartados "Repuestos utilizados", para modificar el repuesto utilizado */
+    $(document).on("click", ".actualizarRepTarea", function() {  
+
+        let idTarea = $(this).parent().parent().parent().attr('id').replace("r", ""); 
+        referencia = $(this).parent().siblings().children('.refRepTarea').text(); 
+        //let nombre = $(this).parent().siblings().children('.nombreRepTarea').text();
+        let cantidad = $(this).parent().siblings().children('.cantRepTarea').text();
+         
+        borrarCamposModal2();        
+        $('#tituloModalRepTarea').text('Modificar Repuesto en Tarea');
+        $('#idTarea').val(idTarea);
+        $('#inputRefRepTarea').val(referencia);
+        mostrarRepuestos(referencia);
+        $('#inputCantRepTarea').val(cantidad);
+        $('#modalRepTarea').modal('show');           
+    });
+
+
+
+
+    /* Al pulsar sobre el botón "Aceptar" del Modal para crear o modificar */
+    $(document).on("click", "#aceptarModalRepTarea", function(e) {  
+        //Detengo la acción por defecto del envío del formulario y su propagación
+        e.preventDefault();
+        e.stopPropagation();
+
+        //Declaro el patrón a comparar
+        let expCantidad = /^[0-9\s]{1,4}$/;    
+    
+        //Recojo el valor de los campos rellenados
+        let idTarea = $('#idTarea').val();
+        /* let ref = $('#inputRefRepTarea').val(); */
+        let referencia = $('#inputNomRepTarea').val();
+        let cantidad = $('#inputCantRepTarea').val();
+
+        console.log(cantidad);
+        console.log(cantidad.replace(/\D|\-/,''));
+        
+        //Compruebo cada campo y maqueto efectos en el formulario
+        //Campo Nombre donde elegir el repuesto
+        if(referencia==0){
+            $("#errNomRepTarea").fadeIn();
+            $('#inputNomRepTarea').focus().css("border", "3px solid red");
+            return false;
+        
+        } else {
+            $("#errNomRepTarea").hide();
+            $('#inputNomRepTarea').css("border", "3px solid #03c003");
+
+            //Campo Cantidad
+            if(!expCantidad.test(cantidad)){
+                $("#errCantRepTarea").fadeIn();
+                $('#inputCantRepTarea').focus().css("border", "3px solid red");
+                return false;
+
+            } else {
+                $("#errCantRepTarea").hide();
+                $('#inputCantRepTarea').css("border", "3px solid #03c003");
+
+                //Formateo el tiempo a número flotante para la base de datos
+                /* tiempo = tiempo.replace(":", ".");
+                tiempo = parseFloat(tiempo); */
+
+                //Recojo los datos
+                accionRepTarea = {
+                    accion: $('#tituloModalRepTarea').text(),
+                    referencia: referencia,
+                    idTarea: idTarea,                    
+                    cantidad: cantidad
+                };
+
+                console.log(accionRepTarea);
+            
+                //LLamo a la función y le paso los datos por parámetros para la petición Ajax
+                /* accionRepTareas(accionRepTarea); */
+            }
+        }
+                                                  
+    });
+
+
+
+
+
+    /* Al pulsar sobre el botón "Borrar" de algún registro */
+    $(document).on("click", ".eliminarRepTarea", function() {        
+        let idTarea = $(this).parent().parent().parent().attr('id').replace("r", "");
+        let nombre = $(this).parent().siblings().children('.nombreRepTarea').text(); 
+        referencia = $(this).parent().siblings().children('.refRepTarea').text(); 
+
+        if(confirm('¿Seguro que quieres borrar el Repuesto en Tarea: "' + nombre + '" ?')){
+            //Recojo los datos
+            accionRepTarea = {
+                accion: "Borrar Repuesto en Tarea",
+                referencia: referencia,
+                idTarea: idTarea,                    
+                cantidad: ""
+            };
+
+           //LLamo a la función y le paso los datos por parámetros para la petición Ajax
+           /* accionRepTareas(accionRepTarea); */
+        }
     });
 
 
