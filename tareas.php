@@ -204,7 +204,7 @@
                                             <div class="col-lg-4">
                                                 <label for="inputCantRepTarea" class="text-success ml-2">Cantidad *</label>
                                                 <input type="number" class="form-control" name="inputCantRepTarea" id="inputCantRepTarea" min="1" max="1000" minlength="1" maxlength="4" required> 
-                                                <span class="errorModal" id="errFechaTarea">Solo admite números enteros del 0 al 1000</span>                                   
+                                                <span class="errorModal" id="errCantRepTarea">Solo admite números enteros del 0 al 1000</span>                                   
                                             </div>
                                         </div>                     
 

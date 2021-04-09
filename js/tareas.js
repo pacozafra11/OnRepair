@@ -691,7 +691,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
     function mostrarRepTareas(idTarea){
         let repTarea = idTarea;
         let tecnico = $("#"+idTarea).children('.tecnico').text();   //'.tecnico'
-        console.log(tecnico);
 
             //Petición ajax
             $.ajax({
@@ -742,9 +741,12 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
 
 
     function borrarCamposModal2(){
-        $('#inputDescTarea').val(""); 
-        $('#inputDescTarea').css("border", "none"); 
-        $("#errDescTarea").hide();     
+        $('#inputNomRepTarea').val("");
+        $('#inputNomRepTarea').css("border", "none"); 
+        $('#errNomRepTarea').hide();
+        $('#inputCantRepTarea').val("");
+        $('#inputCantRepTarea').css("border", "none"); 
+        $('#errCantRepTarea').hide();   
     }
 
 
@@ -791,6 +793,45 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
             }
         });        
     }
+
+
+
+    /* Función con la llamada Ajax para pasar el parámetro accionRepTareas con todos los datos recogidos para Crear, Modificar o Eliminar un Repuesto en Tarea*/
+    function accionRepTareas(accionRepTarea, idTarea){
+        //Petición ajax
+        $.ajax({
+            url:'includes/functions.php',
+            type: 'POST',
+            data: { accionRepTarea },
+            success: function(respuesta){
+
+                //Si se ha modificado
+                if(respuesta == "si"){
+
+                    $('#modalRepTarea').modal('hide');
+                    mostrarRepTareas(idTarea);
+                    $("#infoModal").html('<p class="text-center text-success pt-3"><ion-icon name="checkmark-circle-outline"></ion-icon> <b>La acción se ha realizado correctamente</b></p>');
+                    $("#modalInfo").modal('show');
+                    setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2000); //Temporizador para desaparecer el mensaje
+                                                            
+                //Si no se ha modificado
+                } else{
+                
+                    $('#modalRepTarea').modal('hide');
+                    mostrarRepTareas(idTarea);
+                    $("#infoModal").html('<p class="text-center text-danger pt-3"><ion-icon name="close-circle-outline"></ion-icon> <b>No ha podido realizar la acción, revisa y modifica los datos introducidos</b></p>');
+                    $("#modalInfo").modal('show');
+                    setTimeout(function(){ $("#modalInfo").modal('hide'); }, 2500); //Temporizador para desaparecer el mensaje
+                }
+            },
+            // Si la petición falla, devuelve en consola el error producido y el estado
+            error: function(estado, error) {
+                console.log("-Error producido: " + error + ". -Estado: " + estado)
+            }
+        });
+    }
+
+
 
 
     var referencia = '';
@@ -842,10 +883,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
         let idTarea = $('#idTarea').val();
         /* let ref = $('#inputRefRepTarea').val(); */
         let referencia = $('#inputNomRepTarea').val();
-        let cantidad = $('#inputCantRepTarea').val();
-
-        console.log(cantidad);
-        console.log(cantidad.replace(/\D|\-/,''));
+        let cantidad = parseInt($('#inputCantRepTarea').val());
         
         //Compruebo cada campo y maqueto efectos en el formulario
         //Campo Nombre donde elegir el repuesto
@@ -859,7 +897,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
             $('#inputNomRepTarea').css("border", "3px solid #03c003");
 
             //Campo Cantidad
-            if(!expCantidad.test(cantidad)){
+            if(!expCantidad.test(cantidad) && cantidad>0 && cantidad<=1000){
                 $("#errCantRepTarea").fadeIn();
                 $('#inputCantRepTarea').focus().css("border", "3px solid red");
                 return false;
@@ -867,10 +905,6 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
             } else {
                 $("#errCantRepTarea").hide();
                 $('#inputCantRepTarea').css("border", "3px solid #03c003");
-
-                //Formateo el tiempo a número flotante para la base de datos
-                /* tiempo = tiempo.replace(":", ".");
-                tiempo = parseFloat(tiempo); */
 
                 //Recojo los datos
                 accionRepTarea = {
@@ -880,15 +914,12 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                     cantidad: cantidad
                 };
 
-                console.log(accionRepTarea);
-            
                 //LLamo a la función y le paso los datos por parámetros para la petición Ajax
-                /* accionRepTareas(accionRepTarea); */
+                accionRepTareas(accionRepTarea, idTarea);
             }
         }
                                                   
     });
-
 
 
 
@@ -909,7 +940,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
             };
 
            //LLamo a la función y le paso los datos por parámetros para la petición Ajax
-           /* accionRepTareas(accionRepTarea); */
+           accionRepTareas(accionRepTarea, idTarea);
         }
     });
 

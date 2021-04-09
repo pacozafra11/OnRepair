@@ -67,6 +67,8 @@
     $db = new db();
 
 
+    /* ------------------------------------------------------------Tareas------------------------------------------------------------- */
+
     //Si recibe por el método POST el parámetro "tareas", llama al método mostrarTareas() para que se cargen todos los datos de la tabla.
     if(isset($_POST['tareas'])){
 
@@ -117,6 +119,21 @@
             echo $json;           
     }
 
+
+    //Si recibe por el método POST el parámetro "accionRepTarea", pasa los datos recibidos a variables, los filtra e invoca a la función pasandole las variables como parámetros.
+    if(isset($_POST['accionRepTarea'])){
+
+        if(!empty($_POST['accionRepTarea'])){
+            $accionRepTarea=$_POST['accionRepTarea'];
+            $accion=$accionRepTarea['accion'];
+            $referencia=htmlentities(addslashes($accionRepTarea['referencia']));
+            $idTarea2=htmlentities(addslashes($accionRepTarea['idTarea']));
+            $cantidad=htmlentities(addslashes($accionRepTarea['cantidad']));
+        
+            $realizado = $db->accionRepTarea($accion, $referencia, $idTarea2, $cantidad);            
+            echo $realizado;
+        }      
+    }
 
 
     /* ------------------------------------------------------------Máquinas------------------------------------------------------------- */

@@ -200,7 +200,7 @@
         *    @param  int $tecnico
         *    @param  int $averia
         *    @param  int $mant 
-        *    @return string $desc
+        *    @return string $realizado
         */
         public function accionTarea($accion, $id, $titulo, $fecha, $tiempo, $final, $maquina, $tecnico, $averia, $mant, $desc){
             $realizado = "";
@@ -292,6 +292,60 @@
             return $registros;
         }
 
+
+
+        /* 
+        *   Función para modificar, crear o borrar un Repuesto usado en una tarea
+        *
+        *   @access public
+        *    @param  string $accion 
+        *    @param  string $referencia
+        *    @param  int $idTarea
+        *    @param  int $cantidad
+        *    @return string $realizado
+        */
+        public function accionRepTarea($accion, $referencia, $idTarea, $cantidad){
+            $realizado = "";
+            $afectado=0;
+            $conexion = $this->accesoDB();
+
+            /* Si la acción es Modificar un Repuesto en Tarea existente */
+            if ($accion == "Modificar Repuesto en Tarea"){
+                $sql="UPDATE repuestos_en_tarea SET referencia_repuesto=:referencia, cantidad=:cantidad WHERE id_tarea=:idTarea";
+                $resultado=$conexion->prepare($sql);  
+                $resultado->bindParam(':idTarea', $idTarea);         
+                $resultado->bindParam(':referencia', $referencia);
+                $resultado->bindParam(':cantidad', $cantidad); 
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+            /* Si la acción es crear un nuevo Repuesto en Tarea*/
+            } elseif ($accion == "Nuevo Repuesto en Tarea") {
+                $sql="INSERT INTO repuestos_en_tarea (referencia_repuesto, id_tarea, cantidad) VALUES (:referencia, :idTarea, :cantidad)";
+                $resultado=$conexion->prepare($sql);           
+                $resultado->bindParam(':idTarea', $idTarea);         
+                $resultado->bindParam(':referencia', $referencia);
+                $resultado->bindParam(':cantidad', $cantidad);                   
+                $resultado->execute();   
+                $afectado=$resultado->rowCount();
+
+                /* Si la acción es borrar un Repuesto en Tarea existente */
+            } elseif ($accion == "Borrar Repuesto en Tarea") {                
+                $sql="DELETE FROM repuestos_en_tarea WHERE id_tarea=:idTarea";
+                $resultado = $conexion->prepare($sql);     
+                $resultado->bindParam(':idTarea', $idTarea);      
+                $resultado->execute();
+                $afectado=$resultado->rowCount();
+
+            }
+
+            if($afectado!=0){
+                $realizado = "si";            
+            }else{
+                $realizado = "no";
+            }
+            return $realizado;
+        }
 
 
         /* ----------------------------------------------------------------------MAQUINAS---------------------------------------------------------------------------------------- */
