@@ -38,16 +38,13 @@
 
 
         /* 
-        *   Función para comprobar si existe el usuario, en caso afirmativo comprobar si está bloqueado y su password
+        *   Función para comprobar en la base de datos si existe el usuario, en caso afirmativo devuelve los daots de ses usuario para comprobarlos
         *
         *   @access public
+        *    @param  string $login 
+        *    @return string $realizado
         */
-
-        public function comprobarUsuario($log, $pass){
-            $error= $loginContador= "";
-            $contador=0;
-
-            date_default_timezone_set('Europe/Madrid');
+        public function comprobarUsuarioDB($login){
 
             $conexion = $this->accesoDB();               
             $sql="SELECT usuarios.id AS id, usuarios.nombre AS nombre, usuarios.email AS email, usuarios.password AS password,
@@ -56,79 +53,20 @@
                         INNER JOIN roles ON usuarios.id_rol = roles.id
                         WHERE email= :login";
             $resultado = $conexion->prepare($sql);
-            $login=htmlentities(addslashes($log));        
-            $password=htmlentities(addslashes($pass));
             $resultado->execute(array(":login"=>$login));
-
-            //Si recibo la cookie contador
-            if(isset($_COOKIE[$login]['contador'])){
-                $contador = $_COOKIE[str_replace("_", ".", $login)]['contador'];
-            }
-
-            //Si recibo la cookie login
-            if(isset($_COOKIE[$login]['login'])){
-                $loginContador = $_COOKIE[str_replace("_", ".", $login)]['login'];
-            } else {
-                $loginContador = "";
-            }
-
-            //Si se ejecuta bien la sentencia es por que encuentre ese usuario en la tabla y se crea el array
+            
             if($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                $registros = array($registro); 
 
-                //Compruebo que el usuario no se encuentre bloqueado
-                if($registro["bloqueado"]==0){ 
-
-                    //Verifico la contraseña del usuario
-                    if(password_verify($password, $registro["password"]) && $contador<2){
-
-                        //Borro la cookie
-                        setcookie(str_replace(".", "_", $login) . "[login]", $login, time() -3600);
-                        setcookie(str_replace(".", "_", $login) . "[contador]", $contador, time() -3600);
-
-                        //Creo la sesión y le asigno el login y la hora de conexión
-                        session_start();
-                        
-                        $_SESSION['id'] = $registro["id"];
-                        $_SESSION['login'] = $login;
-                        $_SESSION['hora'] = date('H:i:s');
-                        $_SESSION['rol'] = $registro["rol"];
-                        $_SESSION['nombre'] = $registro["nombre"];
-                        $_SESSION['ultima_conexion'] = time();   
-                        
-                        //Redirijo a tareas.php
-                        header("Location: tareas.php");
-
-                    //Si la contraseña es incorrecta
-                    } else {
-
-                        if($contador<2){ 
-                            $contador++;                       
-                            $error = "Contraseña incorrecta, intentos restantes: " . (3-$contador);                                
-
-                            //Creo la cookie con una duracion de 1 hora
-                            setcookie(str_replace("_", ".", $login) . "[login]", $login, time()+3600);
-                            setcookie(str_replace("_", ".", $login) . "[contador]", $contador, time()+3600);
-
-                            echo $loginContador;
-
-                        } else {
-                            //Bloqueo del usuario por superar los 3 intentos
-                            $error = "Se ha bloquedado el acceso al usuario <br>" . $login . "</br> durante una hora";
-                        }
-                    }
-                    
-                } else {
-                    $error = "El usuario <b>" . $login . "</b> se encuentra bloqueado, contacte con su responsable";
-                }               
-                                      
+                while($tabla=$resultado->fetch(PDO::FETCH_ASSOC)){                    
+                    array_push($registros, $tabla);  
+                }                   
             } else {
-                $error = "Usuario erroneo o no registrado";
-            }
-            //Devuelo el error para mostrarlo en pantalla
-            return $error;
+                $registros = "Usuario no registrado";
+            }         
+            return $registros;
         }
 
-    
 
         /* ----------------------------------------------------------------------TAREAS----------------------------------------------------------------------------------------- */
 
@@ -136,8 +74,7 @@
         *   Función para mostrar tareas, no recibe parámetros
         *
         *   @access public
-        */
-        
+        */        
         public function mostrarTareas($ordenTareas){
             $orden = "";
 
@@ -953,10 +890,6 @@
             }
             return $realizado;
         }
-
-
-
-
 
 
     }

@@ -13,6 +13,14 @@
     $emailOk= $passwordOk= false;
 
 
+    //Función para filtrar y escapar caracteres especiales
+    function test_input($dato) {
+        $dato = trim($dato);
+        $dato = stripslashes($dato);
+        $dato = htmlspecialchars($dato);
+        return $dato;
+      }
+
     //Primero compruebo sesion
     //comprobarSesion();
         
@@ -27,7 +35,9 @@
 
             $emailErr = "Email es requerido";
         } else {
-            $email = $_POST["email"];
+            //Filtro el dato
+            $email = test_input($_POST["email"]);
+
             //Verifica si la dirección de correo electrónico está bien formada
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) { 
                 //La función filter_var () filtra una variable con el filtro especificado y 
@@ -43,26 +53,24 @@
         //Password
         if(empty($_POST["password"])){
             $passwordErr = "Contraseña es requerida";
-        }else{
-            $password = $_POST["password"];
 
-            if(strlen($password)>0 && strlen($password) <21){
-                $passwordOk = true;          
+        }else{
+            $password = test_input($_POST["password"]);
+            //El filtro FILTER_SANITIZE_SPECIAL_CHARS escapa caracteres especiales.
+            $password2 = filter_var($password ,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if(strlen($password2)>0 && strlen($password2)<21){
+            
+                $passwordOk = true;         
             }else{
-                $passwordErr = "La contraseña debe tener entre 1 y 20 caracteres";
+                $passwordErr = "La contraseña debe tener entre 1 y 20 caracteres, no especiales";
             }     
         }
         
         //Si todo está correcto, envío los datos a la función para comprobar si existe el usuario y si es correcta la contraseña
         if($emailOk && $passwordOk){
-
-            
-            $error = $db->comprobarUsuario($email, $password);
-
-            //Si es correcto el resultado redirecciono
-            if($error=="OK"){
-                header('Location: tareas.php');
-            }
+ 
+            $error = comprobarUsuario($email, $password);
         }    
     }
 ?>
@@ -72,8 +80,8 @@
             <div class="col-sm-6 mt-4">
                 <div class="col-sm-12">
 
-                    <!-- Formulario html -->
-                    <form name="formLogin" id="formLogin" class="form-signin" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+                    <!-- Formulario html -->        <!-- Protejo el envío de formulario evitando el XSS (Cross-site scripting) usando "htmlspecialchars()"  -->
+                    <form name="formLogin" id="formLogin" class="form-signin" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
 
                         <div class="form-group">
                             <img src="images/logo_centrado.png" class="img-fluid"  alt="Logotipo On Repair" width="100%" height="auto">    
@@ -81,19 +89,20 @@
 
                         <!-- Campos rellenables de usuario y contraseña -->
                         <div class="form-group">
-                            <input type="text" class="form-control" name="email" id="email" placeholder="&#128272;  Email" value="<?php echo $email;?>" autofocus maxlength="50" required> 
-                            <span class="error"><?php echo $emailErr;?></span>    
+                            <input type="text" class="form-control" name="email" id="email" placeholder="&#128272; Email" value="<?php echo $email;?>" pattern=".+@.+.+" autofocus maxlength="50" required> 
+                            <div class="text-center"><span class="error"><?php echo $emailErr;?></span></div>   
                         </div>
 
                         <div class="form-group">
                             <input type="password" class="form-control" name="password" id="password" placeholder="&#128272; Contraseña" value="<?php echo $password;?>" maxlength="20" required>
-                            <span class="error"><?php echo $passwordErr;?></span>
+                            <div class="text-center"><span class="error"><?php echo $passwordErr;?></span></div>
                         </div>
 
                         <!-- Botón enviar -->
                         <div class="form-group">
                             <button type="submit" class="btn btn-lg btn-primary btn-block" name="autenti">Autentificarse</button>
-                            <span class="error"><?php echo $error;?></span>
+                            <!-- <button class="g-recaptcha btn btn-lg btn-primary btn-block" name="autenti" data-sitekey="reCAPTCHA_site_key" data-callback='onSubmit' data-action='submit'>Autentificarse</button> -->
+                            <div class="text-center"><p class="error"><?php echo $error;?></p></div>
                         </div>
 
                     </form>  
@@ -110,6 +119,13 @@
             </button>
         </div>
     </footer>
+
+    <!-- Script de reCAPTCHA -->
+    <!-- <script>
+        function onSubmit(token**) {
+            document.getElementById("formLogin").submit();
+        }
+    </script> -->
     
 <?php
     //Incluyo pie

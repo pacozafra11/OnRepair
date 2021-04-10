@@ -20,6 +20,9 @@
     <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 
+    <!-- reCAPTCHA v3 de Google para la validación de la página Index -->
+    <!-- <script src="https://www.google.com/recaptcha/api.js"></script> -->
+
     <!-- Script propios para las páginas -->
     <script type="text/javascript" src="js/functions.js"></script>
     <script type="text/javascript" src="js/roles.js"></script>

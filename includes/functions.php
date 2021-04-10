@@ -4,6 +4,8 @@
     //Incluyo la páginas necesarias
     include("db.php");
 
+    //Creo un objeto db de la clase DB para su uso en las funciones
+    $db = new db();
 
     function comprobarSesion(){
         $resultado = false;
@@ -63,8 +65,114 @@
     }*/
 
 
-    //Creo un objeto db de la clase DB
-    $db = new db();
+
+
+    /* 
+        *   Función para comprobar si existe el usuario, en caso afirmativo comprobar si está bloqueado y su password
+        *
+        *   @access public
+        */
+        function comprobarUsuario($log, $pass){
+            global $db;
+            $error= $loginContador= "";
+            $contador= $bloq= 0;            
+
+            //Filtro los datos para pasarlos a la función de la base de datos
+            $login=htmlentities(addslashes($log));        
+            $password=htmlentities(addslashes($pass));
+            $registro = $db->comprobarUsuarioDB($login);  
+            
+            //Establezco la hora local
+            date_default_timezone_set('Europe/Madrid');
+
+            //Reemplazo los posibles simbolos para el posterior almacenaje en cookies
+            $reemplazo = array("@", ".", "_", "-", "+", "*", "'", "`");
+            $login2 = str_replace($reemplazo, "", $login);
+
+            
+            //Si recibo la cookie contador            
+            if(isset($_COOKIE[$login2]['contador'])){
+                $contador = $_COOKIE[$login2]['contador']; 
+            }
+
+            //Si recibo la cookie login
+            if(isset($_COOKIE[$login2]['login'])){
+                $loginContador = $_COOKIE[$login2]['login']; 
+            }
+
+            //Si recibo la cookie contador            
+            if(isset($_COOKIE[$login2]['bloq'])){
+                $bloq = $_COOKIE[$login2]['bloq']; 
+            }
+        
+          
+            //Compruebo que el usuario no esté bloqueado por exceder el número de intentos de Login (3 int x 1h x usu).
+            if($bloq===0){
+
+                //Si se ejecuta bien la sentencia es por que encuentre ese usuario en la tabla y se crea el array
+                if(gettype($registro) === "array"){
+
+                    //Compruebo que el usuario no se encuentre bloqueado por el responsable
+                    if($registro[0]["bloqueado"]==0){ 
+
+                        //Verifico la contraseña del usuario
+                        if(password_verify($password, $registro[0]["password"])){
+
+                            //Borro la cookie
+                            setcookie($login2 . "[login]", $login2, time()-3600); 
+                            setcookie($login2 . "[contador]", $contador, time()-3600);
+                            setcookie($login2 . "[bloq]", 0, time()-3600);
+
+                            //Creo la sesión y le asigno el login y la hora de conexión
+                            session_start();
+                            
+                            $_SESSION['id'] = $registro[0]["id"];
+                            $_SESSION['login'] = $login;
+                            $_SESSION['hora'] = date('H:i:s');
+                            $_SESSION['rol'] = $registro[0]["rol"];
+                            $_SESSION['nombre'] = $registro[0]["nombre"];
+                            $_SESSION['ultima_conexion'] = time();   
+                            
+                            //Redirijo a tareas.php
+                            header("Location: tareas.php");
+
+                        //Si la contraseña es incorrecta
+                        } else {
+                            $contador++;
+
+                            if($contador<=2){                        
+                                $error = "Contraseña incorrecta, intentos restantes: " . (3-$contador);                                
+
+                                //Creo la cookie con una duracion de 1 hora                            
+                                setcookie($login2 . "[login]", $login2, time()+3600);  
+                                setcookie($login2 . "[contador]", $contador, time()+3600);                           
+
+                                //echo $loginContador;
+
+                            } else {                            
+                                //Bloqueo del usuario por superar los 3 intentos
+                                $error = "Se ha bloquedado el acceso al usuario <br>" . $login . "</br> durante una hora. (Intentos: " . $contador . ")";
+                                setcookie($login2 . "[login]", $login2, time()+3600);   //3600
+                                setcookie($login2 . "[contador]", $contador, time()+3600);
+                                setcookie($login2 . "[bloq]", 1, time()+3600);
+                            }
+                        }
+                        
+                    } else {
+                        $error = "El usuario <b>" . $login . "</b> se encuentra bloqueado, contacte con su responsable.";
+                    }               
+                                        
+                } else {
+                    $error = $registro;
+                }
+            } else {
+                $contador++;
+                setcookie($login2 . "[contador]", $contador, time()+3600);
+                $error = "El usuario <b>" . $login . "</b> se encuentra bloqueado durante una hora. (Intentos: " . $contador . ")";
+            }
+            //Devuelo el error para mostrarlo en pantalla
+            return $error;
+        }
 
 
     /* ------------------------------------------------------------Tareas------------------------------------------------------------- */
