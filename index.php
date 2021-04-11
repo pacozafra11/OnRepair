@@ -4,8 +4,7 @@
     * @author Francisco José López Zafra
     */
 
-    //Incluyo cabecera y db
-    include("includes/head.php");
+    //Incluyo funciones
     include("includes/functions.php");
     
     //Declaración de variables
@@ -75,32 +74,55 @@
     }
 ?>
 
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS Bootstrap 4-->
+   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+ 
+    <!-- CSS Propio -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon.jpg"/>
+    
+
+    <title>On Repair</title>
+</head>
+
+<body id="bodyIndex">
+
     <section class="container">        
-        <div class="row justify-content-center align-items-center minh-100">
-            <div class="col-sm-6 mt-4">
-                <div class="col-sm-12">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-5 mt-4 rounded" id="contLogin">
+                <div class="fondo col-lg-12">
 
                     <!-- Formulario html -->        <!-- Protejo el envío de formulario evitando el XSS (Cross-site scripting) usando "htmlspecialchars()"  -->
                     <form name="formLogin" id="formLogin" class="form-signin" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
 
                         <div class="form-group">
-                            <img src="images/logo_centrado.png" class="img-fluid"  alt="Logotipo On Repair" width="100%" height="auto">    
+                            <img src="images/logo_centrado.png" class="img-fluid rounded mt-2"  alt="Logotipo On Repair" width="100%" height="auto">    
                         </div>
 
                         <!-- Campos rellenables de usuario y contraseña -->
                         <div class="form-group">
-                            <input type="text" class="form-control" name="email" id="email" placeholder="&#128272; Email" value="<?php echo $email;?>" pattern=".+@.+.+" autofocus maxlength="50" required> 
+                            <input type="text" class="form-control <?php echo $emailErr;?>" name="email" id="email" placeholder="&#128272; Email" value="<?php echo $email;?>" pattern=".+@.+.+" autofocus maxlength="50" required> 
                             <div class="text-center"><span class="error"><?php echo $emailErr;?></span></div>   
                         </div>
 
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password" id="password" placeholder="&#128272; Contraseña" value="<?php echo $password;?>" maxlength="20" required>
+                            <input type="password" class="form-control <?php echo $passErr;?>" name="password" id="password" placeholder="&#128272; Contraseña" value="<?php echo $password;?>" maxlength="20" required>
                             <div class="text-center"><span class="error"><?php echo $passwordErr;?></span></div>
                         </div>
 
                         <!-- Botón enviar -->
                         <div class="form-group">
-                            <button type="submit" class="btn btn-lg btn-primary btn-block" name="autenti">Autentificarse</button>
+                            <button type="submit" class="btn btn-lg btn-success btn-block" name="autenti">Autentificarse</button>
                             <!-- <button class="g-recaptcha btn btn-lg btn-primary btn-block" name="autenti" data-sitekey="reCAPTCHA_site_key" data-callback='onSubmit' data-action='submit'>Autentificarse</button> -->
                             <div class="text-center"><p class="error"><?php echo $error;?></p></div>
                         </div>
@@ -111,8 +133,8 @@
         </div>        
     </section>
 
-    <footer class="footer">
-        <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
+    <footer class="footer row justify-content-center align-items-center">
+        <div class="alert alert-warning alert-dismissible fade show mt-4 col-lg-8 border" role="alert">
             Esta página hace uso de <a href="includes/cookies.php" class="alert-link">cookies</a> para su funcionamiento.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

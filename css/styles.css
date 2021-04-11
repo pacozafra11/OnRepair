@@ -15,9 +15,57 @@ body{
 	font-weight: 300;
 }
 
+/* Imagen fondo página Index */
+#bodyIndex {
+  margin: 0;
+  min-height: 100vh;
+  background-image: url("../images/5026563.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+
 .error{
 	color: red;
   font-size: 15px!important;
+}
+
+
+/* Fondo contenedor Login */
+#contLogin {
+  background-image: linear-gradient(to top,#cadafa, #2893a8, #d5e3e6, #2893a8,#012981, #001c58);
+  /* background-image: url("/images/fondo_contenedor.jpg")no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;*/
+}
+
+
+/* Creo una variable con el color del logo */
+:root {
+  --info: #009fc8;
+}
+
+
+/* Sobreescribo clases de bootstrap */
+.bg-info {
+  background-color: var(--info) !important;  
+}
+
+.text-info {
+  color: var(--info) !important; 
+}
+
+.btn-outline-info {
+  color: var(--info) !important;
+}
+
+.btn-outline-info:hover {
+  background-color: var(--info) !important;
+  color: white !important;
 }
 
 

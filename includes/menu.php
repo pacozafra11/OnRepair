@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="list-group list-group-flush">
-                    <a href="tareas.php" class="list-group-item list-group-item-action bg-info text-light" id="menuTareas"><ion-icon name="clipboard" class="lead"></ion-icon> Tareas</a>
+                    <a href="tareas.php" class="list-group-item list-group-item-action bg-info text-light border-top-light" id="menuTareas"><ion-icon name="clipboard" class="lead"></ion-icon> Tareas</a>
                     <a href="maquinas.php" class="list-group-item list-group-item-action bg-info text-light" id="menuMaquinas"><ion-icon name="cog" class="lead"></ion-icon> Máquinas</a>
                     <a href="grupos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuGrupos"><ion-icon name="filing" class="lead"></ion-icon> Grupos de máquinas</a>
                     <a href="averias.php" class="list-group-item list-group-item-action bg-info text-light" id="menuAverias"><ion-icon name="flash" class="lead"></ion-icon> Tipos de averías</a>
