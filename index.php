@@ -8,7 +8,7 @@
     include("includes/functions.php");
     
     //Declaración de variables
-    $email= $emailErr= $password= $passwordErr= $error= "";
+    $email= $emailErr= $password= $passwordErr= $error= $classEmailErr=  $classPassErr= "";
     $emailOk= $passwordOk= false;
 
 
@@ -32,6 +32,7 @@
         //Email
         if (empty($_POST["email"])) {
 
+            $classEmailErr = "classErr";
             $emailErr = "Email es requerido";
         } else {
             //Filtro el dato
@@ -42,15 +43,19 @@
                 //La función filter_var () filtra una variable con el filtro especificado y 
                 //el filtro FILTER_VALIDATE_EMAIL valida una dirección de correo electrónico
 
+                $classEmailErr = "classOk";
                 $emailOk = true;
             }else{
             
+                $classEmailErr = "classErr";
                 $emailErr = "Formato de correo no valido";
             }
         }
         
         //Password
         if(empty($_POST["password"])){
+
+            $classPassErr = "classErr";
             $passwordErr = "Contraseña es requerida";
 
         }else{
@@ -59,10 +64,12 @@
             $password2 = filter_var($password ,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             if(strlen($password2)>0 && strlen($password2)<21){
-            
+                
+                $classPassErr = "classOk";
                 $passwordOk = true;         
             }else{
                 $passwordErr = "La contraseña debe tener entre 1 y 20 caracteres, no especiales";
+                $classPassErr = "classErr";
             }     
         }
         
@@ -111,12 +118,12 @@
 
                         <!-- Campos rellenables de usuario y contraseña -->
                         <div class="form-group">
-                            <input type="text" class="form-control <?php echo $emailErr;?>" name="email" id="email" placeholder="&#128272; Email" value="<?php echo $email;?>" pattern=".+@.+.+" autofocus maxlength="50" required> 
+                            <input type="text" class="<?php echo $classEmailErr;?> form-control" name="email" id="email" placeholder="&#128272; Email" value="<?php echo $email;?>" pattern=".+@.+.+" autofocus maxlength="50" required> 
                             <div class="text-center"><span class="error"><?php echo $emailErr;?></span></div>   
                         </div>
 
                         <div class="form-group">
-                            <input type="password" class="form-control <?php echo $passErr;?>" name="password" id="password" placeholder="&#128272; Contraseña" value="<?php echo $password;?>" maxlength="20" required>
+                            <input type="password" class="<?php echo $classPassErr;?> form-control" name="password" id="password" placeholder="&#128272; Contraseña" value="<?php echo $password;?>" maxlength="20" required>
                             <div class="text-center"><span class="error"><?php echo $passwordErr;?></span></div>
                         </div>
 
