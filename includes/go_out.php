@@ -1,7 +1,11 @@
 <?php
-
-//Aquí realizo el cierre/destrucción/anulación de las sesiones y conexiones
-// a la base de datos, y volver a la página de inicio index.php
+/**
+ * Aquí realizo el cierre/destrucción/anulación de las sesiones y conexiones
+ * a la base de datos, y volver a la página de inicio index.php
+ * 
+ * @author Francisco José López Zafra
+ */
+ 
 session_start();
 
 if(session_unset()){

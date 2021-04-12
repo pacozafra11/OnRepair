@@ -1,17 +1,23 @@
 <?php
+
     /**
-     * Clase DB, implementa la conexión a la base de datos y otras funciones a la misma , contiene atributos y el método constructor privados.
+     * Clase DB, implementa la conexión a la base de datos y otras funciones a la misma ,
+     * contiene atributos y el método constructor privados.
      * 
      * @author Francisco José López Zafra
-    */
-
+     */
     class DB{
-
+        //Variables privadas
         private $mysql;
         private $log;
         private $pass;
 
 
+        /**
+         * Método constructor, de acceso publico, contiene los datos para la conexión en local
+         * 
+         * @access public
+         */
         public function __construct(){
 
             $this->mysql="mysql: host=localhost; dbname=mantenimiento; charset=utf8";
@@ -19,7 +25,12 @@
             $this->pass="FranciscoZafra";
         }
 
-        //Acceso a la base de datos
+        /**
+         * Función de acceso a la base de datos, no recibe parámetros y devuelve la conexión
+         * 
+         * @access private
+         * @return $conexion
+         */
         private function accesoDB(){
             
             try {
@@ -37,16 +48,16 @@
         }
 
 
-        /* 
-        *   Función para comprobar en la base de datos si existe el usuario, en caso afirmativo devuelve los daots de ses usuario para comprobarlos
-        *
-        *   @access public
-        *    @param  string $login 
-        *    @return string $realizado
-        */
+        /**
+         * Función para comprobar en la base de datos si existe el usuario, en caso afirmativo devuelve los daots de ses usuario para comprobarlos
+         *
+         * @access public
+         * @param string $login 
+         * @return array $realizado
+         */
         public function comprobarUsuarioDB($login){
 
-            $conexion = $this->accesoDB();               
+             $conexion = $this->accesoDB();               
             $sql="SELECT usuarios.id AS id, usuarios.nombre AS nombre, usuarios.email AS email, usuarios.password AS password,
                 usuarios.bloqueado AS bloqueado, roles.nombre AS rol 
                         FROM usuarios 
@@ -70,15 +81,17 @@
 
         /* ----------------------------------------------------------------------TAREAS----------------------------------------------------------------------------------------- */
 
-        /* 
-        *   Función para mostrar tareas, no recibe parámetros
-        *
-        *   @access public
-        */        
-        public function mostrarTareas($ordenTareas){
+        /** 
+         * Función para mostrar tareas, según el parámetro recibido, así las ordena
+         *
+         * @access public
+         * @param string $ordenTareas 
+         * @return array $realizado
+         */        
+         public function mostrarTareas($ordenTareas){
             $orden = "";
 
-            /* Según se seleccione en el dropdown de ordenación */
+            //Según se seleccione en el dropdown de ordenación
             switch ($ordenTareas) {
                 case "máqui":
                     $orden = "maquina";
@@ -124,27 +137,28 @@
 
 
 
-        /* 
-        *   Función para modificar, crear o borrar una Tarea
-        *
-        *   @access public
-        *    @param  string $accion 
-        *    @param  int $id
-        *    @param  string $titulo
-        *    @param  date $fecha
-        *    @param  double $tiempo
-        *    @param  int $maquina 
-        *    @param  int $tecnico
-        *    @param  int $averia
-        *    @param  int $mant 
-        *    @return string $realizado
-        */
+        /**
+         * Función para modificar, crear o borrar una Tarea según la acción recibida
+         *
+         * @access public
+         * @param  string $accion 
+         * @param int $id
+         * @param string $titulo
+         * @param date $fecha
+         * @param double $tiempo
+         * @param int $maquina 
+         * @param int $tecnico
+         * @param int $averia
+         * @param int $mant 
+         * @param string $desc
+         * @return string $realizado
+         */
         public function accionTarea($accion, $id, $titulo, $fecha, $tiempo, $final, $maquina, $tecnico, $averia, $mant, $desc){
             $realizado = "";
             $afectado=0;
             $conexion = $this->accesoDB();
 
-            /* Si la acción es Modificar una Tarea existente */
+            //Si la acción es Modificar una Tarea existente
             if ($accion == "Modificar Tarea"){
                 $sql="UPDATE tareas SET titulo=:titulo, descripcion=:descripcion, tiempo=:tiempo, fecha=:fecha, finalizada=:final, id_tipo_mantenimiento=:mant, id_tipo_averia=:averia, id_usuario=:tecnico, id_maquina=:maquina WHERE id=:id";
                 $resultado=$conexion->prepare($sql);  
@@ -161,7 +175,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-            /* Si la acción es crear una nueva Tarea*/
+            //Si la acción es crear una nueva Tarea
             } elseif ($accion == "Nueva Tarea") {
                 $sql="INSERT INTO tareas (titulo, descripcion, tiempo, fecha, finalizada, id_tipo_mantenimiento, id_tipo_averia, id_usuario, id_maquina) VALUES (:titulo, :descripcion, :tiempo, :fecha, :final, :mant, :averia, :tecnico, :maquina)";
                 $resultado=$conexion->prepare($sql);           
@@ -177,7 +191,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-                /* Si la acción es borrar una Tarea existente */
+            //Si la acción es borrar una Tarea existente
             } elseif ($accion == "Borrar Tarea") {                
                 $sql="DELETE FROM tareas WHERE id=:id";
                 $resultado = $conexion->prepare($sql);     
@@ -200,11 +214,13 @@
 
         /* ----------------------------------------------------------------REPUESTOS EN TAREAS----------------------------------------------------------------------------------- */
 
-        /* 
-        *   Función para mostrar los repuestos usados en las tareas, recibe como parámetro el id de la tarea que tiene relacionados los repuestos
-        *
-        *   @access public
-        */
+         /** 
+         * Función para mostrar los repuestos usados en las tareas, recibe como parámetro el id de la tarea que tiene relacionados los repuestos
+         *
+         * @access public
+         * @param int $idTarea
+         * @return array $realizado
+         */
         public function mostrarRepTarea($idTarea){
 
             $conexion = $this->accesoDB();
@@ -231,22 +247,22 @@
 
 
 
-        /* 
-        *   Función para modificar, crear o borrar un Repuesto usado en una tarea
-        *
-        *   @access public
-        *    @param  string $accion 
-        *    @param  string $referencia
-        *    @param  int $idTarea
-        *    @param  int $cantidad
-        *    @return string $realizado
-        */
+        /**
+         * Función para modificar, crear o borrar un Repuesto usado en una tarea, según el parámetro acción recibido
+         *
+         * @access public
+         * @param string $accion 
+         * @param string $referencia
+         * @param int $idTarea
+         * @param int $cantidad
+         * @return string $realizado
+         */
         public function accionRepTarea($accion, $referencia, $idTarea, $cantidad){
             $realizado = "";
             $afectado=0;
             $conexion = $this->accesoDB();
 
-            /* Si la acción es Modificar un Repuesto en Tarea existente */
+            //Si la acción es Modificar un Repuesto en Tarea existente
             if ($accion == "Modificar Repuesto en Tarea"){
                 $sql="UPDATE repuestos_en_tarea SET referencia_repuesto=:referencia, cantidad=:cantidad WHERE id_tarea=:idTarea";
                 $resultado=$conexion->prepare($sql);  
@@ -256,7 +272,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-            /* Si la acción es crear un nuevo Repuesto en Tarea*/
+            //Si la acción es crear un nuevo Repuesto en Tarea
             } elseif ($accion == "Nuevo Repuesto en Tarea") {
                 $sql="INSERT INTO repuestos_en_tarea (referencia_repuesto, id_tarea, cantidad) VALUES (:referencia, :idTarea, :cantidad)";
                 $resultado=$conexion->prepare($sql);           
@@ -266,7 +282,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-                /* Si la acción es borrar un Repuesto en Tarea existente */
+            //Si la acción es borrar un Repuesto en Tarea existente
             } elseif ($accion == "Borrar Repuesto en Tarea") {                
                 $sql="DELETE FROM repuestos_en_tarea WHERE id_tarea=:idTarea";
                 $resultado = $conexion->prepare($sql);     
@@ -287,11 +303,12 @@
 
         /* ----------------------------------------------------------------------MAQUINAS---------------------------------------------------------------------------------------- */
 
-        /* 
-        *   Función para mostrar maquinas, no recibe parámetros
-        *
-        *   @access public
-        */
+        /** 
+         * Función para mostrar maquinas, no recibe parámetros
+         *
+         * @access public
+         * @return array $realizado
+         */
         public function mostrarMaquinas(){
 
             $conexion = $this->accesoDB();
@@ -316,24 +333,25 @@
 
 
 
-        /* 
-        *   Función para modificar, crear o borrar una Máquina
-        *
-        *   @access public
-        *    @param  string $accion, acción a realizar 
-        *    @param  int $id
-        *    @param  string $nombre
-        *    @param  string $marca
-        *    @param  string $modelo
-        *    @param  int $grupo  
-        *    @return string $desc
-        */
+        /** 
+         * Función para modificar, crear o borrar una Máquina, según el parámetro acción recibido
+         *
+         * @access public
+         * @param string $accion 
+         * @param int $id
+         * @param string $nombre
+         * @param string $marca
+         * @param string $modelo
+         * @param int $grupo  
+         * @param string $desc
+         * @return string $realizado
+         */
         public function accionMaquina($accion, $id, $nombre, $marca, $modelo, $grupo, $desc){
             $realizado = "";
             $afectado=0;
             $conexion = $this->accesoDB();
 
-            /* Si la acción es Modificar una máquina existente */
+            //Si la acción es Modificar una máquina existente
             if ($accion == "Modificar Máquina"){
                 $sql="UPDATE maquinas SET nombre=:nombre, marca=:marca, modelo=:modelo, id_grupo=:grupo, descripcion=:descripcion WHERE id=:id";
                 $resultado=$conexion->prepare($sql);  
@@ -346,7 +364,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-            /* Si la acción es crear una nueva máquina*/
+            //Si la acción es crear una nueva máquina
             } elseif ($accion == "Nueva Máquina") {
                 $sql="INSERT INTO maquinas (nombre, marca, modelo, descripcion, id_grupo) VALUES (:nombre, :marca, :modelo, :descripcion, :grupo)";
                 $resultado=$conexion->prepare($sql);           
@@ -358,7 +376,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-                /* Si la acción es borrar una máquina existente */
+            //Si la acción es borrar una máquina existente
             } elseif ($accion == "Borrar Máquina") {                
                 $sql="DELETE FROM maquinas WHERE id=:id";
                 $resultado = $conexion->prepare($sql);     
@@ -382,8 +400,8 @@
          * los caracteres o palabras pasadas como parámetro.
          * 
          * @access public
-         * @param string
-         * @return array
+         * @param string $nombre
+         * @return array $registros
          */
         public function buscarNombres($nombre){
             $registros="";
@@ -411,11 +429,12 @@
 
         /* ------------------------------------------------------------------GRUPOS DE MAQUINAS-------------------------------------------------------------------------------- */
 
-        /* 
-        *   Función para mostrar grupos de máquinas, no recibe parámetros
-        *
-        *   @access public
-        */
+        /** 
+         * Función para mostrar grupos de máquinas, no recibe parámetros, devuelve un array con los grupos
+         *
+         * @access public
+         * @return $registros
+         */
         public function mostrarGrupos(){
 
             $conexion = $this->accesoDB();
@@ -438,20 +457,20 @@
 
 
 
-         /* 
-        *   Función para modificar, crear o borrar un Grupo de Máquinas
-        *
-        *    @access public
-        *    @param  string $accion, acción a realizar 
-        *    @param  int $id
-        *    @param  string $nombre  
-        *    @return string $realizado
-        */ 
+        /** 
+         * Función para modificar, crear o borrar un Grupo de Máquinas, según la acción recibida por el parámetro acción
+         *
+         * @access public
+         * @param string $accion
+         * @param int $id
+         * @param string $nombre  
+         * @return string $realizado
+         */ 
         public function accionGrupo($accion, $id, $nombre){
             $realizado = "";
             $conexion = $this->accesoDB();
 
-            /* Si la acción es Modificar un Grupo de Máquinas existente */
+            //Si la acción es Modificar un Grupo de Máquinas existente
             if($accion=="Modificar Grupo de Máquinas"){
                 $sql="UPDATE grupos SET nombre=:nombre WHERE id=:id";
                 $resultado=$conexion->prepare($sql);  
@@ -460,7 +479,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-            /* Si la acción es crear un nuevo Grupo de Máquinas */
+            //Si la acción es crear un nuevo Grupo de Máquinas
             }elseif($accion=="Nuevo Grupo de Máquinas") {
                 $sql="INSERT INTO grupos (nombre) VALUES (:nombre)";
                 $resultado=$conexion->prepare($sql);          
@@ -468,7 +487,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-                /* Si la acción es borrar un Grupo de Máquinas existente */
+            //Si la acción es borrar un Grupo de Máquinas existente
             }elseif($accion=="Borrar Grupo de Máquinas") {                
                 $sql="DELETE FROM grupos WHERE id=:id";
                 $resultado = $conexion->prepare($sql);     
@@ -489,9 +508,12 @@
 
         /* -----------------------------------------------------------------------AVERIAS------------------------------------------------------------------------------------------ */
 
-        /* 
-        *   Función para mostrar los tipos de averías, no recibe parámetros
-        */
+        /** 
+         * Función para mostrar los tipos de averías, no recibe parámetros, devuelve un array con todas las averías
+         *
+         * @access public
+         * @return array $registros
+         */
         public function mostrarAverias(){
 
             $conexion = $this->accesoDB();
@@ -514,19 +536,20 @@
 
 
         
-        /* 
-        *   Función para modificar, crear o borrar un Tipo de Averia
-        *
-        *    @param  string $accion, acción a realizar 
-        *    @param  int $id
-        *    @param  string $nombre  
-        *    @return string $realizado
-        */ 
+        /** 
+         * Función para modificar, crear o borrar un Tipo de Averia, según la acción recibida por el parámetro acción
+         *
+         * @access public
+         * @param string $accion
+         * @param int $id
+         * @param string $nombre  
+         * @return string $realizado
+         */ 
         public function accionAveria($accion, $id, $nombre){
             $realizado = "";
             $conexion = $this->accesoDB();
 
-            /* Si la acción es Modificar un Tipo de Averia existente */
+            //Si la acción es Modificar un Tipo de Averia existente
             if($accion=="Modificar Tipo de Averia"){
                 $sql="UPDATE tipo_averia SET nombre=:nombre WHERE id=:id";
                 $resultado=$conexion->prepare($sql);  
@@ -535,7 +558,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-            /* Si la acción es crear un nuevo Tipo de Averia */
+            //Si la acción es crear un nuevo Tipo de Averia
             }elseif($accion=="Nuevo Tipo de Averia") {
                 $sql="INSERT INTO tipo_averia (nombre) VALUES (:nombre)";
                 $resultado=$conexion->prepare($sql);          
@@ -543,7 +566,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-                /* Si la acción es borrar un Tipo de Averia existente */
+            //Si la acción es borrar un Tipo de Averia existente
             }elseif($accion=="Borrar Tipo de Averia") {                
                 $sql="DELETE FROM tipo_averia WHERE id=:id";
                 $resultado = $conexion->prepare($sql);     
@@ -564,9 +587,12 @@
 
         /* ----------------------------------------------------------------TIPOS DE MANTENIMIENTOS-------------------------------------------------------------------------------- */
 
-        /* 
-        *   Función para mostrar los tipos de mantenimientos, no recibe parámetros
-        */
+        /** 
+         * Función para mostrar los tipos de mantenimientos, no recibe parámetros, devuelve un array con los datos
+         *
+         * @access public
+         * @return array $registros
+         */
         public function mostrarMantenimientos(){
 
             $conexion = $this->accesoDB();
@@ -588,19 +614,20 @@
         }
 
 
-        /* 
-        *   Función para modificar, crear o borrar un Tipo de Mantenimiento
-        *
-        *    @param  string $accion, acción a realizar 
-        *    @param  int $id
-        *    @param  string $nombre  
-        *    @return string $realizado
-        */ 
+        /** 
+         * Función para modificar, crear o borrar un Tipo de Mantenimiento, según la acción recibida por el parámetro acción
+         *
+         * @access public
+         * @param string $accion 
+         * @param int $id
+         * @param string $nombre  
+         * @return string $realizado
+         */ 
         public function accionManteni($accion, $id, $nombre){
             $realizado = "";
             $conexion = $this->accesoDB();
 
-            /* Si la acción es Modificar un Tipo de Mantenimiento existente */
+            //Si la acción es Modificar un Tipo de Mantenimiento existente
             if($accion=="Modificar Tipo de Mantenimiento"){
                 $sql="UPDATE tipo_mantenimiento SET nombre=:nombre WHERE id=:id";
                 $resultado=$conexion->prepare($sql);  
@@ -609,7 +636,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-            /* Si la acción es crear un nuevo Tipo de Mantenimiento */
+            //Si la acción es crear un nuevo Tipo de Mantenimiento
             }elseif($accion=="Nuevo Tipo de Mantenimiento") {
                 $sql="INSERT INTO tipo_mantenimiento (nombre) VALUES (:nombre)";
                 $resultado=$conexion->prepare($sql);          
@@ -617,7 +644,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-                /* Si la acción es borrar un Tipo de Mantenimiento existente */
+            //Si la acción es borrar un Tipo de Mantenimiento existente
             }elseif($accion=="Borrar Tipo de Mantenimiento") {                
                 $sql="DELETE FROM tipo_mantenimiento WHERE id=:id";
                 $resultado = $conexion->prepare($sql);     
@@ -638,9 +665,12 @@
 
         /* ---------------------------------------------------------------------REPUESTOS--------------------------------------------------------------------------------------- */
         
-        /*
-        *   Función para mostrar los repuestos, no recibe parámetros
-        */
+        /**
+         * Función para mostrar los repuestos, no recibe parámetros, devuelve un array con los datos
+         *
+         * @access public
+         * @return array $registros
+         */
         public function mostrarRepuestos(){
 
             $conexion = $this->accesoDB();
@@ -663,21 +693,23 @@
 
 
 
-        /* 
-        *   Función para modificar, crear o borrar un Repuesto
-        *
-        *    @param  string $accion, acción a realizar 
-        *    @param  int $id_old
-        *    @param  int $id_new
-        *    @param  string $nombre  
-        *    @return string $desc
-        */
+        /** 
+         * Función para modificar, crear o borrar un Repuesto, según la acción recibida por el parámetro acción
+         *
+         * @access public
+         * @param string $accion
+         * @param int $id_old
+         * @param int $id_new
+         * @param string $nombre  
+         * @param string $desc
+         * @return string $realizado
+         */
         public function accionRepuesto($accion, $id_old, $id_new, $nombre, $desc){
             $realizado = "";
             $afectado=0;
             $conexion = $this->accesoDB();
 
-            /* Si la acción es Modificar un repuesto existente */
+            //Si la acción es Modificar un repuesto existente
             if ($accion == "Modificar Repuesto"){
                 $sql="UPDATE repuestos SET referencia=:idNew, nombre=:nombre, descripcion=:descripcion WHERE referencia=:idOld";
                 $resultado=$conexion->prepare($sql);  
@@ -688,7 +720,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-            /* Si la acción es crear un nuevo repuesto */
+            //Si la acción es crear un nuevo repuesto
             } elseif ($accion == "Nuevo Repuesto") {
                 $sql="INSERT INTO repuestos (referencia, nombre, descripcion) VALUES (:idNew, :nombre, :descripcion)";
                 $resultado=$conexion->prepare($sql);           
@@ -698,7 +730,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-                /* Si la acción es borrar un repuesto existente */
+            //Si la acción es borrar un repuesto existente
             } elseif ($accion == "Borrar Repuesto") {                
                 $sql="DELETE FROM repuestos WHERE referencia=:idOld";
                 $resultado = $conexion->prepare($sql);     
@@ -720,9 +752,12 @@
 
         /* ---------------------------------------------------------------------USUARIOS----------------------------------------------------------------------------------------- */
 
-        /*
-        *   Función para mostrar los usuarios, no recibe parámetros
-        */
+        /**
+         * Función para mostrar los usuarios, no recibe parámetros, devuelve un array con los datos
+         *
+         * @access public
+         * @return array $registros
+         */
         public function mostrarUsuarios(){
 
             $conexion = $this->accesoDB();
@@ -746,24 +781,25 @@
         }
 
 
-        /* 
-        *   Función para modificar, crear o eliminar un usuario 
-        *
-        *    @param  string $accion, acción a realizar 
-        *    @param  int $id
-        *    @param  string $nombre  
-        *    @param  int $rol  
-        *    @param  string $email  
-        *    @param  string $bloque  
-        *    @param  int $pass  
-        *    @return string $realizado
-        */
+        /** 
+        * Función para modificar, crear o eliminar un usuario, según la acción recibida por el parámetro acción
+         *
+         * @access public
+         * @param string $accion 
+         * @param int $id
+         * @param string $nombre  
+         * @param int $rol  
+         * @param string $email  
+         * @param string $bloque  
+         * @param int $pass  
+         * @return string $realizado
+         */
         public function accionUsuario($accion, $id, $nombre, $rol, $email, $bloque, $pass){
             $realizado = "";
             $afectado=0;
             $conexion = $this->accesoDB();
 
-            /* Si la acción es Modificar un usuario existente */
+            //Si la acción es Modificar un usuario existente
             if ($accion == "Modificar Usuario"){
                 $sql="UPDATE usuarios SET nombre=:nombre, email=:email, bloqueado=:bloqueado, id_rol=:rol WHERE id=:id";
                 $resultado=$conexion->prepare($sql);  
@@ -775,7 +811,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-            /* Si la acción es crear un nuevo usuario */
+            //Si la acción es crear un nuevo usuario
             } elseif ($accion == "Nuevo Usuario") {
                 $sql="INSERT INTO usuarios (nombre, email, password, bloqueado, id_rol) VALUES (:nombre, :email, :password, :bloqueado, :id_rol)";
                 $resultado=$conexion->prepare($sql);          
@@ -789,7 +825,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-                /* Si la acción es borrar un usuario existente */
+            //Si la acción es borrar un usuario existente
             } elseif ($accion == "Borrar Usuario") {                
                 $sql="DELETE FROM usuarios WHERE id=:id";
                 $resultado = $conexion->prepare($sql);     
@@ -797,6 +833,7 @@
                 $resultado->execute();
                 $afectado=$resultado->rowCount();
 
+            //Si la acción es CAmbiar contraseña de un usuario existente y logueado
             } elseif ($accion == "Cambiar Contrasena") { 
                 $sql="UPDATE usuarios SET password=:password WHERE id=:id";
                 $resultado=$conexion->prepare($sql);  
@@ -820,9 +857,12 @@
 
         /* -----------------------------------------------------------------------ROLES------------------------------------------------------------------------------------------ */
 
-        /* 
-        *   Función para mostrar los roles de usuario, no recibe parámetros
-        */
+        /** 
+         * Función para mostrar los roles de usuario, no recibe parámetros, devuelve un array con los datos
+         *
+         * @access public
+         * @return array $registros
+         */
         public function mostrarRoles(){
 
             $conexion = $this->accesoDB();
@@ -844,20 +884,20 @@
         }
 
 
-
-        /* 
-        *   Función para modificar un rol o para crearlo nuevo 
-        *
-        *    @param  string $accion, acción a realizar 
-        *    @param  int $id
-        *    @param  string $nombre  
-        *    @return string $realizado
-        */ 
+        /**
+         * Función para crear, modificar o eliminar un Rol, según la acción recibida por el parámetro acción
+         *
+         * @access public
+         * @param string $accion 
+         * @param int $id
+         * @param string $nombre  
+         * @return string $realizado
+         */  
         public function accionRol($accion, $id, $nombre){
             $realizado = "";
             $conexion = $this->accesoDB();
 
-            /* Si la acción es Modificar un rol existente */
+            //Si la acción es Modificar un rol existente
             if($accion=="Modificar Rol"){
                 $sql="UPDATE roles SET nombre=:nombre WHERE id=:id";
                 $resultado=$conexion->prepare($sql);  
@@ -866,7 +906,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-            /* Si la acción es crear un nuevo rol */
+            //Si la acción es crear un nuevo rol
             }elseif($accion=="Nuevo Rol") {
                 $sql="INSERT INTO roles (nombre) VALUES (:nombre)";
                 $resultado=$conexion->prepare($sql);          
@@ -874,7 +914,7 @@
                 $resultado->execute();   
                 $afectado=$resultado->rowCount();
 
-                /* Si la acción es borrar un rol existente */
+            //Si la acción es borrar un rol existente
             }elseif($accion=="Borrar Rol") {                
                 $sql="DELETE FROM roles WHERE id=:id";
                 $resultado = $conexion->prepare($sql);     

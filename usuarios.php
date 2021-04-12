@@ -1,11 +1,17 @@
 <?php 
-    /* Página que muestra los usuarios
-    *
-    * @author Francisco José López Zafra
-    */
+    /** Página que muestra los usuarios
+     *
+     * @author Francisco José López Zafra
+     */
     
     //Incluyo los de mas archivos    
     include("includes/menu.php");
+
+    //Compruebo sesión
+    if(!comprobarSesion()){
+        //Redirijo a la página de Inicio para volver a identificarse
+        header("Location: index.php");
+    }
     
 ?>
 
@@ -18,6 +24,7 @@
                         <h2 class="mt-1 text-info"><ion-icon name="contacts" class="lead text-warning"></ion-icon> USUARIOS</h2>                        
                     </div>
                 
+                    <!-- Se muestra el botón según el rol -->
                     <?php if($rol === "Administrador" || $rol === "Responsable"){
                         echo '<div class="col-lg-4 text-right">
                                 <button type="button" class="btn btn-success mt-2 mr-3" id="crearUsuario">Nuevo Usuario</button>
@@ -49,12 +56,14 @@
 
                         <div class="modal-body bg-light justify-content-center">
                             <div class="row mt-3">
+                                <!-- Campo Nombre -->
                                 <div class="col-lg-6">
                                     <input type="hidden" class="inputIdUsuario" id="inputIdUsuario">
                                     <label for="inputNombreUsuario" class="text-success ml-2">Nombre *</label>
                                     <input type="text" class="form-control" name="inputNombreUsuario" id="inputNombreUsuario" placeholder="Añadir Nombre ..." minlength="3" maxlength="50" pattern="[A-Za-z]{3,50}" autofocus required> 
                                     <span class="errorModal" id="errNombre">Solo admite letras mayúsculas y minúsculas, entre 3 y 50 caracteres</span>
                                 </div> 
+                                <!-- Campo Rol -->
                                 <div class="col-lg-6">
                                     <label for="inputRolUsuario" class="text-success ml-2">Rol</label> 
                                     <div class="input-group mb-3">
@@ -65,11 +74,13 @@
                                 </div>
                             </div>
                             <div class="row mt-3">
+                                <!-- Campo Email -->
                                 <div class="col-lg-6">
                                     <label for="inputEmailUsuario"class="text-success ml-2">Email *</label>
                                     <input type="email" class="form-control" name="inputEmailUsuario" id="inputEmailUsuario" placeholder="Añadir Email ..."  minlength="4" maxlength="50" required>
                                     <span class="errorModal" id="errEmail">Introducir un formato válido de Email</span> 
                                 </div> 
+                                <!-- Campo Bloqueado -->
                                 <div class="col-lg-6">
                                     <label for="inputBloqueUsuario" class="text-success ml-2">Bloqueado</label>                                         
                                     <div class="input-group mb-3">
@@ -81,11 +92,13 @@
                                 </div>                     
                             </div>
                             <div id="filaPassword" class="row mt-4">
+                                <!-- Campo Password -->
                                 <div class="col-lg-6">
                                     <label for="inputPasswordUsuario"class="text-success ml-2">Password *</label>                                   
                                     <input type="password" class="form-control" name="inputPasswordUsuario" id="inputPasswordUsuario" placeholder="Añadir Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}" minlength="4" maxlength="20"> 
                                     <span class="errorModal" id="errPassword">Solo admite letras mayúsculas, minúsculas y números, entre 4 y 20 caracteres</span>
                                 </div> 
+                                <!-- Campo Confirmar Password -->
                                 <div class="col-lg-6">
                                     <label for="inputConfPassUsuario"class="text-success ml-2">Confirmar Password *</label>
                                     <input type="password" class="form-control" name="inputConfPassUsuario" id="inputConfPassUsuario" placeholder="Confirmar Password ..." pattern="[a-zA-Z0-9ñÑ]{4,20}" minlength="4" maxlength="20"> 

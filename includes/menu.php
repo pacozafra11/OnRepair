@@ -1,33 +1,36 @@
-<!-- Menú lateral y superior de todas las páginas
-
-@author Francisco José López Zafra -->
-    
 <?php 
+
+/**
+* Menú lateral y superior de todas las páginas
+*
+* @author Francisco José López Zafra
+*/
         
-        //Incluyo los de mas archivos
-        include("includes/head.php");
+    //Incluyo archivos
+    include("includes/head.php");
+    include("includes/functions.php");
 
-    
-        //Iniciar variables
-        $login= $hora= $nombre= $ultimaConexion= $tituloPagina= "";
-        $id= $rol= 0;
 
-        //Retomo la sesión
-        session_start();    
+    //Iniciar variables
+    $login= $hora= $nombre= $ultimaConexion= $tituloPagina= "";
+    $id= $rol= 0;
 
-        //Si existe la sesion tomo sus valores, si no existe redirecciono a Index para que se identifique
-        if(!empty($_SESSION['login'])){
-            $id=$_SESSION['id'];
-            $login=$_SESSION['login'];
-            $hora=$_SESSION['hora'];
-            $rol=$_SESSION['rol'];
-            $nombre=$_SESSION['nombre'];
-            $ultimaConexion=$_SESSION['ultima_conexion'];
-            
-        }else{
-            header('Location: index.php');
-        }
-    ?>
+    //Retomo la sesión
+    session_start();    
+
+    //Si existe la sesion tomo sus valores, si no existe redirecciono a Index para que se identifique
+    if(!empty($_SESSION['login'])){
+        $id=$_SESSION['id'];
+        $login=$_SESSION['login'];
+        $hora=$_SESSION['hora'];
+        $rol=$_SESSION['rol'];
+        $nombre=$_SESSION['nombre'];
+        $ultimaConexion=$_SESSION['ultima_conexion'];       
+        
+    }else{
+        header('Location: index.php');
+    }
+?>
 
 
 
@@ -47,6 +50,7 @@
                     <a href="mantenimientos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuMantenimientos"><ion-icon name="construct" class="lead"></ion-icon> Tipos de mantenimiento</a>
                     <a href="repuestos.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRepuestos"><ion-icon name="git-compare" class="lead"></ion-icon> Repuestos</a>
                     <a href="usuarios.php" class="list-group-item list-group-item-action bg-info text-light" id="menuUsuarios"><ion-icon name="contacts" class="lead"></ion-icon> Usuarios</a>
+                    <!-- Se muestra el botón según el rol, SOLO ADMINISTRADOR -->                   
                     <?php if($rol=== "Administrador"){echo '<a href="roles.php" class="list-group-item list-group-item-action bg-info text-light" id="menuRoles"><ion-icon name="podium" class="lead"></ion-icon> Roles</a>';}?>
                 </div>
             </div>

@@ -43,7 +43,7 @@
 
 
         <!-- Contenido principal -->
-        <main role="main" class="container p-2 mb-3">
+        <main role="main" class="container p-3 mb-3">
             <h2 class="mt-3">POLÍTICA DE COOKIES</h2>
 
             <h3 class="mt-4">¿Qué son las cookies?</h3>

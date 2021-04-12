@@ -1,4 +1,7 @@
 <!-- Cabeza de todos los archivos php -->
+
+<!-- @author Francisco José López Zafra -->
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

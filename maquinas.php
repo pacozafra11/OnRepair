@@ -1,12 +1,19 @@
 
 <?php 
-    /* Página que muestra las máquinas
-    *
-    * @author Francisco José López Zafra
-    */
+    /**
+     * Página que muestra las máquinas
+     *
+     * @author Francisco José López Zafra
+     */
     
     //Incluyo los de mas archivos    
     include("includes/menu.php");
+   
+    //Compruebo sesión
+    if(!comprobarSesion()){
+        //Redirijo a la página de Inicio para volver a identificarse
+        header("Location: index.php");
+    }
     
 ?>
 

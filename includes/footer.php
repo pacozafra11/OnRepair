@@ -1,5 +1,5 @@
-<!-- Pie de todos los archivos php -->
 
+<!-- Pie de todos los archivos php -->
     
     <!-- Modal información -->
     <div class="modal fade" tabindex="-1" id="modalInfo">

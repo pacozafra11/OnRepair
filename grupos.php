@@ -1,12 +1,19 @@
 
 <?php 
-    /* Página que muestra los grupos de máquinas
-    *
-    * @author Francisco José López Zafra
-    */
+    /**
+     * Página que muestra los grupos de máquinas
+     *
+     * @author Francisco José López Zafra
+     */
     
     //Incluyo los de mas archivos    
     include("includes/menu.php");
+    
+    //Compruebo sesión
+    if(!comprobarSesion()){
+        //Redirijo a la página de Inicio para volver a identificarse
+        header("Location: index.php");
+    }
     
 ?>
 
@@ -20,6 +27,7 @@
                         <h2 class="mt-1 text-info"><ion-icon name="filing" class="lead text-warning"></ion-icon> GRUPOS DE MÁQUINAS</h2>                        
                     </div>
                 
+                    <!-- Se muestra el botón según el rol -->
                     <?php if($rol === "Administrador" || $rol === "Responsable"){
                         echo '<div class="col-lg-3 text-right">
                                 <button type="button" class="btn btn-success mt-2 mr-3" id="crearGrupo">Nuevo Grupo</button>

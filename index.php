@@ -1,11 +1,19 @@
 <?php 
-    /* Index o página de inicio, formulario de autentificación para acceder a la App Web
+
+    /** Index o página de inicio, formulario de autentificación para acceder a la App Web
     *
     * @author Francisco José López Zafra
     */
 
     //Incluyo funciones
     include("includes/functions.php");
+
+    //Primero compruebo sesión
+    if(comprobarSesion()){
+        //Redirijo a la página tareas.php
+        header("Location: tareas.php");
+    }   
+    
     
     //Declaración de variables
     $email= $emailErr= $password= $passwordErr= $error= $classEmailErr=  $classPassErr= "";
@@ -18,11 +26,7 @@
         $dato = stripslashes($dato);
         $dato = htmlspecialchars($dato);
         return $dato;
-      }
-
-    //Primero compruebo sesion
-    //comprobarSesion();
-        
+    }            
 
     
     //Si se ha pulsado "autentificarse"
@@ -75,10 +79,11 @@
         
         //Si todo está correcto, envío los datos a la función para comprobar si existe el usuario y si es correcta la contraseña
         if($emailOk && $passwordOk){
- 
+
             $error = comprobarUsuario($email, $password);
         }    
     }
+  
 ?>
 
 
@@ -140,6 +145,7 @@
         </div>        
     </section>
 
+    <!-- Pie de la página -->
     <footer class="footer row justify-content-center align-items-center">
         <div class="alert alert-warning alert-dismissible fade show mt-4 col-lg-8 border" role="alert">
             Esta página hace uso de <a href="includes/cookies.php" class="alert-link">cookies</a> para su funcionamiento.
@@ -149,7 +155,7 @@
         </div>
     </footer>
 
-    <!-- Script de reCAPTCHA -->
+    <!-- Script de reCAPTCHA, solo se puede activar en el dominio público -->
     <!-- <script>
         function onSubmit(token**) {
             document.getElementById("formLogin").submit();
