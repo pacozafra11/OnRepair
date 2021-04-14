@@ -73,7 +73,7 @@
                     </button>
 
                     
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="text-right collapse navbar-collapse" id="navbarSupportedContent">
 
                         <!-- Desplegable con información de usuario -->
                         <ul class="navbar-nav ml-auto">
@@ -82,16 +82,16 @@
                                     <?php echo $nombre;?>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <div class="bg-light ml-2 mr-2 border">
+                                    <div class="text-center bg-light ml-2 mr-2 border">
                                         <input type="hidden" id="id" name="id" value="<?php echo $id;?>">
                                         <span id="login" class="dropdown-item"><?php echo $login;?></span>
                                         <span class="dropdown-item"><b class="text-info">Hora de Login: </b><span id="hora"><?php echo $hora;?></span></span>
                                         <span class="dropdown-item"><b class="text-info">Rol: </b><span id="rol"><?php echo $rol;?></span></span>
                                     </div>
                                     <div class="dropdown-divider"></div>
-                                        <a href="#" id="cambiarPassword" class="dropdown-item text-warning"><ion-icon name="key"></ion-icon>  Cambiar contraseña</a>
+                                        <a href="#" id="cambiarPassword" class="text-center dropdown-item text-warning"><ion-icon name="key"></ion-icon>  Cambiar contraseña</a>
                                     <div class="dropdown-divider"></div>
-                                        <a href="#" id="cerrarSesion" class="dropdown-item text-danger"><ion-icon name="log-out"></ion-icon>  Cerrar sesión</a>   
+                                        <a href="#" id="cerrarSesion" class="text-center dropdown-item text-danger"><ion-icon name="log-out"></ion-icon>  Cerrar sesión</a>   
                                 </div>
                             </li>
                         </ul>
