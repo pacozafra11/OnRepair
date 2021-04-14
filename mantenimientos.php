@@ -40,7 +40,7 @@
                         <thead class="bg-info text-light">
                             <th scope="col">Id</th>
                             <th scope="col">Tipos de <span class="text-warning">mantenimiento</span></th>
-                            <th scope="col" class="text-right pr-5">Acción</th>
+                            <th scope="col" class="botonesGrupos text-right pr-5">Acción</th>
                         </thead>
                         <tbody id="cont_mostrar_mantenimientos">
 
@@ -67,7 +67,7 @@
 
                         <div class="modal-body bg-light justify-content-center">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-md-12 col-lg-12">
                                     <input type="hidden" name="inputIdManteni" id="inputIdManteni">
                                     <label for="inputNombreManteni" class="text-success ml-2">Tipo de Mantenimiento *</label>
                                     <input type="text" class="form-control" name="inputNombreManteni" id="inputNombreManteni" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,50}"  mixlength="3" maxlength="50" autofocus required> 

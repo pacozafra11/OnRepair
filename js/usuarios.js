@@ -40,25 +40,25 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                         <div class="${clase}">
 
                             <div class="row">
-                                <div class="col-lg-2 pt-3">
+                                <div class="col-md-12 col-lg-2 pt-3">
                                     <span class="text-success font-weight-bold">Id: </span><span class="id">${id}</span>
                                 </div>
-                                <div class="col-lg-4 pt-3">
+                                <div class="col-md-12 col-lg-4 pt-3">
                                     <span class="text-success font-weight-bold">Nombre: </span><span class="nombre">${buscado.nombre}</span>
                                 </div>
-                                <div class="col-lg-3 pt-3">
+                                <div class="col-md-12 col-lg-3 pt-3">
                                     <span class="text-success font-weight-bold">Rol: </span><span class="rol">${buscado.rol}</span>
                                 </div>
                                 
-                                <div class="col-lg-3 text-right mt-1">
+                                <div class="col-md-12 col-lg-3 text-right mt-1">
                                     ${botones}
                                 </div>
                             </div>
                             <div class="row pb-2">
-                                <div class="col-lg-6 pt-1">
+                                <div class="col-md-12 col-lg-6 pt-1">
                                     <span class="text-success font-weight-bold">Email: </span><span class="email">${buscado.email}</span>
                                 </div>
-                                <div class="col-lg-6 pt-1">
+                                <div class="col-md-12 col-lg-6 pt-1">
                                     <span class="text-success font-weight-bold">Bloqueado: </span><span class="bloqueado">${buscado.bloqueado}</span>
                                 </div>
                             </div>

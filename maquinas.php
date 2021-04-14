@@ -28,7 +28,8 @@
                     </div>
 
                     <!-- Campo de busqueda -->
-                    <div class="col-lg-4 text-center w-100 mt-1">
+                    <!-- Este contenedor se esconde a partir del tamaño de pantalla lg (Grande) "≥992px" -->
+                    <div class="col-lg-4 text-center w-100 mt-1 d-none d-lg-block">
                         <form class="form-inline d-inline-block mt-1 w-100">
                             <input class="form-control mr-sm-2 border border-info mt-1 w-100" type="search" id="busqueda" placeholder="Buscar por nombre ..." aria-label="Search" maxlength="50">
                             <span class="errorModal" id="errBusqueda">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-()/" , entre 3 y 50 caracteres</span>
@@ -75,7 +76,7 @@
                         <div class="modal-body bg-light justify-content-center">
                             <div class="row">
                                 <!-- Nombre -->
-                                <div class="col-lg-6">
+                                <div class="col-md-12 col-lg-6 mt-2">
                                     <!-- Id -->
                                     <input type="hidden" class="inputIdMaquina" id="inputIdMaquina"> 
                                     <label for="inputNombreMaquina" class="text-success ml-2">Nombre *</label>
@@ -83,24 +84,24 @@
                                     <span class="errorModal" id="errNombreMaquina">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-()/" , entre 3 y 50 caracteres</span>
                                 </div> 
                                 <!-- Marca -->
-                                <div class="col-lg-6">
+                                <div class="col-md-12 col-lg-6 mt-2">
                                     <label for="inputMarcaMaquina" class="text-success ml-2">Marca *</label>
                                     <input type="text" class="form-control" name="inputMarcaMaquina" id="inputMarcaMaquina" placeholder="Añadir marca ..." minlength="3" maxlength="50" pattern="[A-Za-z0-9\.\,\-]{3,50}" required> 
                                     <span class="errorModal" id="errMarcaMaquina">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , entre 3 y 50 caracteres</span>                                   
                                 </div>
                             </div>
 
-                            <div class="row mt-3">
+                            <div class="row">
                                 <!-- Modelo -->
-                                <div class="col-lg-6">
+                                <div class="col-md-12 col-lg-6 mt-2">
                                     <label for="inputModeloMaquina" class="text-success ml-2">Modelo</label>
                                     <input type="text" class="form-control" name="inputModeloMaquina" id="inputModeloMaquina" placeholder="Añadir modelo ..." maxlength="50" pattern="[A-Za-z0-9\.\,\-]{0,50}"> 
                                     <span class="errorModal" id="errModeloMaquina">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , máximo 50 caracteres</span>
                                 </div> 
                                 <!-- Grupo de Máquinas -->
-                                <div class="col-lg-6">
+                                <div class="col-md-12 col-lg-6 mt-2">
                                     <label for="inputGrupoMaquina" class="text-success ml-2">Grupo de Máquinas *</label>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group">
                                         <select class="custom-select" name="inputGrupoMaquina" id="inputGrupoMaquina" required>
                                             
                                         </select>
@@ -109,9 +110,9 @@
                                 </div>
                             </div>
 
-                            <div class="row mt-3">
+                            <div class="row">
                                 <!-- Descripcion -->
-                                <div class="col-lg-12">
+                                <div class="col-md-12 col-lg-12 mt-2">
                                     <label for="inputDescMaquina"class="text-success ml-2">Descripción</label>
                                     
                                     <textarea class="form-control" name="inputDescMaquina" id="inputDescMaquina" placeholder="Añadir descripción ..." rows="3" maxlength="800"></textarea>
@@ -119,7 +120,7 @@
                                 </div>                     
                             </div>
                             <div class="row mt-2">
-                                <div class="col-lg-12 text-center text-warning">
+                                <div class="col-md-12 col-lg-12 mt-2 text-center text-warning">
                                     <span>* Campos requeridos, no pueden quedar vacíos</span> 
                                 </div>                     
                             </div>                

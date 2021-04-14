@@ -110,9 +110,9 @@
 <body id="bodyIndex">
 
     <section class="container">        
-        <div class="row justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center mt-3">
             <div class="col-lg-5 mt-4 rounded" id="contLogin">
-                <div class="fondo col-lg-12">
+                <div class="fondo col-md-12">
 
                     <!-- Formulario html -->        <!-- Protejo el envío de formulario evitando el XSS (Cross-site scripting) usando "htmlspecialchars()"  -->
                     <form name="formLogin" id="formLogin" class="form-signin" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">

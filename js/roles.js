@@ -25,7 +25,7 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                         resultado +=`<tr id="${id}">
                             <td class="id align-middle">${id}</td>
                             <td class="nombre align-middle">${buscado.nombre}</td>                                        
-                            <td class="botonesGrupos text-right">
+                            <td class="botonesGrupos">
                                 <button type="button" class="actualizarRol btn btn-outline-primary">
                                     <ion-icon name="create" class="pt-1"></ion-icon>
                                 </button> 

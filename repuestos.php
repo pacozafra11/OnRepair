@@ -57,23 +57,23 @@
                         </div>
 
                         <div class="modal-body bg-light justify-content-center">
-                            <div class="row mt-3">
+                            <div class="row">
                                 <!-- Referencia -->
-                                <div class="col-lg-4">
+                                <div class="col-md-12 col-lg-4 mt-2">
                                     <label for="inputIdRepuesto" class="text-success ml-2">Referencia *</label>
                                     <input type="text" class="form-control" name="inputIdRepuesto" id="inputIdRepuesto" placeholder="Añadir referencia ..." pattern="[A-Za-z\.\,\-\(\)]{3,12}" minlength="3" maxlength="12" autofocus required> 
                                     <span class="errorModal" id="errIdRepuesto">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-()" , entre 3 y 12 caracteres</span>
                                 </div> 
                                 <!-- Nombre -->
-                                <div class="col-lg-8">
+                                <div class="col-md-12 col-lg-8 mt-2">
                                     <label for="inputNombreRepuesto" class="text-success ml-2">Nombre *</label>
                                     <input type="text" class="form-control" name="inputNombreRepuesto" id="inputNombreRepuesto" placeholder="Añadir nombre ..." pattern="[A-Za-z\.\,\-\(\)]{3,50}" minlength="3" maxlength="50" required> 
                                     <span class="errorModal" id="errNombreRepuesto">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-()" , entre 3 y 50 caracteres</span>                                   
                                 </div>
                             </div>
-                            <div class="row mt-3">
+                            <div class="row">
                             <!-- Descripción -->
-                                <div class="col-lg-12">
+                                <div class="col-md-12 col-lg-12 mt-2">
                                     <label for="inputDescRepuesto"class="text-success ml-2">Descripción</label>
                                     <textarea class="form-control" name="inputDescRepuesto" id="inputDescRepuesto" placeholder="Añadir descripción ..." rows="4" maxlength="800"></textarea>
                                     <span class="errorModal" id="errDescRepuesto">Solo admite letras mayúsculas, minúsculas, números y los signos " . , - () " , máximo 800 caracteres</span> 

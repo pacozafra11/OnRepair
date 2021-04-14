@@ -707,11 +707,11 @@ $(function() {  //Con esta línea espera el archivo JS a que se cargue toda la p
                     if(typeof info !== "string"){
 
                         info.forEach(buscado => {                        
-                        resultado +=`<div class="row">
-                                        <div class="col-lg-3 mt-2"><span class="text-success font-weight-bold">Referencia </span><span class="refRepTarea">${buscado.referencia}</span></div>
-                                        <div class="col-lg-5 mt-2"><span class="text-success font-weight-bold">Nombre </span><span class="nombreRepTarea">${buscado.nombre}</span></div>  
-                                        <div class="col-lg-2 mt-2"><span class="text-success font-weight-bold">Cantidad </span><span class="cantRepTarea">${buscado.cantidad}</span></div>
-                                        <div class="col-lg-2 mr-0">
+                        resultado +=`<div class="row border-top">
+                                        <div class="col-md-12 col-lg-3 mt-2"><span class="text-success font-weight-bold">Referencia </span><span class="refRepTarea">${buscado.referencia}</span></div>
+                                        <div class="col-md-12 col-lg-5 mt-2"><span class="text-success font-weight-bold">Nombre </span><span class="nombreRepTarea">${buscado.nombre}</span></div>  
+                                        <div class="col-md-6 col-lg-2 mt-2"><span class="text-success font-weight-bold">Cantidad </span><span class="cantRepTarea">${buscado.cantidad}</span></div>
+                                        <div class="col-md-6 col-lg-2 mr-0 text-right">
                                             <button type='button' class='actualizarRepTarea btn btn-outline-primary'>
                                                 <ion-icon name='create' class='pt-1'></ion-icon>
                                             </button>

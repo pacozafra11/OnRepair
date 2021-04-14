@@ -161,8 +161,10 @@ body{
 }
 
 .botonesGrupos{
-  padding-left: 2.5em !important;
+  /* //padding-left: 2.5em !important; */
+  width:130px;
 }
+
 
 
 

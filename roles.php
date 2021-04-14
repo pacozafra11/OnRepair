@@ -46,7 +46,7 @@
                         <thead class="bg-info text-light">
                             <th scope="col">Id</th>
                             <th scope="col"><span class="text-warning">Rol</span> de usuario</th>
-                            <th scope="col" class="text-right pr-5">Acción</th>
+                            <th scope="col" class="botonesGrupos text-right pr-5">Acción</th>
                         </thead>
                         <tbody id="cont_mostrar_roles">
 
@@ -75,7 +75,7 @@
 
                         <div class="modal-body bg-light justify-content-center">
                             <div class="row">                          
-                                <div class="col-lg-12">
+                                <div class="col-md-12 col-lg-12">
                                     <input type="hidden" name="inputIdRol" id="inputIdRol">
                                     <label for="inputNombreRol" class="text-success ml-2">Rol *</label>
                                     <input type="text" class="form-control" name="inputNombreRol" id="inputNombreRol" placeholder="Añadir nuevo ..." pattern="[A-Za-z]{3,20}" mixlength="3" maxlength="20" autofocus required> 

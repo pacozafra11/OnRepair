@@ -20,15 +20,17 @@
                     <div class="row pb-2">                        
 
                         <!-- Contenedor que contiene el título de la página -->
-                        <div class="col-lg-3 text-left mt-2">
+                        <div class="col-md-12 col-lg-3 text-left mt-2">
                             <h2 class="mt-1 text-info"><ion-icon name="clipboard" class="lead text-warning"></ion-icon> TAREAS</h2>                        
                         </div>
 
-                        <div class="col-lg-2 mt-3 text-right text-secondary">                            
+                        <!-- Este contenedor se esconde a partir del tamaño de pantalla lg (Grande) "≥992px" -->
+                        <div class="col-md-12 col-lg-2 mt-3 text-secondary d-none d-lg-block">                            
                             <span class="text-right">Ordenadas por: </span>
                         </div>
 
-                        <div class="col-lg-4 mt-2">
+                        <!-- Este contenedor se esconde a partir del tamaño de pantalla lg (Grande) "≥992px" -->
+                        <div class="col-md-12 col-lg-4 mt-2 d-none d-lg-block">
                             <div class="dropdown">
                                 <button type="button" class="btn btn-outline-info dropdown-toggle" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">
                                     fecha, descendente
@@ -42,7 +44,7 @@
                             </div>                            
                         </div>
 
-                        <div class="col-lg-3 text-right">
+                        <div class="col-md-12 col-lg-3 text-right">
                                 <button type="button" class="btn btn-success mt-2 mr-2" id="crearTarea">Nueva Tarea</button>
                         </div>
                     </div>  
@@ -69,7 +71,7 @@
                                     <div class="modal-body bg-light justify-content-center">
                                         <div class="row">
                                             <!-- Título -->
-                                            <div class="col-lg-6">
+                                            <div class="col-md-12 col-lg-6 mt-2">
                                                 <!-- Id -->
                                                 <input type="hidden" class="inputIdTarea" id="inputIdTarea"> 
                                                 <label for="inputTituloTarea" class="text-success ml-2">Título *</label>                                                                        <!--  pattern="[A-Za-z0-9\.\,\-]{3,50}" -->
@@ -77,24 +79,24 @@
                                                 <span class="errorModal" id="errTituloTarea">Solo admite letras mayúsculas, minúsculas, números y los signos ".,-" , entre 3 y 50 caracteres</span>
                                             </div> 
                                             <!-- Fecha -->
-                                            <div class="col-lg-6">
+                                            <div class="col-md-12 col-lg-6 mt-2">
                                                 <label for="inputFechaTarea" class="text-success ml-2">Fecha *</label>
                                                 <input type="date" class="form-control" name="inputFechaTarea" id="inputFechaTarea" min="2021-01-01" pattern="\d{4}-\d{2}-\d{2}" required> 
                                                 <span class="errorModal" id="errFechaTarea">Solo admite formato fecha</span>                                   
                                             </div>
                                         </div>
 
-                                        <div class="row mt-3">
+                                        <div class="row">
                                             <!-- Tiempo empleado -->
-                                            <div class="col-lg-6">
+                                            <div class="col-md-12 col-lg-6 mt-2">
                                                 <label for="inputTiempoTarea" class="text-success ml-2">Tiempo Empleado *</label><span>(entre 00:15 y 08:00 h)</span>
                                                 <input type="time" class="form-control" name="inputTiempoTarea" id="inputTiempoTarea" min="00:15" max="08:00" pattern="[0-9]{2}:[0-9]{2}" required>
                                                 <span class="errorModal" id="errTiempoTarea">Solo admite formato hora, entre 00:15 y 08:00 h</span>
                                             </div> 
                                             <!-- Finalizada -->
-                                            <div class="col-lg-6">
+                                            <div class="col-md-12 col-lg-6 mt-2">
                                                 <label for="inputFinalTarea" class="text-success ml-2">Finalizada</label>
-                                                <div class="input-group mb-3">
+                                                <div class="input-group">
                                                     <select class="custom-select" name="inputFinalTarea" id="inputFinalTarea" required>
                                                                                                         
                                                     </select>
@@ -102,11 +104,11 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mt-1">
+                                        <div class="row">
                                             <!-- Máquina -->
-                                            <div class="col-lg-6">
+                                            <div class="col-md-12 col-lg-6 mt-2">
                                                 <label for="inputMaquinaTarea" class="text-success ml-2">Máquina *</label>
-                                                <div class="input-group mb-3">
+                                                <div class="input-group">
                                                     <select class="custom-select" name="inputMaquinaTarea" id="inputMaquinaTarea" required>
                                                                                             
                                                     </select>
@@ -114,9 +116,9 @@
                                                 <span class="errorModal" id="errMaquinaTarea">Debe seleccionar una de las opciones</span>
                                             </div> 
                                             <!-- Técnico -->
-                                            <div class="col-lg-6">
+                                            <div class="col-md-12 col-lg-6 mt-2">
                                                 <label for="inputTecnicoTarea" class="text-success ml-2">Técnico *</label>
-                                                <div class="input-group mb-3">
+                                                <div class="input-group">
                                                     <select class="custom-select" name="inputTecnicoTarea" id="inputTecnicoTarea" required>
                                                         
                                                     </select>
@@ -125,11 +127,11 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mt-1">
+                                        <div class="row">
                                             <!-- Tipo de Avería -->
-                                            <div class="col-lg-6">
+                                            <div class="col-md-12 col-lg-6 mt-2">
                                                 <label for="inputAveriaTarea" class="text-success ml-2">Tipo de Avería *</label>
-                                                <div class="input-group mb-3">
+                                                <div class="input-group">
                                                     <select class="custom-select" name="inputAveriaTarea" id="inputAveriaTarea" required>
                                                                                             
                                                     </select>
@@ -137,9 +139,9 @@
                                                 <span class="errorModal" id="errAveriaTarea">Debe seleccionar una de las opciones</span>
                                             </div> 
                                             <!-- Tipo de Mantenimiento -->
-                                            <div class="col-lg-6">
+                                            <div class="col-md-12 col-lg-6 mt-2">
                                                 <label for="inputMantTarea" class="text-success ml-2">Tipo de Mantenimiento *</label>
-                                                <div class="input-group mb-3">
+                                                <div class="input-group">
                                                     <select class="custom-select" name="inputMantTarea" id="inputMantTarea" required>
                                                         
                                                     </select>
@@ -148,9 +150,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mt-1">
+                                        <div class="row">
                                             <!-- Descripcion -->
-                                            <div class="col-lg-12">
+                                            <div class="col-md-12 col-lg-12 mt-2">
                                                 <label for="inputDescTarea"class="text-success ml-2">Descripción *</label>
                                                 
                                                 <textarea class="form-control" name="inputDescTarea" id="inputDescTarea" placeholder="Añadir descripción de la tarea..." rows="3" minlengh="5" maxlength="800" required></textarea>
