@@ -20,6 +20,7 @@
          */
         public function __construct(){
 
+            //CONEXIÓN LOCAL
             $this->mysql="mysql: host=localhost; dbname=mantenimiento; charset=utf8";
             $this->log="admin";
             $this->pass="FranciscoZafra";
