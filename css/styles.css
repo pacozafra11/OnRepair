@@ -34,14 +34,9 @@ body{
 
 
 /* Fondo contenedor Login */
-#contLogin {
-  background-image: linear-gradient(to top,#bfd4dd, #f8fbfc, #d5e3e6, #2893a8,#012981, #001c58);
-  /* background-image: url("/images/fondo_contenedor.jpg")no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;*/
-}
+/* #contLogin {
+   background-image: linear-gradient(to top,#bfd4dd, #f8fbfc, #d5e3e6, #2893a8,#012981, #001c58);
+} */
 
 
 
