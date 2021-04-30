@@ -123,7 +123,7 @@
                                                         
                                                     </select>
                                                 </div>
-                                                <span class="errorModal" id="errinputTecnicoTarea">Debe seleccionar una de las opciones</span>                                                                   
+                                                <span class="errorModal" id="errTecnicoTarea">Debe seleccionar una de las opciones</span>                                                                   
                                             </div>
                                         </div>
 
@@ -146,7 +146,7 @@
                                                         
                                                     </select>
                                                 </div>
-                                                <span class="errorModal" id="errinputMantTarea">Debe seleccionar una de las opciones</span>                                                                   
+                                                <span class="errorModal" id="errMantTarea">Debe seleccionar una de las opciones</span>                                                                   
                                             </div>
                                         </div>
 
